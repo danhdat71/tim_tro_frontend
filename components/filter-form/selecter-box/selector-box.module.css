@@ -5,6 +5,7 @@
     border-radius: 5px;
     cursor: pointer;
     user-select: none;
+    color: rgb(78, 78, 78);
 }
 
 .selector_box span:first-child {

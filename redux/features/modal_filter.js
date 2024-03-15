@@ -3,7 +3,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState = {
     modalFilter : {
         is_enable: false,
-    }
+        box_type: 'address',
+        modal_title: 'address',
+    },
 };
 
 export const modalFilter = createSlice({
@@ -13,7 +15,9 @@ export const modalFilter = createSlice({
         toggleModalFilter: function(state, action) {
             let newState = {...state};
             let payload = action.payload;
-            newState.modalFilter.is_enable = payload;
+            newState.modalFilter.is_enable = payload.is_enable;
+            newState.modalFilter.box_type = payload.box_type ?? '';
+            newState.modalFilter.modal_title = payload.modal_title ?? '';
         },
     }
 })
