@@ -55,7 +55,7 @@
     font-weight: 700;
     font-size: 17px;
     color: rgb(69, 69, 69);
-    letter-spacing: 1px;
+    letter-spacing: .6px;
 }
 
 .modal_filter_title button {
