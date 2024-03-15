@@ -1,0 +1,28 @@
+.menu_item_wrap {
+    text-decoration: none;
+}
+
+.menu_item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-style: normal;
+    border-bottom: 1px solid rgb(237, 237, 237);
+}
+
+.menu_item:hover {
+    background-color: rgb(246, 246, 246);
+}
+
+.menu_item .icon {
+    font-size: 25px;
+    color: rgb(0, 110, 0);
+    width: 45px;
+}
+
+.menu_item .text {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgb(41, 41, 41);
+}

@@ -1,0 +1,142 @@
+.toggle_header {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    transition: .4s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.enable_header {
+    visibility: visible!important;
+    opacity: 1!important;
+}
+
+.backdrop {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.656);
+    position: absolute;
+    z-index: 1;
+}
+
+.wrap_main_header {
+    width: 20%;
+    height: 100vh;
+    background-color: white;
+    position: absolute;
+    z-index: 2;
+    right: -100%;
+    top: 0;
+    transition: .4s;
+}
+
+.enable_header .wrap_main_header {
+    right: 0;
+}
+
+@media screen and (max-width: 1935px) {
+    .wrap_main_header {
+        width: 22%;
+    }
+}
+@media screen and (max-width: 1296px) {
+    .wrap_main_header {
+        width: 35%;
+    }
+}
+@media screen and (max-width: 1134px) {
+    .wrap_main_header {
+        width: 45%;
+    }
+}
+@media screen and (max-width: 900px) {
+    .wrap_main_header {
+        width: 50%;
+    }
+}
+@media screen and (max-width: 813px) {
+    .wrap_main_header {
+        width: 70%;
+    }
+}
+@media screen and (max-width: 555px) {
+    .person_domain {
+        display: none;
+    }
+}
+@media screen and (max-width: 470px) {
+    .wrap_main_header {
+        width: 100%;
+    }
+}
+
+.header_head {
+    padding: 35px 15px 20px 15px;
+    background-color: rgb(0, 85, 53);
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.person .person_avatar {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 999px;
+}
+
+.person .person_avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.little_info {
+    padding-left: 10px;
+}
+
+.little_info .name {
+    color: rgb(235, 235, 235);
+    font-size: 17px;
+    padding-bottom: 5px;
+}
+
+.little_info .person_link {
+    color: rgb(205, 205, 205);
+    font-weight: 300px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+}
+
+.copy_clip {
+    padding-left: 5px;
+}
+
+.close_menu_btn {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 14px;
+    user-select: none;
+}
+.close_menu_btn i {
+    font-size: 25px;
+    color: rgb(91, 91, 91)
+}
+
