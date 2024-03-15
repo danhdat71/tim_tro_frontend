@@ -8,7 +8,7 @@ const ProviderMenuItems = () => {
             <Link href="" className={cl.menu_item_wrap}>
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
-                        <i className="fas fa-comment-alt-edit"></i>
+                        <i className="fal fa-comment-alt-edit"></i>
                     </div>
                     <div className={cl.text}>
                         Đăng phòng trọ
@@ -18,7 +18,7 @@ const ProviderMenuItems = () => {
             <Link href="" className={cl.menu_item_wrap}>
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
-                        <i className="fas fa-list"></i>
+                        <i className="fal fa-list-ul"></i>
                     </div>
                     <div className={cl.text}>
                         Quản lý tin đăng
@@ -28,7 +28,7 @@ const ProviderMenuItems = () => {
             <Link href="" className={cl.menu_item_wrap}>
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
-                        <i className="far fa-address-card"></i>
+                        <i className="fal fa-address-card"></i>
                     </div>
                     <div className={cl.text}>
                         Trang cá nhân
@@ -38,7 +38,7 @@ const ProviderMenuItems = () => {
             <Link href="" className={cl.menu_item_wrap}>
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
-                        <i className="far fa-exclamation-triangle"></i>
+                        <i className="fal fa-exclamation-triangle"></i>
                     </div>
                     <div className={cl.text}>
                         Báo lỗi hệ thống
@@ -48,7 +48,7 @@ const ProviderMenuItems = () => {
             <Link href="" className={cl.menu_item_wrap}>
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
-                        <i className="far fa-user-slash"></i>
+                        <i className="fal fa-user-alt-slash"></i>
                     </div>
                     <div className={cl.text}>
                         Xóa tài khoản
@@ -58,7 +58,7 @@ const ProviderMenuItems = () => {
             <Link href="" className={cl.menu_item_wrap}>
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
-                        <i className="far fa-sign-out"></i>
+                        <i className="fal fa-sign-out"></i>
                     </div>
                     <div className={cl.text}>
                         Đăng xuất

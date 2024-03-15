@@ -30,7 +30,12 @@ const ToggleHeader = () => {
         <div
             className={handleEnableHeader()}
         >
-            <div className={cl.backdrop}></div>
+            <div
+                className={cl.backdrop}
+                onClick={()=>{
+                    handleSetEnableHeader(false);
+                }}
+            ></div>
             <div className={cl.wrap_main_header}>
                 <div className={cl.header_head}>
                     <div
@@ -58,8 +63,8 @@ const ToggleHeader = () => {
                     </div>
                 </div>
                 <div className={cl.header_main}>
-                    {/* <ProviderMenuItems></ProviderMenuItems> */}
-                    <FinderMenuItems></FinderMenuItems>
+                    <ProviderMenuItems></ProviderMenuItems>
+                    {/* <FinderMenuItems></FinderMenuItems> */}
                 </div>
             </div>
         </div>
