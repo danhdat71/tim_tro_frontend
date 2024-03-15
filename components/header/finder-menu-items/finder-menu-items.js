@@ -19,6 +19,19 @@ const FinderMenuItems = () => {
                 <Link href="" className={cl.menu_item_wrap}>
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
+                            <i className="fal fa-bell"></i>
+                        </div>
+                        <div className={cl.text}>
+                            Thông báo
+                        </div>
+                        <div className={cl.counter}>
+                            10
+                        </div>
+                    </div>
+                </Link>
+                <Link href="" className={cl.menu_item_wrap}>
+                    <div className={cl.menu_item}>
+                        <div className={cl.icon}>
                             <i className="fal fa-search"></i>
                         </div>
                         <div className={cl.text}>
@@ -62,7 +75,7 @@ const FinderMenuItems = () => {
                             <i className="fal fa-exclamation-triangle"></i>
                         </div>
                         <div className={cl.text}>
-                            Báo lỗi hệ thống
+                            Báo lỗi & góp ý
                         </div>
                     </div>
                 </Link>

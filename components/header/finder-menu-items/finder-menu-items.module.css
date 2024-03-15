@@ -8,6 +8,21 @@
     padding: 12px 15px;
     text-decoration: none;
     font-style: normal;
+    position: relative;
+}
+
+.counter {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    position: absolute;
+    right: 20px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    color: white;
 }
 
 .menu_item:hover {

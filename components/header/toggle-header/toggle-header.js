@@ -4,7 +4,6 @@ import cl from './toggle-header.module.css';
 import Link from 'next/link';
 import ProviderMenuItems from '../provider-menu-items/provider-menu-items';
 import FinderMenuItems from '../finder-menu-items/finder-menu-items';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleMenuHeader } from '@/redux/features/header';
@@ -63,8 +62,8 @@ const ToggleHeader = () => {
                     </div>
                 </div>
                 <div className={cl.header_main}>
-                    <ProviderMenuItems></ProviderMenuItems>
-                    {/* <FinderMenuItems></FinderMenuItems> */}
+                    {/* <ProviderMenuItems></ProviderMenuItems> */}
+                    <FinderMenuItems></FinderMenuItems>
                 </div>
             </div>
         </div>

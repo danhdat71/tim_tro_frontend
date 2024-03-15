@@ -41,7 +41,7 @@ const ProviderMenuItems = () => {
                         <i className="fal fa-exclamation-triangle"></i>
                     </div>
                     <div className={cl.text}>
-                        Báo lỗi hệ thống
+                        Báo lỗi & góp ý
                     </div>
                 </div>
             </Link>
