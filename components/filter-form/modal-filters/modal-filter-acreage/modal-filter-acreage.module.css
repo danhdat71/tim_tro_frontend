@@ -1,0 +1,48 @@
+
+.acreage_input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hand_input {
+    width: 45%;
+    height: 35px;
+    text-align: center;
+    border: 1px solid rgb(205, 205, 205);
+    outline: none;
+    border-radius: 5px;
+}
+
+.radio_list {
+    padding-top: 15px;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.radio_item *{
+    cursor: pointer;
+}
+
+.radio_item {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.radio_item span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.radio_item input {
+    font-size: 35px;
+    width: 17px;
+    height: 17px;
+}
+
+.radio_item label {
+    font-size: 17px;
+}

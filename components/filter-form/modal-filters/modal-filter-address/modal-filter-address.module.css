@@ -1,0 +1,17 @@
+.filter_address {
+    height: 200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+}
+
+.select {
+    cursor: pointer;
+}
+
+.group_search label {
+    color: rgb(89, 89, 89);
+    padding-bottom: 10px;
+    display: inline-block;
+    font-size: 14px;
+}
