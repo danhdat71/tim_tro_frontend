@@ -37,6 +37,12 @@
     transition: .4s;
 }
 
+@media screen and (max-width: 750px) {
+    .main_modal_filter {
+        width: 100%;
+    }
+}
+
 .show_modal_filter .main_modal_filter {
     bottom: 0%;
 }

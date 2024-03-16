@@ -1,0 +1,31 @@
+.preview_range {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: rgb(67, 67, 67);
+    font-size: 17px;
+    padding-bottom: 15px;
+}
+
+.input_range {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hand_input {
+    width: 45%;
+    height: 40px;
+    text-align: center;
+    border: 1px solid rgb(205, 205, 205);
+    outline: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: rgb(46, 46, 46);
+}
+
+.price_slider_wrapper {
+    width: 90%;
+    margin: auto;
+    padding-top: 10px;
+}

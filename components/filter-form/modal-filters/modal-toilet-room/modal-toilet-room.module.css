@@ -1,0 +1,32 @@
+.wrap_buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.input_box {
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+@media screen and (max-width: 600px) {
+    .input_box {
+        padding: 7px 10px;
+        font-size: 14px;
+    }
+}
+
+.input_box:hover {
+    background-color: rgb(149, 149, 149);
+    color: white;
+}
+
+.active {
+    background-color: rgb(149, 149, 149);
+    color: white;
+}

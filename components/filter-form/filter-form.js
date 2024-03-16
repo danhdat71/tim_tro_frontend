@@ -8,6 +8,11 @@ import ModalFilter from './modal-filters/modal-filter';
 import { useAppSelector } from '@/redux/store';
 import ModalFilterAddress from './modal-filters/modal-filter-address/modal-filter-address';
 import ModalFilterAcreage from './modal-filters/modal-filter-acreage/modal-filter-acreage';
+import ModalPriceRange from './modal-filters/modal-price-range/modal-price-range';
+import ModalCategory from './modal-filters/modal-category/modal-category';
+import ModalBedroom from './modal-filters/modal-bedroom/modal-bedroom';
+import ModalToiletRoom from './modal-filters/modal-toilet-room/modal-toilet-room';
+import ModalPet from './modal-filters/modal-pet/modal-pet';
 
 export default function filterForm()
 {
@@ -26,6 +31,31 @@ export default function filterForm()
         else if (modalFilter.box_type == 'acreage') {
             modalFilterJsx = (
                 <ModalFilterAcreage />
+            );
+        }
+        else if (modalFilter.box_type == 'price_range') {
+            modalFilterJsx = (
+                <ModalPriceRange />
+            );
+        }
+        else if (modalFilter.box_type == 'category') {
+            modalFilterJsx = (
+                <ModalCategory />
+            );
+        }
+        else if (modalFilter.box_type == 'bed_room') {
+            modalFilterJsx = (
+                <ModalBedroom />
+            );
+        }
+        else if (modalFilter.box_type == 'toilet_room') {
+            modalFilterJsx = (
+                <ModalToiletRoom />
+            );
+        }
+        else if (modalFilter.box_type == 'pet') {
+            modalFilterJsx = (
+                <ModalPet />
             );
         }
 
@@ -58,16 +88,16 @@ export default function filterForm()
                 />
                 <SelectorBox
                     title="Số phòng ngủ"
-                    filterTitle="Phân số phòng ngủ"
+                    filterTitle="Số phòng ngủ"
                     boxType="bed_room"
                 />
                 <SelectorBox
                     title="Số phòng WC"
-                    filterTitle="Phân số phòng vệ sinh"
+                    filterTitle="Số phòng vệ sinh"
                     boxType="toilet_room"
                 />
                 <SelectorBox
-                    title="Nuôi thú"
+                    title="Thú nuôi"
                     filterTitle="Cho phép thú nuôi"
                     boxType="pet"
                 />

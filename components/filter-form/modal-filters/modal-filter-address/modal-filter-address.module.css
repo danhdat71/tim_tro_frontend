@@ -5,6 +5,17 @@
     grid-column-gap: 10px;
 }
 
+@media screen and (max-width: 566px) {
+    .filter_address {
+        display: block;
+        height: 350px;
+    }
+
+    .group_search {
+        padding-bottom: 20px;
+    }
+}
+
 .select {
     cursor: pointer;
 }
