@@ -11,24 +11,58 @@ import ModalCategory from './modal-filters/modal-category/modal-category';
 import ModalBedroom from './modal-filters/modal-bedroom/modal-bedroom';
 import ModalToiletRoom from './modal-filters/modal-toilet-room/modal-toilet-room';
 import ModalPet from './modal-filters/modal-pet/modal-pet';
+import { useAppSelector } from '@/redux/store';
+import { convertPriceStringToVnMoneyKey, getPriceToStringMoney } from '@/helpers/priceHelper';
+import { convertAcreageStringToMetter } from '@/helpers/aceageFilter';
 
 export default function filterForm()
 {
+    const addressFilter = useAppSelector(function(state){
+        return state.filterAddressReducer.addressFilterBox;
+    });
+    const acreageFilter = useAppSelector(function(state){
+        return state.filterAcreageReducer.acreageFilterBox;
+    });
+    const priceFilter = useAppSelector(function(state){
+        return state.filterPriceReducer.priceFilterBox;
+    });
+
+    function getAcreaceLabel()
+    {
+        if (acreageFilter.selected_value != null) {
+            return convertAcreageStringToMetter(acreageFilter.selected_value);
+        }
+
+        return 'Diện tích';
+    }
+
+    function getPriceRangeLabel()
+    {
+        if (priceFilter.selected_value != null) {
+            return convertPriceStringToVnMoneyKey(priceFilter.selected_value);
+        }
+
+        return 'Khoảng giá';
+    }
+
     return (
         <form className={cl.filter_form}>
             <SearchBox></SearchBox>
             <div className={cl.select_box_list}>
                 <SelectorBox
-                    title="Địa điểm"
+                    title={addressFilter.default_label}
                     boxType="address"
+                    active={addressFilter.is_clicked_filter}
                 />
                 <SelectorBox
-                    title="Diện tích"
+                    title={getAcreaceLabel()}
                     boxType="acreage"
+                    active={acreageFilter.selected_value != null ? true : false}
                 />
                 <SelectorBox
-                    title="Khoảng giá"
+                    title={getPriceRangeLabel()}
                     boxType="price_range"
+                    active={priceFilter.selected_value != null ? true : false}
                 />
                 <SelectorBox
                     title="Phân loại"

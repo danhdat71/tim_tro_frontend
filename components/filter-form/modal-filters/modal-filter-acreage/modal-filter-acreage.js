@@ -4,10 +4,50 @@ import Slider from '@mui/material/Slider';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
+import { changeMaxValue, changeMinValue, changeValue, resetValue, submitValue } from '@/redux/features/filter_box/acreage_filter_box';
+
+const configAcreages = [
+    {
+        value: [15, 30],
+        label: '15 - 30 mét'
+    },
+    {
+        value: [30, 40],
+        label: '30 - 40 mét'
+    },
+    {
+        value: [40, 50],
+        label: '40 - 50 mét'
+    },
+    {
+        value: [50, 60],
+        label: '50 - 60 mét'
+    },
+    {
+        value: [60, 70],
+        label: '60 - 70 mét'
+    },
+    {
+        value: [70, 80],
+        label: '70 - 80 mét'
+    },
+    {
+        value: [80, 90],
+        label: '80 - 90 mét'
+    },
+    {
+        value: [90, 100],
+        label: '90 - 100 mét'
+    },
+];
 
 const ModalFilterAcreage = () => {
 
-    let [value, setValue] = useState([15, 30]);
+    const acreageFilterBox = useAppSelector(function(state){
+        return state.filterAcreageReducer.acreageFilterBox;
+    });
+
+    console.log('acreageFilterBox', acreageFilterBox);
 
     const dispatch = useDispatch();
 
@@ -27,41 +67,6 @@ const ModalFilterAcreage = () => {
             : `${cl.wrap_modal_filter}`;
     }
 
-    const configAcreages = [
-        {
-            value: ['15', '30'],
-            label: '15 - 30 mét'
-        },
-        {
-            value: ['30', '40'],
-            label: '30 - 40 mét'
-        },
-        {
-            value: ['40', '50'],
-            label: '40 - 50 mét'
-        },
-        {
-            value: ['50', '60'],
-            label: '50 - 60 mét'
-        },
-        {
-            value: ['60', '70'],
-            label: '60 - 70 mét'
-        },
-        {
-            value: ['70', '80'],
-            label: '70 - 80 mét'
-        },
-        {
-            value: ['80', '90'],
-            label: '80 - 90 mét'
-        },
-        {
-            value: ['90', '100'],
-            label: '90 - 100 mét'
-        },
-    ];
-
     function renderRadio()
     {
         return configAcreages.map(function(val, index){
@@ -70,7 +75,7 @@ const ModalFilterAcreage = () => {
                     className={cl.radio_item}
                     key={index}
                     onClick={()=>{
-                        setValue(val.value);
+                        dispatch(changeValue(val.value));
                     }}
                 >
                     <span>
@@ -79,7 +84,7 @@ const ModalFilterAcreage = () => {
                             type='radio'
                             name='acreage'
                             value={val.value}
-                            checked={JSON.stringify(value) == JSON.stringify(val.value)}
+                            checked={JSON.stringify(acreageFilterBox.value) == JSON.stringify(val.value)}
                         ></input>
                     </span>
                     <label htmlFor={`acreage_${index}`}>{val.label}</label>
@@ -90,43 +95,38 @@ const ModalFilterAcreage = () => {
 
     function handleChangeMinValue(minValue)
     {
-        let oldValue = [...value];
         minValue = parseInt(minValue);
         if (isNaN(minValue)) return;
-        if (minValue > oldValue[1]) return;
         if (minValue < 0) return;
 
-        setValue([
-            minValue,
-            oldValue[1]
-        ]);
+        dispatch(changeMinValue(minValue));
+    }
+
+    function handleFixChangeMinValue()
+    {
+        if (acreageFilterBox.value[0] > acreageFilterBox.value[1]) {
+            dispatch(changeMinValue(acreageFilterBox.value[1] - 5));
+        }
     }
 
     function handleChangeMaxValue(maxValue)
     {
-        let oldValue = [...value];
         maxValue = parseInt(maxValue);
         if (isNaN(maxValue)) return;
-        if (maxValue > 100) return;
+        if (maxValue < 0) return;
 
-        setValue([
-            oldValue[0],
-            maxValue
-        ]);
+        dispatch(changeMaxValue(maxValue));
     }
 
-    function fixChangeMaxValue(maxValue)
+    function fixChangeMaxValue()
     {
-        let oldValue = [...value];
-        maxValue = parseInt(maxValue);
-        if (maxValue < oldValue[0]) {
-            maxValue = parseInt(oldValue[0]) + 5;
+        if (acreageFilterBox.value[1] < acreageFilterBox.value[0]) {
+            let maxValue = parseInt(acreageFilterBox.value[0]) + 5;
+            dispatch(changeMaxValue(maxValue));
         }
-
-        setValue([
-            oldValue[0],
-            maxValue
-        ]);
+        if (acreageFilterBox.value[1] > 100) {
+            dispatch(changeMaxValue(100));
+        }
     }
 
     return (
@@ -156,15 +156,18 @@ const ModalFilterAcreage = () => {
                         <div className={cl.acreage_input}>
                             <input
                                 className={cl.hand_input}
-                                value={value[0]}
+                                value={acreageFilterBox.value[0]}
                                 onChange={(e)=>{
                                     handleChangeMinValue(e.target.value);
+                                }}
+                                onBlur={()=>{
+                                    handleFixChangeMinValue();
                                 }}
                             ></input>
                             <span>-</span>
                             <input
                                 className={cl.hand_input}
-                                value={value[1]}
+                                value={acreageFilterBox.value[1]}
                                 onChange={(e)=>{
                                     handleChangeMaxValue(e.target.value);
                                 }}
@@ -177,12 +180,12 @@ const ModalFilterAcreage = () => {
                             <Slider
                                 min={0}
                                 max={100}
-                                value={value}
+                                value={acreageFilterBox.value}
                                 disableSwap
                                 valueLabelDisplay="auto"
                                 step={5}
                                 onChange={(e, value)=>{
-                                    setValue(value);
+                                    dispatch(changeValue(value));
                                 }}
                             />
                         </div>
@@ -203,14 +206,32 @@ const ModalFilterAcreage = () => {
                     >
                         <span>Đóng</span>
                     </button>
-                    <button type='button' className={cl.apply_filter_btn}>
+                    <button
+                        type='button'
+                        className={cl.re_edit_btn}
+                        onClick={()=>{
+                            dispatch(resetValue());
+                        }}
+                    >
+                        <span>Đặt lại</span>
+                        <span><i className="fal fa-redo"></i></span>
+                    </button>
+                    <button
+                        type='button'
+                        className={cl.apply_filter_btn}
+                        onClick={()=>{
+                            handleDisableModalFilter({
+                                is_enable: false,
+                            });
+                            dispatch(submitValue());
+                        }}
+                    >
                         <span>Lọc kết quả</span>
                         <span><i className="fal fa-search"></i></span>
                     </button>
                 </div>
             </div>
         </div>
-        
     );
 }
 

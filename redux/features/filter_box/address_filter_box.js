@@ -2,12 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
     addressFilterBox : {
-        defaul_label: 'Địa điểm',
-        selected_town_id: '',
-        tmp_selected_province_label: '',
-        tmp_selected_province_id: '',
-        tmp_selected_district_id: '',
-        tmp_selected_town_id: '',
+        default_label: 'Địa điểm',
+        obj_select_province: {},
+        obj_select_district: {},
+        obj_select_town: {},
+        is_clicked_filter: false,
     }
 };
 
@@ -18,11 +17,44 @@ export const addressFilterBox = createSlice({
         setTmpSelectedProvince: function(state, action) {
             let newState = {...state};
             let payload = action.payload;
-            newState.addressFilterBox.tmp_selected_province_label = payload.tmp_selected_province_label;
-            newState.addressFilterBox.tmp_selected_province_id = payload.tmp_selected_province_id;
+            newState.addressFilterBox.obj_select_province = payload;
         },
+        setTmpSelectedDistrict: function(state, action) {
+            let newState = {...state};
+            let payload = action.payload;
+            newState.addressFilterBox.obj_select_district = payload;
+        },
+        setTmpSelectedTown: function(state, action) {
+            let newState = {...state};
+            let payload = action.payload;
+            newState.addressFilterBox.obj_select_town = payload;
+        },
+        setSelectedValue: function(state, action) {
+            let newState = {...state};
+            let payload = action.payload;
+            newState.addressFilterBox.default_label = payload.default_label;
+
+            if (newState.addressFilterBox.obj_select_town.value != null) {
+                newState.addressFilterBox.is_clicked_filter = true;
+            }
+            
+        },
+        resetSelectedValue: function(state, action) {
+            let newState = {...state};
+            newState.addressFilterBox.default_label = 'Địa điểm';
+            newState.addressFilterBox.obj_select_province = {};
+            newState.addressFilterBox.obj_select_district = {};
+            newState.addressFilterBox.obj_select_town = {};
+            newState.addressFilterBox.is_clicked_filter = false;
+        }
     }
 })
 
-export const { toggleMenuHeader } = addressFilterBox.actions;
+export const {
+    setTmpSelectedProvince,
+    setTmpSelectedDistrict,
+    setTmpSelectedTown,
+    setSelectedValue,
+    resetSelectedValue,
+} = addressFilterBox.actions;
 export default addressFilterBox.reducer;

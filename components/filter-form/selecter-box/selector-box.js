@@ -14,7 +14,7 @@ export default function SelectorBox(props) {
 
   return (
     <div
-      className={cl.selector_box}
+      className={props.active == true ? `${cl.selector_box} ${cl.active}` : `${cl.selector_box}`}
       onClick={()=>{
         handleEnableModalFilter({
           is_enable: true,

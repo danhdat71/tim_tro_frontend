@@ -4,12 +4,15 @@ import { Slider } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
+import { changeMaxValue, changeMinValue, changeValue, resetValue, submitValue } from '@/redux/features/filter_box/price_range_box';
 
 const ModalPriceRange = () => {
 
-    let [value, setValue] = useState([500000, 3000000]);
-
     const dispatch = useDispatch();
+
+    const priceFilterBox = useAppSelector(function(state){
+        return state.filterPriceReducer.priceFilterBox;
+    });
 
     const modalFilter = useAppSelector(function(state){
         return state.modalFilterReducer.modalFilter;
@@ -29,62 +32,44 @@ const ModalPriceRange = () => {
 
     function handleChangeMinValue(minValue)
     {
-        let oldValue = [...value];
         minValue = parseInt(minValue);
         if (isNaN(minValue)) return;
 
-        setValue([
-            minValue,
-            oldValue[1]
-        ]);
+        dispatch(changeMinValue(minValue));
     }
 
-    function fixChangeMinValue(minValue)
+    function fixChangeMinValue()
     {
-        let oldValue = [...value];
-        minValue = parseInt(minValue);
-        if (minValue > oldValue[1]) {
-            minValue = parseInt(oldValue[1]) - 500000;
+        if (priceFilterBox.value[0] > priceFilterBox.value[1]) {
+            let minValue = parseInt(priceFilterBox.value[1]) - 500000;
+            dispatch(changeMinValue(minValue));
         }
 
-        if (minValue < 500000) {
-            minValue = 500000;
+        if (priceFilterBox.value[0] < 500000) {
+            dispatch(changeMinValue(500000));
         }
-
-        setValue([
-            minValue,
-            oldValue[1]
-        ]);
     }
 
     function handleChangeMaxValue(maxValue)
     {
-        let oldValue = [...value];
         maxValue = parseInt(maxValue);
         if (isNaN(maxValue)) return;
 
-        setValue([
-            oldValue[0],
-            maxValue
-        ]);
+        dispatch(changeMaxValue(maxValue));
     }
 
-    function fixChangeMaxValue(maxValue)
+    function fixChangeMaxValue()
     {
-        let oldValue = [...value];
-        maxValue = parseInt(maxValue);
-        if (maxValue < oldValue[0]) {
-            maxValue = parseInt(oldValue[0]) + 500000;
+        if (priceFilterBox.value[1] < priceFilterBox.value[0]) {
+            let maxValue = parseInt(priceFilterBox.value[0]) + 500000;
+            dispatch(changeMaxValue(maxValue));
         }
-        if (maxValue > 20000000) {
-            maxValue = 20000000;
+        if (priceFilterBox.value[1] > 20000000) {
+            dispatch(changeMaxValue(20000000));
         }
-
-        setValue([
-            oldValue[0],
-            maxValue
-        ]);
     }
+
+    console.log('priceFilterBox', priceFilterBox);
 
     return (
         <div className={isEnableModalFilter()}>
@@ -110,24 +95,24 @@ const ModalPriceRange = () => {
                 </div>
                 <div className={cl.modal_filter_main}>
                     <div className={cl.preview_range}>
-                        <div>Từ: <b>{parseInt(value[0]).toLocaleString('en-US')}đ</b></div>
-                        <div>Đến: <b>{parseInt(value[1]).toLocaleString('en-US')}đ</b></div>
+                        <div>Từ: <b>{parseInt(priceFilterBox.value[0]).toLocaleString('en-US')}đ</b></div>
+                        <div>Đến: <b>{parseInt(priceFilterBox.value[1]).toLocaleString('en-US')}đ</b></div>
                     </div>
                     <div className={cl.input_range}>
                         <input
                             className={cl.hand_input}
-                            value={value[0]}
+                            value={priceFilterBox.value[0]}
                             onChange={(e)=>{
                                 handleChangeMinValue(e.target.value);
                             }}
-                            onBlur={(e)=>{
-                                fixChangeMinValue(e.target.value);
+                            onBlur={()=>{
+                                fixChangeMinValue();
                             }}
                         ></input>
                         <span>-</span>
                         <input
                             className={cl.hand_input}
-                            value={value[1]}
+                            value={priceFilterBox.value[1]}
                             onChange={(e)=>{
                                 handleChangeMaxValue(e.target.value);
                             }}
@@ -140,12 +125,12 @@ const ModalPriceRange = () => {
                         <Slider
                             min={500000}
                             max={20000000}
-                            value={value}
+                            value={priceFilterBox.value}
                             disableSwap
                             valueLabelDisplay="auto"
-                            step={500000}
+                            step={100000}
                             onChange={(e, value)=>{
-                                setValue(value);
+                                dispatch(changeValue(value))
                             }}
                             valueLabelFormat={(value)=>{
                                 return value.toLocaleString('en-US') + "đ";
@@ -165,7 +150,26 @@ const ModalPriceRange = () => {
                     >
                         <span>Đóng</span>
                     </button>
-                    <button type='button' className={cl.apply_filter_btn}>
+                    <button
+                        type='button'
+                        className={cl.re_edit_btn}
+                        onClick={()=>{
+                            dispatch(resetValue());
+                        }}
+                    >
+                        <span>Đặt lại</span>
+                        <span><i className="fal fa-redo"></i></span>
+                    </button>
+                    <button
+                        type='button'
+                        className={cl.apply_filter_btn}
+                        onClick={()=>{
+                            dispatch(submitValue());
+                            handleDisableModalFilter({
+                                is_enable: false,
+                            });
+                        }}
+                    >
                         <span>Lọc kết quả</span>
                         <span><i className="fal fa-search"></i></span>
                     </button>

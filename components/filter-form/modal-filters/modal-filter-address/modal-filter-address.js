@@ -1,24 +1,30 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import cl from './modal-filter-address.module.css';
 import Select from 'react-select';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
+import { resetSelectedValue, setSelectedValue, setTmpSelectedDistrict, setTmpSelectedProvince, setTmpSelectedTown } from '@/redux/features/filter_box/address_filter_box';
 
 const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
+    { value: 'hcm', label: 'Hồ Chí Minh' },
+    { value: 'kg', label: 'Kiên Giang' },
+    { value: 'hn', label: 'Hà Nội' },
 ];
 
 const ModalFilterAddress = () => {
-
     const dispatch = useDispatch();
     const modalFilter = useAppSelector(function(state){
         return state.modalFilterReducer.modalFilter;
     });
+
+    const filterAddress = useAppSelector(function(state){
+        return state.filterAddressReducer.addressFilterBox;
+    });
+
+    console.log('filterAddress', filterAddress);
 
     function handleDisableModalFilter(pushData)
     {
@@ -32,6 +38,26 @@ const ModalFilterAddress = () => {
             : `${cl.wrap_modal_filter}`;
     }
 
+    function handleSetTmpProvince(payload) {
+        dispatch(setTmpSelectedProvince(payload));
+    }
+
+    function handleSetTmpDistrict(payload) {
+        dispatch(setTmpSelectedDistrict(payload));
+    }
+
+    function handleSetTmpTown(payload) {
+        dispatch(setTmpSelectedTown(payload));
+    }
+
+    function handleSetSelectedValue(payload) {
+        dispatch(setSelectedValue(payload));
+    }
+
+    function handleResetSelectedValue() {
+        dispatch(resetSelectedValue());
+    }
+
     return (
         <div className={isEnableModalFilter()}>
             <div
@@ -39,7 +65,7 @@ const ModalFilterAddress = () => {
                 onClick={()=>{
                     handleDisableModalFilter({
                         is_enable: false,
-                    })
+                    });
                 }}
             ></div>
             <div className={cl.main_modal_filter}>
@@ -50,7 +76,7 @@ const ModalFilterAddress = () => {
                         onClick={()=>{
                             handleDisableModalFilter({
                                 is_enable: false,
-                            })
+                            });
                         }}
                     ><i className="fal fa-times-circle"></i></button>
                 </div>
@@ -59,9 +85,9 @@ const ModalFilterAddress = () => {
                         <div className={cl.group_search}>
                             <label>Tỉnh/Thành</label>
                             <Select
-                                // value={selectedOption}
+                                value={filterAddress.obj_select_province}
                                 onChange={(selectedOption)=>{
-                                    console.log(selectedOption);
+                                    handleSetTmpProvince(selectedOption);
                                 }}
                                 options={options}
                             />
@@ -69,19 +95,19 @@ const ModalFilterAddress = () => {
                         <div className={cl.group_search}>
                             <label>Quận/Huyện</label>
                             <Select
-                                // value={selectedOption}
+                                value={filterAddress.obj_select_district}
                                 onChange={(selectedOption)=>{
-                                    console.log(selectedOption);
+                                    handleSetTmpDistrict(selectedOption);
                                 }}
                                 options={options}
                             />
                         </div>
                         <div className={cl.group_search}>
-                            <label>Xã/Phườnga/Thị Trấn</label>
+                            <label>Xã/Phường/Thị Trấn</label>
                             <Select
-                                // value={selectedOption}
+                                value={filterAddress.obj_select_town}
                                 onChange={(selectedOption)=>{
-                                    console.log(selectedOption);
+                                    handleSetTmpTown(selectedOption);
                                 }}
                                 options={options}
                             />
@@ -95,12 +121,43 @@ const ModalFilterAddress = () => {
                         onClick={()=>{
                             handleDisableModalFilter({
                                 is_enable: false,
-                            })
+                            });
                         }}
                     >
                         <span>Đóng</span>
                     </button>
-                    <button type='button' className={cl.apply_filter_btn}>
+                    <button
+                        type='button'
+                        className={cl.re_edit_btn}
+                        onClick={()=>{
+                            handleResetSelectedValue();
+                        }}
+                    >
+                        <span>Đặt lại</span>
+                        <span><i className="fal fa-redo"></i></span>
+                    </button>
+                    <button
+                        type='button'
+                        className={cl.apply_filter_btn}
+                        disabled={
+                            filterAddress.obj_select_town.value != null ||
+                            (
+                                filterAddress.obj_select_province.value == null &&
+                                filterAddress.obj_select_district.value == null &&
+                                filterAddress.obj_select_town.value == null
+                            )
+                                ? false
+                                : true
+                            }
+                        onClick={()=>{
+                            handleSetSelectedValue({
+                                default_label: filterAddress.obj_select_province.label || 'Địa điểm',
+                            });
+                            handleDisableModalFilter({
+                                is_enable: false,
+                            });
+                        }}
+                    >
                         <span>Lọc kết quả</span>
                         <span><i className="fal fa-search"></i></span>
                     </button>
