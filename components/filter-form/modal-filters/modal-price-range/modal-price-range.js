@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import cl from './modal-price-range.module.css';
-import { Slider } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
 import { changeMaxValue, changeMinValue, changeValue, resetValue, submitValue } from '@/redux/features/filter_box/price_range_box';
+import { PrettoSlider } from '@/config/mui';
 
 const ModalPriceRange = () => {
 
@@ -122,7 +122,7 @@ const ModalPriceRange = () => {
                         ></input>
                     </div>
                     <div className={cl.price_slider_wrapper}>
-                        <Slider
+                        <PrettoSlider
                             min={500000}
                             max={20000000}
                             value={priceFilterBox.value}

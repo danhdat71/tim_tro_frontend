@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import cl from './modal-filter-acreage.module.css';
-import Slider from '@mui/material/Slider';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
 import { changeMaxValue, changeMinValue, changeValue, resetValue, submitValue } from '@/redux/features/filter_box/acreage_filter_box';
+import { PrettoSlider } from '@/config/mui';
 
 const configAcreages = [
     {
@@ -177,7 +177,7 @@ const ModalFilterAcreage = () => {
                             ></input>
                         </div>
                         <div className={cl.acreage_slider}>
-                            <Slider
+                            <PrettoSlider
                                 min={0}
                                 max={100}
                                 value={acreageFilterBox.value}
