@@ -3,6 +3,7 @@ import cl from './modal-bedroom.module.css';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
+import { resetValue, selectValue, submitValue } from '@/redux/features/filter_box/bed_room_filter_box';
 
 const rooms = [
     {
@@ -37,6 +38,10 @@ const ModalBedroom = () => {
         return state.modalFilterReducer.modalFilter;
     });
 
+    const filerBedroom = useAppSelector(function(state){
+        return state.filterBedroomReducer.bedRoomFilterBox;
+    });
+
     function handleDisableModalFilter(pushData)
     {
         dispatch(toggleModalFilter(pushData));
@@ -50,10 +55,10 @@ const ModalBedroom = () => {
     }
 
     function handleSelect(value) {
-        if (value == selected) {
-            setSelected(null);
+        if (value.value == filerBedroom.value.value) {
+            dispatch(selectValue({}));
         } else {
-            setSelected(value);
+            dispatch(selectValue(value));
         }
     }
 
@@ -65,17 +70,22 @@ const ModalBedroom = () => {
                     key={index}
                     type='button'
                     className={
-                        val.value == selected
+                        val.value == filerBedroom.value.value
                             ? `${cl.input_box} ${cl.active}`
                             : `${cl.input_box}`
                     }
                     onClick={()=>{
-                        handleSelect(val.value);
+                        handleSelect({
+                            label: val.label,
+                            value: val.value,
+                        });
                     }}
                 >{val.label}</button>
             )
         });
     }
+
+    console.log('filerBedroom', filerBedroom);
 
     return (
         <div className={isEnableModalFilter()}>
@@ -116,7 +126,26 @@ const ModalBedroom = () => {
                     >
                         <span>Đóng</span>
                     </button>
-                    <button type='button' className={cl.apply_filter_btn}>
+                    <button
+                        type='button'
+                        className={cl.re_edit_btn}
+                        onClick={()=>{
+                            dispatch(resetValue());
+                        }}
+                    >
+                        <span>Đặt lại</span>
+                        <span><i className="fal fa-redo"></i></span>
+                    </button>
+                    <button
+                        type='button'
+                        className={cl.apply_filter_btn}
+                        onClick={()=>{
+                            dispatch(submitValue());
+                            handleDisableModalFilter({
+                                is_enable: false,
+                            });
+                        }}
+                    >
                         <span>Lọc kết quả</span>
                         <span><i className="fal fa-search"></i></span>
                     </button>

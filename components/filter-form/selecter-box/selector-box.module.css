@@ -6,6 +6,10 @@
     cursor: pointer;
     user-select: none;
     color: rgb(78, 78, 78);
+    max-width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .selector_box span:first-child {

@@ -3,12 +3,13 @@ import cl from './modal-category.module.css';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
+import { resetValue, selectValue, submitValue } from '@/redux/features/filter_box/category_filter_box';
 
 const options = [
-    { value: 'Nhà nguyên căn', label: 'Nhà nguyên căn' },
-    { value: 'Phòng trọ', label: 'Phòng trọ' },
-    { value: 'Sleepbox', label: 'Sleepbox' },
-    { value: 'Chung cư', label: 'Chung cư' },
+    { value: '1', label: 'Nhà nguyên căn' },
+    { value: '2', label: 'Phòng trọ' },
+    { value: '3', label: 'Sleepbox' },
+    { value: '4', label: 'Chung cư' },
 ];
 
 const ModalCategory = () => {
@@ -19,6 +20,10 @@ const ModalCategory = () => {
 
     const modalFilter = useAppSelector(function(state){
         return state.modalFilterReducer.modalFilter;
+    });
+
+    const categoryFilter = useAppSelector(function(state){
+        return state.filterCategoryReducer.categoryFilterBox;
     });
 
     function handleDisableModalFilter(pushData)
@@ -35,18 +40,7 @@ const ModalCategory = () => {
 
     function handleSelect(value)
     {
-        let newSelecteds = [...selecteds];
-        let index = newSelecteds.findIndex(function(item) {
-            return item == value;
-        });
-
-        if (index === -1) {
-            newSelecteds.push(value);
-        } else {
-            newSelecteds.splice(index, 1);
-        }
-
-        setSelecteds(newSelecteds);
+        dispatch(selectValue(value));
     }
 
     function renderButtons()
@@ -57,17 +51,24 @@ const ModalCategory = () => {
                     type='button'
                     key={index}
                     className={
-                        selecteds.includes(value.value)
+                        categoryFilter.value.findIndex((item) => {
+                            return item.value == value.value;
+                        }) != -1
                             ? `${cl.input_box} ${cl.active}` 
                             : `${cl.input_box}`
                     }
                     onClick={()=>{
-                        handleSelect(value.value);
+                        handleSelect({
+                            label: value.label,
+                            value: value.value
+                        });
                     }}
                 >{value.label}</button>
             );
         })
     }
+
+    console.log('categoryFilter', categoryFilter);
 
     return (
         <div className={isEnableModalFilter()}>
@@ -92,9 +93,9 @@ const ModalCategory = () => {
                     ><i className="fal fa-times-circle"></i></button>
                 </div>
                 <div className={cl.modal_filter_main}>
-                <div className={cl.filter_category}>
-                    {renderButtons()}
-                </div>
+                    <div className={cl.filter_category}>
+                        {renderButtons()}
+                    </div>
                 </div>
                 <div className={cl.modal_filter_foot}>
                     <button
@@ -108,7 +109,26 @@ const ModalCategory = () => {
                     >
                         <span>Đóng</span>
                     </button>
-                    <button type='button' className={cl.apply_filter_btn}>
+                    <button
+                        type='button'
+                        className={cl.re_edit_btn}
+                        onClick={()=>{
+                            dispatch(resetValue());
+                        }}
+                    >
+                        <span>Đặt lại</span>
+                        <span><i className="fal fa-redo"></i></span>
+                    </button>
+                    <button
+                        type='button'
+                        className={cl.apply_filter_btn}
+                        onClick={()=>{
+                            dispatch(submitValue());
+                            handleDisableModalFilter({
+                                is_enable: false,
+                            });
+                        }}
+                    >
                         <span>Lọc kết quả</span>
                         <span><i className="fal fa-search"></i></span>
                     </button>

@@ -26,6 +26,12 @@ export default function filterForm()
     const priceFilter = useAppSelector(function(state){
         return state.filterPriceReducer.priceFilterBox;
     });
+    const categoryFilter = useAppSelector(function(state){
+        return state.filterCategoryReducer.categoryFilterBox;
+    });
+    const bedroomFilter = useAppSelector(function(state){
+        return state.filterBedroomReducer.bedRoomFilterBox;
+    });
 
     function getAcreaceLabel()
     {
@@ -43,6 +49,24 @@ export default function filterForm()
         }
 
         return 'Khoảng giá';
+    }
+
+    function getCategoryLabel()
+    {
+        if (categoryFilter.selected_label != null) {
+            return categoryFilter.selected_label;
+        }
+
+        return 'Phân loại';
+    }
+
+    function getBedroomLabel()
+    {
+        if (bedroomFilter.selected_label != null) {
+            return bedroomFilter.selected_label;
+        }
+
+        return 'Số phòng ngủ';
     }
 
     return (
@@ -65,12 +89,14 @@ export default function filterForm()
                     active={priceFilter.selected_value != null ? true : false}
                 />
                 <SelectorBox
-                    title="Phân loại"
+                    title={getCategoryLabel()}
                     boxType="category"
+                    active={categoryFilter.selected_value != null ? true : false}
                 />
                 <SelectorBox
-                    title="Số phòng ngủ"
+                    title={getBedroomLabel()}
                     boxType="bed_room"
+                    active={bedroomFilter.selected_value != null ? true : false}
                 />
                 <SelectorBox
                     title="Số phòng WC"
