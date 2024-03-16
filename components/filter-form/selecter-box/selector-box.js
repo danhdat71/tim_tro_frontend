@@ -19,7 +19,6 @@ export default function SelectorBox(props) {
         handleEnableModalFilter({
           is_enable: true,
           box_type: props.boxType,
-          modal_title: props.filterTitle,
         });
       }}
     >

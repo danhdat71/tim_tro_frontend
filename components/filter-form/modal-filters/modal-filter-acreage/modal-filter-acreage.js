@@ -1,10 +1,31 @@
 import React, { useState } from 'react';
 import cl from './modal-filter-acreage.module.css';
 import Slider from '@mui/material/Slider';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@/redux/store';
+import { toggleModalFilter } from '@/redux/features/modal_filter';
 
 const ModalFilterAcreage = () => {
 
     let [value, setValue] = useState([15, 30]);
+
+    const dispatch = useDispatch();
+
+    const modalFilter = useAppSelector(function(state){
+        return state.modalFilterReducer.modalFilter;
+    });
+
+    function handleDisableModalFilter(pushData)
+    {
+        dispatch(toggleModalFilter(pushData));
+    }
+
+    function isEnableModalFilter()
+    {
+        return modalFilter.is_enable == true && modalFilter.box_type == 'acreage'
+            ? `${cl.wrap_modal_filter} ${cl.show_modal_filter}`
+            : `${cl.wrap_modal_filter}`;
+    }
 
     const configAcreages = [
         {
@@ -109,44 +130,87 @@ const ModalFilterAcreage = () => {
     }
 
     return (
-        <div className={cl.acreage}>
-            <div className={cl.acreage_input}>
-                <input
-                    className={cl.hand_input}
-                    value={value[0]}
-                    onChange={(e)=>{
-                        handleChangeMinValue(e.target.value);
-                    }}
-                ></input>
-                <span>-</span>
-                <input
-                    className={cl.hand_input}
-                    value={value[1]}
-                    onChange={(e)=>{
-                        handleChangeMaxValue(e.target.value);
-                    }}
-                    onBlur={(e)=>{
-                        fixChangeMaxValue(e.target.value);
-                    }}
-                ></input>
-            </div>
-            <div className={cl.acreage_slider}>
-                <Slider
-                    min={0}
-                    max={100}
-                    value={value}
-                    disableSwap
-                    valueLabelDisplay="auto"
-                    step={5}
-                    onChange={(e, value)=>{
-                        setValue(value);
-                    }}
-                />
-            </div>
-            <div className={cl.radio_list}>
-                {renderRadio()}
+        <div className={isEnableModalFilter()}>
+            <div
+                className={cl.backdrop}
+                onClick={()=>{
+                    handleDisableModalFilter({
+                        is_enable: false,
+                    })
+                }}
+            ></div>
+            <div className={cl.main_modal_filter}>
+                <div className={cl.modal_filter_title}>
+                    <span>Lọc diện tích</span>
+                    <button
+                        type='button'
+                        onClick={()=>{
+                            handleDisableModalFilter({
+                                is_enable: false,
+                            })
+                        }}
+                    ><i className="fal fa-times-circle"></i></button>
+                </div>
+                <div className={cl.modal_filter_main}>
+                    <div className={cl.acreage}>
+                        <div className={cl.acreage_input}>
+                            <input
+                                className={cl.hand_input}
+                                value={value[0]}
+                                onChange={(e)=>{
+                                    handleChangeMinValue(e.target.value);
+                                }}
+                            ></input>
+                            <span>-</span>
+                            <input
+                                className={cl.hand_input}
+                                value={value[1]}
+                                onChange={(e)=>{
+                                    handleChangeMaxValue(e.target.value);
+                                }}
+                                onBlur={(e)=>{
+                                    fixChangeMaxValue(e.target.value);
+                                }}
+                            ></input>
+                        </div>
+                        <div className={cl.acreage_slider}>
+                            <Slider
+                                min={0}
+                                max={100}
+                                value={value}
+                                disableSwap
+                                valueLabelDisplay="auto"
+                                step={5}
+                                onChange={(e, value)=>{
+                                    setValue(value);
+                                }}
+                            />
+                        </div>
+                        <div className={cl.radio_list}>
+                            {renderRadio()}
+                        </div>
+                    </div>
+                </div>
+                <div className={cl.modal_filter_foot}>
+                    <button
+                        type='button'
+                        className={cl.cancel_filter_btn}
+                        onClick={()=>{
+                            handleDisableModalFilter({
+                                is_enable: false,
+                            })
+                        }}
+                    >
+                        <span>Đóng</span>
+                    </button>
+                    <button type='button' className={cl.apply_filter_btn}>
+                        <span>Lọc kết quả</span>
+                        <span><i className="fal fa-search"></i></span>
+                    </button>
+                </div>
             </div>
         </div>
+        
     );
 }
 
