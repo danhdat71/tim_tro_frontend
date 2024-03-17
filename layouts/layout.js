@@ -1,6 +1,7 @@
 import Header from '@/components/header/header';
 import Head from 'next/head';
 import cl from './layout.module.css';
+import Footer from '@/components/footer/footer';
 
 const Layout = (props) => {
 
@@ -25,11 +26,14 @@ const Layout = (props) => {
     return (
         <div className={cl.container}>
             <div className={cl.main_container}>
-                {head()}
-                <Header></Header>
-                <main>
-                    {props.children}
-                </main>
+                <div className={cl.padding_container}>
+                    {head()}
+                    <Header></Header>
+                    <main>
+                        {props.children}
+                    </main>
+                </div>
+                <Footer></Footer>
             </div>
         </div>
     );

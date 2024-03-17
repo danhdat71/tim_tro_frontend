@@ -20,7 +20,7 @@ const Header = () => {
         <div className={cl.wrap_header}>
             <Link href='/'>
                 <div className={cl.left}>
-                    <img src={logoImg.src}></img>
+                    <img src={logoImg.src} alt='logo'></img>
                 </div>
             </Link>
             <div className='right'>

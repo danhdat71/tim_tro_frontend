@@ -1,0 +1,62 @@
+.footer {
+    background-color: rgb(235, 235, 235);
+    padding: 30px 0;
+}
+
+.logo_brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo_brand img {
+    width: 150px;
+}
+
+.logo_brand span {
+    font-size: 15px;
+    color: rgb(58, 58, 58);
+}
+
+.all_col {
+    padding: 30px 25px 0 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.col_title {
+    font-weight: 500;
+    font-size: 17px;
+    padding-bottom: 15px;
+    color: rgb(63, 63, 63);
+}
+
+.col_item {
+    display: block;
+    text-decoration: none;
+    font-size: 15px;
+    padding-bottom: 5px;
+    color: rgb(48, 48, 48);
+}
+
+.social_links {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.social_item {
+    display: block;
+    width: 40px;
+    aspect-ratio: 5/5;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.social_item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
