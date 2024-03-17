@@ -47,6 +47,12 @@ export const categoryFilterBox = createSlice({
             let newState = {...state};
             newState.categoryFilterBox.value = [];
         },
+        resetAllCategory: function(state, action) {
+            let newState = {...state};
+            newState.categoryFilterBox.value = [];
+            newState.categoryFilterBox.selected_value = null;
+            newState.categoryFilterBox.selected_label = null;
+        },
     }
 })
 
@@ -54,5 +60,6 @@ export const {
     selectValue,
     submitValue,
     resetValue,
+    resetAllCategory,
 } = categoryFilterBox.actions;
 export default categoryFilterBox.reducer;

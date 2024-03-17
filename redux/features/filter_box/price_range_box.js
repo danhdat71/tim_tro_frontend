@@ -37,9 +37,13 @@ export const priceFilterBox = createSlice({
         },
         resetValue: function(state, action) {
             let newState = {...state};
-            newState.priceFilterBox.default_label = 'Diện tích';
             newState.priceFilterBox.value = [500000, 20000000];
         },
+        resetAllPriceRange: function(state, action) {
+            let newState = {...state};
+            newState.priceFilterBox.value = [500000, 20000000];
+            newState.priceFilterBox.selected_value = null;
+        }
     }
 })
 
@@ -49,5 +53,6 @@ export const {
     changeValue,
     submitValue,
     resetValue,
+    resetAllPriceRange,
 } = priceFilterBox.actions;
 export default priceFilterBox.reducer;

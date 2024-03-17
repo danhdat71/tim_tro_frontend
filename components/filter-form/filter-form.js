@@ -14,9 +14,19 @@ import ModalPet from './modal-filters/modal-pet/modal-pet';
 import { useAppSelector } from '@/redux/store';
 import { convertPriceStringToVnMoneyKey, getPriceToStringMoney } from '@/helpers/priceHelper';
 import { convertAcreageStringToMetter } from '@/helpers/aceageFilter';
+import { resetAllAddress, resetSelectedValue } from '@/redux/features/filter_box/address_filter_box';
+import { useDispatch } from 'react-redux';
+import { resetAllAcreage } from '@/redux/features/filter_box/acreage_filter_box';
+import { resetAllPriceRange } from '@/redux/features/filter_box/price_range_box';
+import { resetAllCategory } from '@/redux/features/filter_box/category_filter_box';
+import { resetAllBedroom } from '@/redux/features/filter_box/bed_room_filter_box';
+import { resetAllToiletRoom } from '@/redux/features/filter_box/toilet_room_filter_box';
+import { resetAllPet } from '@/redux/features/filter_box/pet_filter_box';
 
 export default function filterForm()
 {
+    const dispatch = useDispatch();
+
     const addressFilter = useAppSelector(function(state){
         return state.filterAddressReducer.addressFilterBox;
     });
@@ -32,6 +42,20 @@ export default function filterForm()
     const bedroomFilter = useAppSelector(function(state){
         return state.filterBedroomReducer.bedRoomFilterBox;
     });
+    const toiletRoomFilter = useAppSelector(function(state){
+        return state.filterToiletRoomReducer.toiletRoomFilterBox;
+    });
+    const petFilter = useAppSelector(function(state){
+        return state.filterPetReducer.petFilterBox;
+    });
+
+    function getAddressLabel() {
+        if (addressFilter.selected.value != null) {
+            return addressFilter.selected.label;
+        }
+
+        return 'Địa điểm';
+    }
 
     function getAcreaceLabel()
     {
@@ -69,14 +93,42 @@ export default function filterForm()
         return 'Số phòng ngủ';
     }
 
+    function getToiletRoomLabel()
+    {
+        if (toiletRoomFilter.selected_label != null) {
+            return toiletRoomFilter.selected_label;
+        }
+
+        return 'Số phòng WC';
+    }
+
+    function getPetLabel()
+    {
+        if (petFilter.selected_label != null) {
+            return petFilter.selected_label;
+        }
+
+        return 'Thú nuôi';
+    }
+
+    function handleResetFilter() {
+        dispatch(resetAllAddress());
+        dispatch(resetAllAcreage());
+        dispatch(resetAllPriceRange());
+        dispatch(resetAllCategory());
+        dispatch(resetAllBedroom());
+        dispatch(resetAllToiletRoom());
+        dispatch(resetAllPet());
+    }
+
     return (
         <form className={cl.filter_form}>
             <SearchBox></SearchBox>
             <div className={cl.select_box_list}>
                 <SelectorBox
-                    title={addressFilter.default_label}
+                    title={getAddressLabel()}
                     boxType="address"
-                    active={addressFilter.is_clicked_filter}
+                    active={addressFilter.selected.value != null ? true : false}
                 />
                 <SelectorBox
                     title={getAcreaceLabel()}
@@ -99,13 +151,25 @@ export default function filterForm()
                     active={bedroomFilter.selected_value != null ? true : false}
                 />
                 <SelectorBox
-                    title="Số phòng WC"
+                    title={getToiletRoomLabel()}
                     boxType="toilet_room"
+                    active={toiletRoomFilter.selected_value != null ? true : false}
                 />
                 <SelectorBox
-                    title="Thú nuôi"
+                    title={getPetLabel()}
                     boxType="pet"
+                    active={petFilter.selected_value != null ? true : false}
                 />
+                <button
+                    type='button'
+                    className={cl.recovery_filter_btn}
+                    onClick={()=>{
+                        handleResetFilter();
+                    }}
+                >
+                    <span><i className="fal fa-undo"></i></span>
+                    <span>Đặt lại</span>
+                </button>
             </div>
             <ModalFilterAddress></ModalFilterAddress>
             <ModalFilterAcreage></ModalFilterAcreage>

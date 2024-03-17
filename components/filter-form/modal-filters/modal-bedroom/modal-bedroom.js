@@ -134,7 +134,7 @@ const ModalBedroom = () => {
                         }}
                     >
                         <span>Đặt lại</span>
-                        <span><i className="fal fa-redo"></i></span>
+                        <span><i className="fal fa-undo"></i></span>
                     </button>
                     <button
                         type='button'

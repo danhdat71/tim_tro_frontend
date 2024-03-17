@@ -9,3 +9,20 @@
 .filter_form {
     position: relative;
 }
+.recovery_filter_btn {
+    background-color: rgb(245, 245, 245);
+    border: none;
+    outline: none;
+    padding: 0 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    user-select: none;
+}
+
+.recovery_filter_btn span:first-child {
+    padding-right: 5px;
+}
+
+.recovery_filter_btn:hover {
+    background-color: rgb(232, 232, 232);
+}

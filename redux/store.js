@@ -6,6 +6,8 @@ import filterAcreageReducer from './features/filter_box/acreage_filter_box';
 import filterPriceReducer from './features/filter_box/price_range_box';
 import filterCategoryReducer from './features/filter_box/category_filter_box';
 import filterBedroomReducer from './features/filter_box/bed_room_filter_box';
+import filterToiletRoomReducer from './features/filter_box/toilet_room_filter_box';
+import filterPetReducer from './features/filter_box/pet_filter_box';
 import { useSelector } from "react-redux";
 
 export const store = configureStore({
@@ -17,6 +19,8 @@ export const store = configureStore({
         filterPriceReducer: filterPriceReducer,
         filterCategoryReducer: filterCategoryReducer,
         filterBedroomReducer: filterBedroomReducer,
+        filterToiletRoomReducer: filterToiletRoomReducer,
+        filterPetReducer: filterPetReducer,
     }
 });
 

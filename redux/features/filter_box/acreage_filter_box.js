@@ -37,9 +37,13 @@ export const acreageFilterBox = createSlice({
         },
         resetValue: function(state, action) {
             let newState = {...state};
-            newState.acreageFilterBox.default_label = 'Diện tích';
             newState.acreageFilterBox.value = [0, 100];
         },
+        resetAllAcreage: function(state, action) {
+            let newState = {...state};
+            newState.acreageFilterBox.value = [0, 100];
+            newState.acreageFilterBox.selected_value = null;
+        }
     }
 })
 
@@ -49,5 +53,6 @@ export const {
     changeValue,
     submitValue,
     resetValue,
+    resetAllAcreage,
 } = acreageFilterBox.actions;
 export default acreageFilterBox.reducer;

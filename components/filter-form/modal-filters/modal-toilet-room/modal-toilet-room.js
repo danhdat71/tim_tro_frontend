@@ -3,6 +3,7 @@ import cl from './modal-toilet-room.module.css';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
+import { resetValue, selectValue, submitValue } from '@/redux/features/filter_box/toilet_room_filter_box';
 
 const rooms = [
     {
@@ -29,12 +30,14 @@ const rooms = [
 
 const ModalToiletRoom = () => {
 
-    let [selected, setSelected] = useState();
-
     const dispatch = useDispatch();
 
     const modalFilter = useAppSelector(function(state){
         return state.modalFilterReducer.modalFilter;
+    });
+
+    const toiletRoom = useAppSelector(function(state){
+        return state.filterToiletRoomReducer.toiletRoomFilterBox;
     });
 
     function handleDisableModalFilter(pushData)
@@ -50,10 +53,10 @@ const ModalToiletRoom = () => {
     }
 
     function handleSelect(value) {
-        if (value == selected) {
-            setSelected(null);
+        if (value.value == toiletRoom.value.value) {
+            dispatch(selectValue({}));
         } else {
-            setSelected(value);
+            dispatch(selectValue(value));
         }
     }
 
@@ -65,17 +68,22 @@ const ModalToiletRoom = () => {
                     key={index}
                     type='button'
                     className={
-                        val.value == selected
+                        val.value == toiletRoom.value.value
                             ? `${cl.input_box} ${cl.active}`
                             : `${cl.input_box}`
                     }
                     onClick={()=>{
-                        handleSelect(val.value);
+                        handleSelect({
+                            label: val.label,
+                            value: val.value,
+                        });
                     }}
                 >{val.label}</button>
             )
         });
     }
+
+    console.log('toiletRoom', toiletRoom);
 
     return (
         <div className={isEnableModalFilter()}>
@@ -116,7 +124,26 @@ const ModalToiletRoom = () => {
                     >
                         <span>Đóng</span>
                     </button>
-                    <button type='button' className={cl.apply_filter_btn}>
+                    <button
+                        type='button'
+                        className={cl.re_edit_btn}
+                        onClick={()=>{
+                            dispatch(resetValue());
+                        }}
+                    >
+                        <span>Đặt lại</span>
+                        <span><i className="fal fa-undo"></i></span>
+                    </button>
+                    <button
+                        type='button'
+                        className={cl.apply_filter_btn}
+                        onClick={()=>{
+                            dispatch(submitValue());
+                            handleDisableModalFilter({
+                                is_enable: false,
+                            });
+                        }}
+                    >
                         <span>Lọc kết quả</span>
                         <span><i className="fal fa-search"></i></span>
                     </button>

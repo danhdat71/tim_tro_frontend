@@ -2,11 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
     addressFilterBox : {
-        default_label: 'Địa điểm',
         obj_select_province: {},
         obj_select_district: {},
         obj_select_town: {},
-        is_clicked_filter: false,
+        selected: {},
     }
 };
 
@@ -32,20 +31,28 @@ export const addressFilterBox = createSlice({
         setSelectedValue: function(state, action) {
             let newState = {...state};
             let payload = action.payload;
-            newState.addressFilterBox.default_label = payload.default_label;
 
             if (newState.addressFilterBox.obj_select_town.value != null) {
-                newState.addressFilterBox.is_clicked_filter = true;
+                newState.addressFilterBox.selected = {
+                    value: newState.addressFilterBox.obj_select_town.value,
+                    label: newState.addressFilterBox.obj_select_province.label,
+                };
+            } else {
+                newState.addressFilterBox.selected = {};
             }
-            
         },
         resetSelectedValue: function(state, action) {
             let newState = {...state};
-            newState.addressFilterBox.default_label = 'Địa điểm';
             newState.addressFilterBox.obj_select_province = {};
             newState.addressFilterBox.obj_select_district = {};
             newState.addressFilterBox.obj_select_town = {};
-            newState.addressFilterBox.is_clicked_filter = false;
+        },
+        resetAllAddress: function(state, action) {
+            let newState = {...state};
+            newState.addressFilterBox.obj_select_province = {};
+            newState.addressFilterBox.obj_select_district = {};
+            newState.addressFilterBox.obj_select_town = {};
+            newState.addressFilterBox.selected = {};
         }
     }
 })
@@ -56,5 +63,6 @@ export const {
     setTmpSelectedTown,
     setSelectedValue,
     resetSelectedValue,
+    resetAllAddress,
 } = addressFilterBox.actions;
 export default addressFilterBox.reducer;

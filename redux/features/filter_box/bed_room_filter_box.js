@@ -27,6 +27,12 @@ export const bedRoomFilterBox = createSlice({
             let newState = {...state};
             newState.bedRoomFilterBox.value = {};
         },
+        resetAllBedroom: function(state, action) {
+            let newState = {...state};
+            newState.bedRoomFilterBox.value = {};
+            newState.bedRoomFilterBox.selected_value = null;
+            newState.bedRoomFilterBox.selected_label = null;
+        },
     }
 })
 
@@ -34,5 +40,6 @@ export const {
     selectValue,
     submitValue,
     resetValue,
+    resetAllBedroom,
 } = bedRoomFilterBox.actions;
 export default bedRoomFilterBox.reducer;
