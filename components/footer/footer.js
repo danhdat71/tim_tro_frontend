@@ -10,31 +10,31 @@ const Footer = () => {
                 <Link href='/'>
                     <img src={logoImg.src} alt='logo'></img>
                 </Link>
-                <span>Tìm Trọ 123 là kênh tìm trọ miễn phí cho tất cả mọi người.</span>
+                <span>Tìm Trọ 123 là kênh tìm trọ miễn phí cho tất cả mọi người. Bằng cách đăng ký để sử dụng các tính năng của hệ thống.</span>
             </div>
             <div className={cl.social_links}>
                 <a className={cl.social_item}>
-                    <img alt='facebook-icon' src='https://freelogopng.com/images/all_img/1692797523facebook-logo-png-white.png'></img>
+                    <i className="fab fa-facebook-f"></i>
                 </a>
                 <a className={cl.social_item}>
-                    <img alt='facebook-icon' src='https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-Zalo-Arc.png'></img>
+                    <i className="fab fa-linkedin-in"></i>
                 </a>
                 <a className={cl.social_item}>
-                    <img alt='facebook-icon' src='https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png'></img>
+                    <i class="fas fa-envelope"></i>
                 </a>
             </div>
             <div className={cl.all_col}>
                 <div className={cl.col}>
-                    <div className={cl.col_title}>Hỗ trợ người đăng</div>
+                    <div className={cl.col_title}>Hỗ trợ người dùng</div>
                     <Link className={cl.col_item} href=''><div>Câu hỏi thường gặp</div></Link>
                     <Link className={cl.col_item} href=''><div>Hướng dẫn sử dụng</div></Link>
                     <Link className={cl.col_item} href=''><div>Quy định sử dụng</div></Link>
                 </div>
                 <div className={cl.col}>
-                    <div className={cl.col_title}>Hỗ trợ người tìm</div>
-                    <Link className={cl.col_item} href=''><div>Câu hỏi thường gặp</div></Link>
-                    <Link className={cl.col_item} href=''><div>Hướng dẫn sử dụng</div></Link>
-                    <Link className={cl.col_item} href=''><div>Quy định sử dụng</div></Link>
+                    <div className={cl.col_title}>Tài khoản</div>
+                    <Link className={cl.col_item} href=''><div>Đăng ký</div></Link>
+                    <Link className={cl.col_item} href=''><div>Đăng nhập</div></Link>
+                    <Link className={cl.col_item} href=''><div>Quên mật khẩu</div></Link>
                 </div>
                 <div className={cl.col}>
                     <div className={cl.col_title}>Về chúng tôi</div>
@@ -48,6 +48,7 @@ const Footer = () => {
                     <Link className={cl.col_item} href=''><div>Facebook</div></Link>
                 </div>
             </div>
+            <div className={cl.footer_foot}>Designed @2024. All right serverd.</div>
         </footer>
     );
 }

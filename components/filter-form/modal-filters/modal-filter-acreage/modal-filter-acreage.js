@@ -84,7 +84,7 @@ const ModalFilterAcreage = () => {
                             type='radio'
                             name='acreage'
                             value={val.value}
-                            checked={JSON.stringify(acreageFilterBox.value) == JSON.stringify(val.value)}
+                            defaultChecked={JSON.stringify(acreageFilterBox.value) == JSON.stringify(val.value)}
                         ></input>
                     </span>
                     <label htmlFor={`acreage_${index}`}>{val.label}</label>

@@ -41,7 +41,7 @@ const Product = () => {
                     <span>2 phòng ngủ, 1 phòng WC</span>
                 </div>
                 <div className={cl.like_btn}>
-                    <button><i class="far fa-heart"></i></button>
+                    <button><i className="far fa-heart"></i></button>
                     {/* <button><i class="fas fa-heart"></i></button> */}
                 </div>
             </div>

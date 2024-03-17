@@ -14,6 +14,7 @@
     align-items: center;
     cursor: pointer;
     color: rgb(75, 75, 75);
+    user-select: none;
 }
 
 .menu_button i {
