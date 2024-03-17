@@ -41,6 +41,13 @@ const ProductList = () => {
                 <Product></Product>
                 <Product></Product>
                 <Product></Product>
+                <Product></Product>
+                <Product></Product>
+                <Product></Product>
+                <Product></Product>
+                <Product></Product>
+                <Product></Product>
+                <Product></Product>
             </div>
             <div className={cl.paginate_bar}>
                 {handleRenderPaginate()}

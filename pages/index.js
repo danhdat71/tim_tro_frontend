@@ -1,6 +1,7 @@
 import BestAreaBox from "@/components/best-area-box/best-area-box";
 import Breadcrumb from "@/components/breadcrumb/breadcrumb";
 import FilterForm from "@/components/filter-form/filter-form";
+import FinderGuide from "@/components/finder-guide/finder-guide";
 import ProductList from "@/components/product-list/product-list";
 import Head from "next/head";
 
@@ -19,6 +20,7 @@ export default function Home() {
       />
       <BestAreaBox></BestAreaBox>
       <ProductList></ProductList>
+      <FinderGuide></FinderGuide>
     </>
   );
 }
