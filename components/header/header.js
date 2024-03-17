@@ -6,6 +6,7 @@ import logoImg from '../../assets/imgs/logo.png';
 import ToggleHeader from './toggle-header/toggle-header';
 import { toggleMenuHeader } from '@/redux/features/header';
 import { useDispatch } from 'react-redux';
+import Link from 'next/link';
 
 const Header = () => {
 
@@ -17,9 +18,11 @@ const Header = () => {
 
     return (
         <div className={cl.wrap_header}>
-            <div className={cl.left}>
-                <img src={logoImg.src}></img>
-            </div>
+            <Link href='/'>
+                <div className={cl.left}>
+                    <img src={logoImg.src}></img>
+                </div>
+            </Link>
             <div className='right'>
                 <div
                     className={cl.menu_button}

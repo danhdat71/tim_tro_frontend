@@ -1,6 +1,7 @@
 import BestAreaBox from "@/components/best-area-box/best-area-box";
 import Breadcrumb from "@/components/breadcrumb/breadcrumb";
 import FilterForm from "@/components/filter-form/filter-form";
+import ProductList from "@/components/product-list/product-list";
 import Head from "next/head";
 
 const breadcrumbItems = [
@@ -17,6 +18,7 @@ export default function Home() {
         items={breadcrumbItems}
       />
       <BestAreaBox></BestAreaBox>
+      <ProductList></ProductList>
     </>
   );
 }

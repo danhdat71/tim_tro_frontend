@@ -20,14 +20,14 @@ export default function SearchBox() {
     });
 
     useEffect(function(){
-        var sp = new SuperPlaceholder({
-            placeholders: searchPlaceholders,
-            preText: "VD: ",
-            stay: 1000,
-            speed: 50,
-            element: '#dynamic-placeholder'
-        });
-        sp.init();
+        // var sp = new SuperPlaceholder({
+        //     placeholders: searchPlaceholders,
+        //     preText: "VD: ",
+        //     stay: 1000,
+        //     speed: 50,
+        //     element: '#dynamic-placeholder'
+        // });
+        // sp.init();
     }, []);
 
     function handleRemoveSearch(payload) {
