@@ -22,6 +22,7 @@ import { resetAllCategory } from '@/redux/features/filter_box/category_filter_bo
 import { resetAllBedroom } from '@/redux/features/filter_box/bed_room_filter_box';
 import { resetAllToiletRoom } from '@/redux/features/filter_box/toilet_room_filter_box';
 import { resetAllPet } from '@/redux/features/filter_box/pet_filter_box';
+import { resetAllSearchFilter } from '@/redux/features/filter_box/search_filter_box';
 
 export default function filterForm()
 {
@@ -119,6 +120,7 @@ export default function filterForm()
         dispatch(resetAllBedroom());
         dispatch(resetAllToiletRoom());
         dispatch(resetAllPet());
+        dispatch(resetAllSearchFilter());
     }
 
     return (
