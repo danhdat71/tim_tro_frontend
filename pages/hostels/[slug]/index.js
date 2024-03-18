@@ -2,15 +2,13 @@
 
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import React, { useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
-// import required modules
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import cl from './detail.module.css';
+import ButtonBooking from '@/components/buttons/button-booking/button-booking';
+import ButtonLike from '@/components/buttons/button-like/button-like';
+import ButtonGoLogin from '@/components/buttons/button-go-login/button-go-login';
+import SliderWithThumb from '@/components/slider-with-thumb/slider-with-thumb';
+import ProductDetailInfo from '@/components/product-detail-info/product-detail-info';
+import AvatarUsername from '@/components/avatar-username/avatar-username';
 
 export async function getServerSideProps(context) {
     let slug = context.query.slug;
@@ -38,125 +36,38 @@ const breadCrumbItems = [
 ]
 
 const Index = ({ data }) => {
-
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const [activeThumbItem, setActiveThumbItem] = useState(null);
-
     return (
         <div className={cl.hostel_detail}>
             <Breadcrumb items={breadCrumbItems}></Breadcrumb>
-            <div className={cl.main_slider}>
-                <Swiper
-                    style={{
-                        '--swiper-navigation-color': '#fff',
-                        '--swiper-pagination-color': '#fff',
-                    }}
-                    spaceBetween={10}
-                    navigation={true}
-                    thumbs={{ swiper: thumbsSwiper }}
-                    modules={[FreeMode, Navigation, Thumbs]}
-                    lazy={true}
-                >
-                    <SwiperSlide>
-                        <div className={cl.slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202215-a993_wm.jpeg" />
-                            <div className={cl.slider_bg}>
-                                <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202215-a993_wm.jpeg" />
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            <div className={cl.slider_bg}>
-                                <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            <div className={cl.slider_bg}>
-                                <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            <div className={cl.slider_bg}>
-                                <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            <div className={cl.slider_bg}>
-                                <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                </Swiper>
-            </div>
-            <div className={cl.thumb_slider}>
-                <Swiper
-                    onSwiper={setThumbsSwiper}
-                    spaceBetween={10}
-                    slidesPerView={5}
-                    freeMode={true}
-                    watchSlidesProgress={true}
-                    modules={[FreeMode, Navigation, Thumbs]}
-                    lazy={true}
-                >
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202215-a993_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
-                </Swiper>
-            </div>
+            <SliderWithThumb></SliderWithThumb>
             <div className={cl.hostel_detail}>
-                <h2>Cho thuê phòng trọ hẻm an ninh - xe tải tận cửa - Nguyễn Văn Đậu - Bình Thạnh</h2>
-                <div>
-                    <span><i className="far fa-map-marker-alt"></i></span>
-                    <span>Đường Nguyễn Văn Đậu, Phường 11, Bình Thạnh, Hồ Chí Minh</span>
+                <h2 className={cl.product_name}>Cho thuê phòng trọ hẻm an ninh - xe tải tận cửa - Nguyễn Văn Đậu - Bình Thạnh</h2>
+                <div className={cl.price}>1,5 triệu / tháng</div>
+                <div className={cl.button_bar}>
+                    <div>
+                        <ButtonLike>
+                            <span>Thêm vào yêu thích</span>
+                            <span><i className="far fa-heart"></i></span>
+                        </ButtonLike>
+                        <ButtonBooking>
+                            <span>Đặt lịch hẹn xem</span>
+                            <span><i className="far fa-calendar-alt"></i></span>
+                        </ButtonBooking>
+                        {/* <ButtonGoLogin>
+                            <span>Đăng nhập để liên hệ</span>
+                            <span><i className="far fa-sign-in-alt"></i></span>
+                        </ButtonGoLogin> */}
+                        <div className={cl.desc_booking}>(Bạn sẽ nhận được thông tin liên hệ sau khi người đăng đồng ý lịch hẹn.)</div>
+                    </div>
+                    <div className={cl.other_button}>
+                        Báo xâu
+                    </div>
                 </div>
+                <ProductDetailInfo></ProductDetailInfo>
+                <div className={cl.wrap_avatar}>
+                    <AvatarUsername></AvatarUsername>
+                </div>
+                
             </div>
         </div>
     );
