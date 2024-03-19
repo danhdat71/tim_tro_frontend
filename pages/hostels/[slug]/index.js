@@ -1,7 +1,7 @@
 "use client";
 
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cl from './detail.module.css';
 import ButtonBooking from '@/components/buttons/button-booking/button-booking';
 import ButtonLike from '@/components/buttons/button-like/button-like';
@@ -11,6 +11,9 @@ import ProductDetailInfo from '@/components/product-detail-info/product-detail-i
 import AvatarUsername from '@/components/avatar-username/avatar-username';
 import ButtonReport from '@/components/buttons/button-report/button-report';
 import ButtonShare from '@/components/buttons/button-share/button-share';
+import AlertSuccess from '@/components/alert-success/alert-success';
+import AlertError from '@/components/alert-error/alert-error';
+import ModalBooking from '@/components/modal-booking/modal-booking';
 
 export async function getServerSideProps(context) {
     let slug = context.query.slug;
@@ -38,6 +41,32 @@ const breadCrumbItems = [
 ]
 
 const Index = ({ data }) => {
+
+    let [isLikeSuccess, setIsLikeSuccess] = useState(true);
+
+    // useEffect(function(){
+    //     if (isLikeSuccess == true) {
+    //         let timeout = setTimeout(function(){
+    //             setIsLikeSuccess(false);
+    //         }, 3000);
+
+    //         return ()=>{
+    //             clearTimeout(timeout);
+    //         }
+    //     }
+    // }, [isLikeSuccess]);
+
+    function renderAlertSuccess() {
+        if (isLikeSuccess == true) {
+            return (
+                <AlertError
+                    message="Lưu thất bại !"
+                    sub="Oop ! Có lỗi xảy ra phía máy chủ."
+                ></AlertError>
+            );
+        }
+    }
+
     return (
         <div className={cl.hostel_detail}>
             <Breadcrumb items={breadCrumbItems}></Breadcrumb>
@@ -48,7 +77,9 @@ const Index = ({ data }) => {
                 <div className={cl.button_bar}>
                     <div>
                         <div className={cl.wrap_main_button}>
-                            <ButtonLike>
+                            <ButtonLike
+                                onClick={setIsLikeSuccess}
+                            >
                                 <span>Lưu lại</span>
                                 <span><i className="far fa-heart"></i></span>
                             </ButtonLike>
@@ -73,8 +104,9 @@ const Index = ({ data }) => {
                     <AvatarUsername></AvatarUsername>
                     <div className={cl.created_at}>Đăng lúc: <i>14:40 ngày 23/02/2024</i></div>
                 </div>
-                
             </div>
+            {/* {renderAlertSuccess()} */}
+            <ModalBooking></ModalBooking>
         </div>
     );
 }

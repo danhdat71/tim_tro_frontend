@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import cl from './slider-with-thumb.module.css';
 // Import Swiper styles
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -125,4 +125,4 @@ const SliderWithThumb = () => {
     );
 }
 
-export default SliderWithThumb;
+export default memo(SliderWithThumb);

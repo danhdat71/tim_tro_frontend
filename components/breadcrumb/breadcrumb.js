@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cl from './breadcrumb.module.css';
 import Link from 'next/link';
 
@@ -29,4 +29,4 @@ const Breadcrumb = (props) => {
     );
 }
 
-export default Breadcrumb;
+export default memo(Breadcrumb);

@@ -13,7 +13,7 @@ import ModalToiletRoom from './modal-filters/modal-toilet-room/modal-toilet-room
 import ModalPet from './modal-filters/modal-pet/modal-pet';
 import { useAppSelector } from '@/redux/store';
 import { convertPriceStringToVnMoneyKey, getPriceToStringMoney } from '@/helpers/priceHelper';
-import { convertAcreageStringToMetter } from '@/helpers/aceageFilter';
+import { convertAcreageStringToMetter } from '@/helpers/dateHelper';
 import { resetAllAddress, resetSelectedValue } from '@/redux/features/filter_box/address_filter_box';
 import { useDispatch } from 'react-redux';
 import { resetAllAcreage } from '@/redux/features/filter_box/acreage_filter_box';

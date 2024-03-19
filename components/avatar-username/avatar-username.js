@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cl from './avatar-username.module.css';
 import Link from 'next/link';
 
@@ -16,4 +16,4 @@ const AvatarUsername = () => {
     );
 }
 
-export default AvatarUsername;
+export default memo(AvatarUsername);

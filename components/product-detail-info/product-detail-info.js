@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cl from './product-detail-info.module.css';
 
 const ProductDetailInfo = () => {
@@ -78,4 +78,4 @@ const ProductDetailInfo = () => {
     );
 }
 
-export default ProductDetailInfo;
+export default memo(ProductDetailInfo);
