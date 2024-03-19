@@ -5,7 +5,7 @@ const ButtonReport = () => {
     return (
         <button className={cl.report_button}>
             <span>Báo xấu</span>
-            <span><i class="fal fa-exclamation-triangle"></i></span>
+            <span><i className="fal fa-exclamation-triangle"></i></span>
         </button>
     );
 }

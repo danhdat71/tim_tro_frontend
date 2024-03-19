@@ -5,7 +5,7 @@
     outline: none;
     padding: 10px 20px;
     background-color: #089f57;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     transition: .3s;
     margin-right: 15px;
@@ -21,4 +21,11 @@
     background-color: #036435;
     border: 1px solid #036435;
     color: white;
+}
+
+@media screen and (max-width: 425px) {
+    .button_booking span:first-child, 
+    .button_booking span:last-child {
+        font-size: 14px;
+    }
 }

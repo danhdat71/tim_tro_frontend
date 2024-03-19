@@ -51,6 +51,21 @@
     text-align: center;
 }
 
+@media screen and (max-width: 700px) {
+    .detail_product_table td {
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .detail_product_table td:first-child {
+        width: 25%;
+    }
+
+    .detail_product_table td:first-child span:first-child {
+        display: none;
+    }
+}
+
 .product_desc {
     white-space: pre-line;
     line-height: 1.6;
@@ -58,4 +73,5 @@
     padding: 20px;
     background-color: rgb(245, 245, 245);
     border-radius: 15px;
+    font-size: 15px;
 }

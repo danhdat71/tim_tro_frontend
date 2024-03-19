@@ -5,7 +5,7 @@
     outline: none;
     padding: 10px 20px;
     background-color: rgb(255 242 242);
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     transition: .3s;
     margin-right: 15px;
@@ -20,4 +20,12 @@
 .button_like:hover {
     background-color: rgb(174, 0, 0);
     color: white;
+}
+
+
+@media screen and (max-width: 425px) {
+    .button_like span:first-child, 
+    .button_like span:last-child {
+        font-size: 14px;
+    }
 }

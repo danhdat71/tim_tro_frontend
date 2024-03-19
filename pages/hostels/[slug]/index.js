@@ -10,6 +10,7 @@ import SliderWithThumb from '@/components/slider-with-thumb/slider-with-thumb';
 import ProductDetailInfo from '@/components/product-detail-info/product-detail-info';
 import AvatarUsername from '@/components/avatar-username/avatar-username';
 import ButtonReport from '@/components/buttons/button-report/button-report';
+import ButtonShare from '@/components/buttons/button-share/button-share';
 
 export async function getServerSideProps(context) {
     let slug = context.query.slug;
@@ -46,14 +47,16 @@ const Index = ({ data }) => {
                 <div className={cl.price}>1,5 triệu / tháng</div>
                 <div className={cl.button_bar}>
                     <div>
-                        <ButtonLike>
-                            <span>Thêm vào yêu thích</span>
-                            <span><i className="far fa-heart"></i></span>
-                        </ButtonLike>
-                        <ButtonBooking>
-                            <span>Đặt lịch hẹn xem</span>
-                            <span><i className="far fa-calendar-alt"></i></span>
-                        </ButtonBooking>
+                        <div className={cl.wrap_main_button}>
+                            <ButtonLike>
+                                <span>Lưu lại</span>
+                                <span><i className="far fa-heart"></i></span>
+                            </ButtonLike>
+                            <ButtonBooking>
+                                <span>Hẹn xem</span>
+                                <span><i className="far fa-calendar-alt"></i></span>
+                            </ButtonBooking>
+                        </div>
                         {/* <ButtonGoLogin>
                             <span>Đăng nhập để liên hệ</span>
                             <span><i className="far fa-sign-in-alt"></i></span>
@@ -62,6 +65,7 @@ const Index = ({ data }) => {
                     </div>
                     <div className={cl.other_button}>
                         <ButtonReport></ButtonReport>
+                        <ButtonShare></ButtonShare>
                     </div>
                 </div>
                 <ProductDetailInfo></ProductDetailInfo>

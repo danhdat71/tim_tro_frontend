@@ -15,9 +15,43 @@
     padding-bottom: 10px;
 }
 
+@media screen and (max-width: 570px) {
+    .product_name {
+        font-size: 17px;
+    }
+    .price {
+        font-size: 17px;
+        padding-bottom: 0;
+    }
+}
+
 .button_bar {
     padding: 15px 0 20px 0;
     display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 625px) {
+    .button_bar {
+        flex-direction: column;
+    }
+
+    .other_button {
+        padding-top: 15px;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    /* .wrap_main_button {
+        display: flex;
+        column-gap: 15px;
+        flex-direction: column;
+    }
+    .wrap_main_button button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    } */
 }
 
 .desc_booking {
