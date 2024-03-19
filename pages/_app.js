@@ -1,6 +1,7 @@
 import Layout from "@/layouts/layout";
 import { usePathname } from "next/navigation";
 import '../styles/reset.css';
+import '../styles/components-style.css';
 import { ReduxProvider } from "@/redux/provider";
 
 export default function App({ Component, pageProps }) {
