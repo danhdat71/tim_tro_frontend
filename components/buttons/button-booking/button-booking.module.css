@@ -9,6 +9,7 @@
     cursor: pointer;
     transition: .3s;
     margin-right: 15px;
+    user-select: none;
 }
 
 .button_booking span:last-child {

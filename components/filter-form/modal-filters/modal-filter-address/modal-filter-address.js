@@ -164,9 +164,6 @@ const ModalFilterAddress = () => {
                 </div>
             </div>
         </div>
-
-
-        
     );
 }
 

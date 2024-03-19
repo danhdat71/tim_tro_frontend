@@ -1,0 +1,106 @@
+.err-msg {
+    font-size: 14px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    font-style: italic;
+    color: rgb(216, 0, 0);
+}
+
+.label {
+    font-size: 15px;
+    padding-bottom: 5px;
+    color: rgb(33, 33, 33);
+}
+
+.label span {
+    color: rgb(223, 0, 0);
+}
+
+.label-block {
+    display: block;
+}
+
+.label-group {
+    display: flex;
+    align-items: center;
+    padding-bottom: 5px;
+}
+
+.label-group:last-child {
+    padding-bottom: 0;
+}
+
+.label-group * {
+    cursor: pointer;
+    user-select: none;
+}
+
+.label-group label {
+    font-size: 15px;
+    padding-left: 10px;
+    color: rgb(33, 33, 33);
+}
+
+.input {
+    height: 40px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: rgb(50, 50, 50);
+    border: none;
+    outline: none;
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 5px;
+}
+
+.select {
+    height: 40px;
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 5px;
+    outline: none;
+    padding: 0 10px;
+}
+
+.select option {
+    font-size: 15px;
+}
+
+.form-group {
+    padding-bottom: 15px;
+}
+
+.checkbox-md {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.textarea {
+    padding: 10px;
+    font-size: 15px;
+    color: rgb(50, 50, 50);
+    border: none;
+    outline: none;
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 5px;
+}
+
+
+.scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 999px;
+    margin-top: 10px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #d9d9d9;
+    border-radius: 999px;
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+    width: 0;
+}

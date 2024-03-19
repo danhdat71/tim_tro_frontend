@@ -7,3 +7,22 @@
     align-items: center;
     justify-content: center;
 }
+
+.date-picker-1 .react-datepicker-wrapper {
+    width: 100%;
+}
+
+
+/* Swiper */
+.thumb-slider-fade .swiper-slide {
+    opacity: .5;
+}
+
+.thumb-slider-fade .swiper-slide-thumb-active {
+    opacity: 1!important;
+}
+
+.slider-navigation-sm .swiper-button-prev:after,
+.slider-navigation-sm .swiper-button-next:after{
+    font-size: 20px;
+}

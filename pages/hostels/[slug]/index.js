@@ -13,7 +13,8 @@ import ButtonReport from '@/components/buttons/button-report/button-report';
 import ButtonShare from '@/components/buttons/button-share/button-share';
 import AlertSuccess from '@/components/alert-success/alert-success';
 import AlertError from '@/components/alert-error/alert-error';
-import ModalBooking from '@/components/modal-booking/modal-booking';
+import ModalBooking from '@/components/modals/modal-booking/modal-booking';
+import ModalReport from '@/components/modals/modal-report/modal-report';
 
 export async function getServerSideProps(context) {
     let slug = context.query.slug;
@@ -42,29 +43,17 @@ const breadCrumbItems = [
 
 const Index = ({ data }) => {
 
-    let [isLikeSuccess, setIsLikeSuccess] = useState(true);
+    let [showModalBooking, setShowModalBooking] = useState(false);
+    let [showModalReport, setShowModalReport] = useState(false);
 
-    // useEffect(function(){
-    //     if (isLikeSuccess == true) {
-    //         let timeout = setTimeout(function(){
-    //             setIsLikeSuccess(false);
-    //         }, 3000);
+    function handleShowModalBooking(status)
+    {
+        setShowModalBooking(status);
+    }
 
-    //         return ()=>{
-    //             clearTimeout(timeout);
-    //         }
-    //     }
-    // }, [isLikeSuccess]);
-
-    function renderAlertSuccess() {
-        if (isLikeSuccess == true) {
-            return (
-                <AlertError
-                    message="Lưu thất bại !"
-                    sub="Oop ! Có lỗi xảy ra phía máy chủ."
-                ></AlertError>
-            );
-        }
+    function handleShowModalReport(status)
+    {
+        setShowModalReport(status);
     }
 
     return (
@@ -77,13 +66,13 @@ const Index = ({ data }) => {
                 <div className={cl.button_bar}>
                     <div>
                         <div className={cl.wrap_main_button}>
-                            <ButtonLike
-                                onClick={setIsLikeSuccess}
-                            >
+                            <ButtonLike>
                                 <span>Lưu lại</span>
                                 <span><i className="far fa-heart"></i></span>
                             </ButtonLike>
-                            <ButtonBooking>
+                            <ButtonBooking
+                                handleShowModalBooking={handleShowModalBooking}
+                            >
                                 <span>Hẹn xem</span>
                                 <span><i className="far fa-calendar-alt"></i></span>
                             </ButtonBooking>
@@ -95,7 +84,9 @@ const Index = ({ data }) => {
                         <div className={cl.desc_booking}>(Bạn sẽ nhận được thông tin liên hệ sau khi người đăng đồng ý lịch hẹn.)</div>
                     </div>
                     <div className={cl.other_button}>
-                        <ButtonReport></ButtonReport>
+                        <ButtonReport
+                            handleShowModalReport={handleShowModalReport}
+                        ></ButtonReport>
                         <ButtonShare></ButtonShare>
                     </div>
                 </div>
@@ -105,8 +96,14 @@ const Index = ({ data }) => {
                     <div className={cl.created_at}>Đăng lúc: <i>14:40 ngày 23/02/2024</i></div>
                 </div>
             </div>
-            {/* {renderAlertSuccess()} */}
-            <ModalBooking></ModalBooking>
+            <ModalBooking
+                showModalBooking={showModalBooking}
+                handleShowModalBooking={handleShowModalBooking}
+            ></ModalBooking>
+            <ModalReport
+                showModalReport={showModalReport}
+                handleShowModalReport={handleShowModalReport}
+            ></ModalReport>
         </div>
     );
 }

@@ -49,6 +49,13 @@ const ProductDetailInfo = () => {
                         </td>
                         <td>Chỉ chó</td>
                     </tr>
+                    <tr>
+                        <td>
+                            <span><i className="fad fa-clock"></i></span>
+                            <span>Ngày đăng:</span>
+                        </td>
+                        <td>21-12-2024</td>
+                    </tr>
                 </tbody>
             </table>
 
