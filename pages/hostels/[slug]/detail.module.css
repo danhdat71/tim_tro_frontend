@@ -34,4 +34,12 @@
     margin-top: 15px;
     padding-top: 15px;
     padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.created_at {
+    font-size: 15px;
+    color: rgb(62, 62, 62);
 }

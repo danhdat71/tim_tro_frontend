@@ -9,6 +9,7 @@ import ButtonGoLogin from '@/components/buttons/button-go-login/button-go-login'
 import SliderWithThumb from '@/components/slider-with-thumb/slider-with-thumb';
 import ProductDetailInfo from '@/components/product-detail-info/product-detail-info';
 import AvatarUsername from '@/components/avatar-username/avatar-username';
+import ButtonReport from '@/components/buttons/button-report/button-report';
 
 export async function getServerSideProps(context) {
     let slug = context.query.slug;
@@ -60,12 +61,13 @@ const Index = ({ data }) => {
                         <div className={cl.desc_booking}>(Bạn sẽ nhận được thông tin liên hệ sau khi người đăng đồng ý lịch hẹn.)</div>
                     </div>
                     <div className={cl.other_button}>
-                        Báo xâu
+                        <ButtonReport></ButtonReport>
                     </div>
                 </div>
                 <ProductDetailInfo></ProductDetailInfo>
                 <div className={cl.wrap_avatar}>
                     <AvatarUsername></AvatarUsername>
+                    <div className={cl.created_at}>Đăng lúc: <i>14:40 ngày 23/02/2024</i></div>
                 </div>
                 
             </div>
