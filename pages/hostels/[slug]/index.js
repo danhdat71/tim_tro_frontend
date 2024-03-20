@@ -16,6 +16,9 @@ import AlertError from '@/components/alert-error/alert-error';
 import ModalBooking from '@/components/modals/modal-booking/modal-booking';
 import ModalReport from '@/components/modals/modal-report/modal-report';
 import ModalShare from '@/components/modals/modal-share/modal-share';
+import AlertBarWarning from '@/components/alert-bars/alert-bar-warning/alert-bar-warning';
+import AlertBarSuccess from '@/components/alert-bars/alert-bar-success/alert-bar-success';
+import ButtonRebooking from '@/components/buttons/button-rebooking/button-rebooking';
 
 export async function getServerSideProps(context) {
     let slug = context.query.slug;
@@ -72,17 +75,34 @@ const Index = ({ data }) => {
                 <div className={cl.price}>1,5 triệu / tháng</div>
                 <div className={cl.button_bar}>
                     <div>
+                        <AlertBarWarning
+                            style={{marginBottom: '10px'}}
+                        >
+                            <div>Chủ bài đăng yêu cầu dời lịch xem vào lúc 21h10 ngày 21/12/2000</div>
+                        </AlertBarWarning>
+                        <AlertBarSuccess
+                            style={{marginBottom: '10px'}}
+                        >
+                            <div>Chủ bài đăng đồng ý lịch xem vào lúc 21h10 ngày 21/12/2000.</div>
+                            <a href="tel:0123123123">Số điện thoại: 0123.333.3333</a>
+                        </AlertBarSuccess>
                         <div className={cl.wrap_main_button}>
                             <ButtonLike>
                                 <span>Lưu lại</span>
                                 <span><i className="far fa-heart"></i></span>
                             </ButtonLike>
-                            <ButtonBooking
+                            {/* <ButtonBooking
                                 handleShowModalBooking={handleShowModalBooking}
                             >
                                 <span>Hẹn xem</span>
                                 <span><i className="far fa-calendar-alt"></i></span>
-                            </ButtonBooking>
+                            </ButtonBooking> */}
+                            <ButtonRebooking
+                                handleShowModalReBooking={handleShowModalBooking}
+                            >
+                                <span>Hẹn xem lại</span>
+                                <span><i className="far fa-calendar-alt"></i></span>
+                            </ButtonRebooking>
                         </div>
                         {/* <ButtonGoLogin>
                             <span>Đăng nhập để liên hệ</span>

@@ -42,19 +42,6 @@ const ModalBooking = (props) => {
                 <input type='time' className={`${cl.input} input`}></input>
                 <div className='err-msg'>Vui lòng chọn giờ xem</div>
             </div>
-            <div className={cl.form_group}>
-                <label className='label label-block'>Thời gian xem <span>*</span></label>
-                <select className={`${cl.select} select`}>
-                    <option>Khoảng 10 phút</option>
-                    <option>Khoảng 15 phút</option>
-                    <option>Khoảng 20 phút</option>
-                    <option>Khoảng 25 phút</option>
-                    <option>Khoảng 30 phút</option>
-                    <option>Khoảng 35 phút</option>
-                    <option>Khoảng 40 phút</option>
-                </select>
-                <div className='err-msg'>Vui lòng chọn thời gian xem</div>
-            </div>
         </Modal>
     );
 }
