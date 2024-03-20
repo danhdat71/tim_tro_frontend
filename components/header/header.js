@@ -23,12 +23,19 @@ const Header = () => {
                     <img src={logoImg.src} alt='logo'></img>
                 </div>
             </Link>
-            <div className='right'>
+            <div className={cl.right}>
+                <Link href='/finder/loves' className={cl.menu_button}>
+                    <span className={cl.count}>1</span>
+                    <span><i className="fal fa-heart"></i></span>
+                </Link>
+                <div className={cl.menu_button}>
+                    <span className={cl.count}>1</span>
+                    <span><i className="fal fa-bell"></i></span>
+                </div>
                 <div
                     className={cl.menu_button}
                     onClick={()=>{handleSetEnableHeader(true)}}
                 >
-                    <span>Menu</span>
                     <i className="far fa-bars"></i>
                 </div>
             </div>

@@ -5,7 +5,7 @@
     z-index: 9999;
     top: 0;
     left: 0;
-    transition: .4s;
+    transition: .2s;
     visibility: hidden;
     opacity: 0;
 }

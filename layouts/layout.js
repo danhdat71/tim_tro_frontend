@@ -24,18 +24,21 @@ const Layout = (props) => {
     }
 
     return (
-        <div className={cl.container}>
-            <div className={cl.main_container}>
-                <div className={cl.padding_container}>
-                    {head()}
+        <>
+            {head()}
+            <div className={cl.container}>
+                <div className={cl.main_container}>
                     <Header></Header>
-                    <main>
-                        {props.children}
-                    </main>
+                    <div className={cl.padding_container}>
+                        
+                        <main>
+                            {props.children}
+                        </main>
+                    </div>
+                    <Footer></Footer>
                 </div>
-                <Footer></Footer>
             </div>
-        </div>
+        </>
     );
 }
 
