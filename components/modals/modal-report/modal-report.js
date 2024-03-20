@@ -38,23 +38,17 @@ const ModalReport = (props) => {
             isShowModal={showModalReport}
             mobileTop={'10%'}
             top="5%"
-            onBackdropClick={()=>{
+            title="Báo cáo vi phạm"
+            subTitle="Chúng tôi sẽ xem xét bài viết này"
+            submitBtnText="Gửi báo cáo"
+            submitBtnIcon={<i class="far fa-paper-plane"></i>}
+            onClose={()=>{
+                handleShowModalReport(false);
+            }}
+            onSubmit={()=>{
                 handleShowModalReport(false);
             }}
         >
-            <div className={cl.modal_filter_title}>
-                <div>
-                    <div>Báo cáo tin đăng</div>
-                    <div>Chúng tôi sẽ tiến hành xem xét báo cáo của bạn.</div>
-                </div>
-                <button
-                    type='button'
-                    onClick={()=>{
-                        handleShowModalReport(false);
-                    }}
-                ><i className="fal fa-times-circle"></i></button>
-            </div>
-
             <div className={cl.group_info}>
                 <div className='form-group'>
                     <label className='label label-block' htmlFor='full_name'>Họ tên <span>*</span></label>
@@ -87,28 +81,6 @@ const ModalReport = (props) => {
                     <textarea id='description' className={`textarea ${cl.textarea}`}></textarea>
                     <div className='err-msg'>Mô tả quá 200 ký tự</div>
                 </div>
-            </div>
-
-            <div className={cl.modal_filter_foot}>
-                <button
-                    type='button'
-                    className={cl.cancel_filter_btn}
-                    onClick={()=>{
-                        handleShowModalReport(false);
-                    }}
-                >
-                    <span>Đóng</span>
-                </button>
-                <button
-                    type='button'
-                    className={cl.apply_filter_btn}
-                    onClick={()=>{
-                        handleShowModalReport(false);
-                    }}
-                >
-                    <span>Gửi báo cáo</span>
-                    <span><i className="fal fa-paper-plane"></i></span>
-                </button>
             </div>
         </Modal>
     );
