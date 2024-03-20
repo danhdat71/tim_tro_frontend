@@ -23,6 +23,13 @@ const ProductDetailInfo = () => {
                     </tr>
                     <tr>
                         <td>
+                            <span><i className="far fa-house-user"></i></span>
+                            <span>Chung chủ:</span>
+                        </td>
+                        <td>Không chung chủ</td>
+                    </tr>
+                    <tr>
+                        <td>
                             <span><i className="fad fa-home-lg-alt"></i></span>
                             <span>Loại sử dụng:</span>
                         </td>

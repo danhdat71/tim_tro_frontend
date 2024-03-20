@@ -15,6 +15,7 @@ import AlertSuccess from '@/components/alert-success/alert-success';
 import AlertError from '@/components/alert-error/alert-error';
 import ModalBooking from '@/components/modals/modal-booking/modal-booking';
 import ModalReport from '@/components/modals/modal-report/modal-report';
+import ModalShare from '@/components/modals/modal-share/modal-share';
 
 export async function getServerSideProps(context) {
     let slug = context.query.slug;
@@ -45,6 +46,7 @@ const Index = ({ data }) => {
 
     let [showModalBooking, setShowModalBooking] = useState(false);
     let [showModalReport, setShowModalReport] = useState(false);
+    let [showModalShare, setShowModalShare] = useState(false);
 
     function handleShowModalBooking(status)
     {
@@ -54,6 +56,11 @@ const Index = ({ data }) => {
     function handleShowModalReport(status)
     {
         setShowModalReport(status);
+    }
+
+    function handleShowModalShare(status)
+    {
+        setShowModalShare(status);
     }
 
     return (
@@ -85,9 +92,15 @@ const Index = ({ data }) => {
                     </div>
                     <div className={cl.other_button}>
                         <ButtonReport
-                            handleShowModalReport={handleShowModalReport}
+                            onClick={()=>{
+                                handleShowModalReport(true);
+                            }}
                         ></ButtonReport>
-                        <ButtonShare></ButtonShare>
+                        <ButtonShare
+                            onClick={()=>{
+                                handleShowModalShare(true);
+                            }}
+                        />
                     </div>
                 </div>
                 <ProductDetailInfo></ProductDetailInfo>
@@ -104,6 +117,10 @@ const Index = ({ data }) => {
                 showModalReport={showModalReport}
                 handleShowModalReport={handleShowModalReport}
             ></ModalReport>
+            <ModalShare
+                showModalShare={showModalShare}
+                handleShowModalShare={handleShowModalShare}
+            ></ModalShare>
         </div>
     );
 }
