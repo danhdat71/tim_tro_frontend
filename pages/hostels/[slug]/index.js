@@ -19,11 +19,12 @@ import ModalShare from '@/components/modals/modal-share/modal-share';
 import AlertBarWarning from '@/components/alert-bars/alert-bar-warning/alert-bar-warning';
 import AlertBarSuccess from '@/components/alert-bars/alert-bar-success/alert-bar-success';
 import ButtonRebooking from '@/components/buttons/button-rebooking/button-rebooking';
+import axios from 'axios';
+import { getDetailProduct } from '@/helpers/http-requests/product';
 
 export async function getServerSideProps(context) {
     let slug = context.query.slug;
-    let data = await fetch(`https://nmsoft.online/offical_page/api/v1/product/${slug}`);
-    data = await data.json();
+    let data = await getDetailProduct(process.env.API + `product/${slug}`);
 
     return {
         props: { data },

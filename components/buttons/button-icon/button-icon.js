@@ -20,7 +20,7 @@ const ButtonIcon = (props) => {
             onClick={onClick}
             style={{
                 backgroundColor: backgroundColor,
-                border: border,
+                border: border != null ? border : 'none',
                 color: color,
             }}
         >

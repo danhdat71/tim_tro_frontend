@@ -1,0 +1,24 @@
+.login {
+    min-height: calc(100vh - (465.72px + 79.03px));
+    padding-bottom: 30px;
+}
+
+.wrap_button {
+    text-align: center;
+}
+
+.wrap_button button {
+    width: 100%;
+}
+
+.others {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.others a {
+    text-decoration: none;
+    color: rgb(0, 110, 153);
+}
