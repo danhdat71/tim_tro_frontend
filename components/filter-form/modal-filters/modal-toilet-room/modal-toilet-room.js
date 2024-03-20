@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
 import { resetValue, selectValue, submitValue } from '@/redux/features/filter_box/toilet_room_filter_box';
+import Modal from '@/components/modals/modal/modal';
 
 const rooms = [
     {
@@ -48,8 +49,8 @@ const ModalToiletRoom = () => {
     function isEnableModalFilter()
     {
         return modalFilter.is_enable == true && modalFilter.box_type == 'toilet_room'
-            ? `${cl.wrap_modal_filter} ${cl.show_modal_filter}`
-            : `${cl.wrap_modal_filter}`;
+            ? true
+            : false;
     }
 
     function handleSelect(value) {
@@ -69,8 +70,8 @@ const ModalToiletRoom = () => {
                     type='button'
                     className={
                         val.value == toiletRoom.value.value
-                            ? `${cl.input_box} ${cl.active}`
-                            : `${cl.input_box}`
+                            ? `input-button active`
+                            : `input-button`
                     }
                     onClick={()=>{
                         handleSelect({
@@ -86,70 +87,30 @@ const ModalToiletRoom = () => {
     console.log('toiletRoom', toiletRoom);
 
     return (
-        <div className={isEnableModalFilter()}>
-            <div
-                className={cl.backdrop}
-                onClick={()=>{
-                    handleDisableModalFilter({
-                        is_enable: false,
-                    })
-                }}
-            ></div>
-            <div className={cl.main_modal_filter}>
-                <div className={cl.modal_filter_title}>
-                    <span>Số phòng vệ sinh</span>
-                    <button
-                        type='button'
-                        onClick={()=>{
-                            handleDisableModalFilter({
-                                is_enable: false,
-                            })
-                        }}
-                    ><i className="fal fa-times-circle"></i></button>
-                </div>
-                <div className={cl.modal_filter_main}>
-                    <div className={cl.wrap_buttons}>
-                        {renderRooms()}
-                    </div>
-                </div>
-                <div className={cl.modal_filter_foot}>
-                    <button
-                        type='button'
-                        className={cl.cancel_filter_btn}
-                        onClick={()=>{
-                            handleDisableModalFilter({
-                                is_enable: false,
-                            })
-                        }}
-                    >
-                        <span>Đóng</span>
-                    </button>
-                    <button
-                        type='button'
-                        className={cl.re_edit_btn}
-                        onClick={()=>{
-                            dispatch(resetValue());
-                        }}
-                    >
-                        <span>Đặt lại</span>
-                        <span><i className="fal fa-undo"></i></span>
-                    </button>
-                    <button
-                        type='button'
-                        className={cl.apply_filter_btn}
-                        onClick={()=>{
-                            dispatch(submitValue());
-                            handleDisableModalFilter({
-                                is_enable: false,
-                            });
-                        }}
-                    >
-                        <span>Lọc kết quả</span>
-                        <span><i className="fal fa-search"></i></span>
-                    </button>
-                </div>
+        <Modal
+            isShowModal={isEnableModalFilter()}
+            title="Số phòng vệ sinh"
+            submitBtnText="Lọc kết quả"
+            submitBtnIcon={<i className="fal fa-search"></i>}
+            onClose={()=>{
+                handleDisableModalFilter({
+                    is_enable: false,
+                })
+            }}
+            onRefresh={()=>{
+                dispatch(resetValue());
+            }}
+            onSubmit={()=>{
+                dispatch(submitValue());
+                handleDisableModalFilter({
+                    is_enable: false,
+                });
+            }}
+        >
+            <div className={cl.wrap_buttons}>
+                {renderRooms()}
             </div>
-        </div>
+        </Modal>
     );
 }
 

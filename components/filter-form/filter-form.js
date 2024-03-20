@@ -13,7 +13,6 @@ import ModalToiletRoom from './modal-filters/modal-toilet-room/modal-toilet-room
 import ModalPet from './modal-filters/modal-pet/modal-pet';
 import { useAppSelector } from '@/redux/store';
 import { convertPriceStringToVnMoneyKey, getPriceToStringMoney } from '@/helpers/priceHelper';
-import { convertAcreageStringToMetter } from '@/helpers/dateHelper';
 import { resetAllAddress, resetSelectedValue } from '@/redux/features/filter_box/address_filter_box';
 import { useDispatch } from 'react-redux';
 import { resetAllAcreage } from '@/redux/features/filter_box/acreage_filter_box';
@@ -23,6 +22,7 @@ import { resetAllBedroom } from '@/redux/features/filter_box/bed_room_filter_box
 import { resetAllToiletRoom } from '@/redux/features/filter_box/toilet_room_filter_box';
 import { resetAllPet } from '@/redux/features/filter_box/pet_filter_box';
 import { resetAllSearchFilter } from '@/redux/features/filter_box/search_filter_box';
+import { convertAcreageStringToMetter } from '@/helpers/aceageFilter';
 
 export default function filterForm()
 {

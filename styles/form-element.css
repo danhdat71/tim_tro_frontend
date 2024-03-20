@@ -1,3 +1,4 @@
+/**err-msg**/
 .err-msg {
     font-size: 14px;
     padding-top: 5px;
@@ -6,41 +7,39 @@
     color: rgb(216, 0, 0);
 }
 
+/**label**/
 .label {
     font-size: 15px;
     padding-bottom: 5px;
     color: rgb(33, 33, 33);
 }
-
 .label span {
     color: rgb(223, 0, 0);
 }
-
 .label-block {
     display: block;
 }
 
+/**label-group**/
 .label-group {
     display: flex;
     align-items: center;
-    padding-bottom: 5px;
+    padding-bottom: 7px;
 }
-
 .label-group:last-child {
     padding-bottom: 0;
 }
-
 .label-group * {
     cursor: pointer;
     user-select: none;
 }
-
 .label-group label {
     font-size: 15px;
     padding-left: 10px;
     color: rgb(33, 33, 33);
 }
 
+/**input**/
 .input {
     height: 40px;
     padding: 0 10px;
@@ -52,6 +51,7 @@
     border-radius: 5px;
 }
 
+/**select**/
 .select {
     height: 40px;
     border: 1px solid rgb(192, 192, 192);
@@ -59,21 +59,30 @@
     outline: none;
     padding: 0 10px;
 }
-
 .select option {
     font-size: 15px;
 }
 
+/**form group**/
 .form-group {
     padding-bottom: 15px;
 }
 
+/**checkbox**/
 .checkbox-md {
     width: 15px;
     height: 15px;
     cursor: pointer;
 }
 
+/**radio**/
+.radio-md {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+/**textarea**/
 .textarea {
     padding: 10px;
     font-size: 15px;
@@ -84,7 +93,7 @@
     border-radius: 5px;
 }
 
-
+/**scrollbar**/
 .scrollbar::-webkit-scrollbar {
     width: 4px;
 }
@@ -100,7 +109,29 @@
 .scrollbar::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
-
 .scrollbar-none::-webkit-scrollbar {
     width: 0;
+}
+
+/**input button**/
+.input-button {
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 5px;
+    font-size: 15px;
+}
+.input-button.active,
+.input-button:hover {
+    background-color: rgb(0, 158, 105);
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .input-button {
+        padding: 7px 10px;
+        font-size: 14px;
+    }
 }

@@ -14,6 +14,7 @@ const Modal = (props) => {
         subTitle,
         submitBtnText,
         submitBtnIcon,
+        submitBtnDisabled,
         onClose,
         onRefresh,
         onSubmit,
@@ -69,6 +70,7 @@ const Modal = (props) => {
                             type='button'
                             className={cl.apply_btn}
                             onClick={onSubmit}
+                            disabled={submitBtnDisabled}
                         >
                             <span>{submitBtnText}</span>
                             <span>{submitBtnIcon}</span>

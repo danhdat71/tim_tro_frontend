@@ -5,6 +5,7 @@ import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
 import { changeMaxValue, changeMinValue, changeValue, resetValue, submitValue } from '@/redux/features/filter_box/acreage_filter_box';
 import { PrettoSlider } from '@/config/mui';
+import Modal from '@/components/modals/modal/modal';
 
 const configAcreages = [
     {
@@ -63,8 +64,8 @@ const ModalFilterAcreage = () => {
     function isEnableModalFilter()
     {
         return modalFilter.is_enable == true && modalFilter.box_type == 'acreage'
-            ? `${cl.wrap_modal_filter} ${cl.show_modal_filter}`
-            : `${cl.wrap_modal_filter}`;
+            ? true
+            : false;
     }
 
     function renderRadio()
@@ -72,21 +73,20 @@ const ModalFilterAcreage = () => {
         return configAcreages.map(function(val, index){
             return (
                 <div
-                    className={cl.radio_item}
+                    className='label-group'
                     key={index}
                     onClick={()=>{
                         dispatch(changeValue(val.value));
                     }}
                 >
-                    <span>
-                        <input
-                            id={`acreage_${index}`}
-                            type='radio'
-                            name='acreage'
-                            value={val.value}
-                            defaultChecked={JSON.stringify(acreageFilterBox.value) == JSON.stringify(val.value)}
-                        ></input>
-                    </span>
+                    <input
+                        className='radio-md'
+                        id={`acreage_${index}`}
+                        type='radio'
+                        name='acreage'
+                        value={val.value}
+                        defaultChecked={JSON.stringify(acreageFilterBox.value) == JSON.stringify(val.value)}
+                    ></input>
                     <label htmlFor={`acreage_${index}`}>{val.label}</label>
                 </div>
             );
@@ -130,108 +130,68 @@ const ModalFilterAcreage = () => {
     }
 
     return (
-        <div className={isEnableModalFilter()}>
-            <div
-                className={cl.backdrop}
-                onClick={()=>{
-                    handleDisableModalFilter({
-                        is_enable: false,
-                    })
-                }}
-            ></div>
-            <div className={cl.main_modal_filter}>
-                <div className={cl.modal_filter_title}>
-                    <span>Lọc diện tích</span>
-                    <button
-                        type='button'
-                        onClick={()=>{
-                            handleDisableModalFilter({
-                                is_enable: false,
-                            })
+        <Modal
+            isShowModal={isEnableModalFilter()}
+            title="Lọc diện tích"
+            submitBtnText="Lọc kết quả"
+            submitBtnIcon={<i className="fal fa-search"></i>}
+            onClose={()=>{
+                handleDisableModalFilter({
+                    is_enable: false,
+                })
+            }}
+            onRefresh={()=>{
+                dispatch(resetValue());
+            }}
+            onSubmit={()=>{
+                handleDisableModalFilter({
+                    is_enable: false,
+                });
+                dispatch(submitValue());
+            }}
+        >
+            <div className={cl.acreage}>
+                <div className={`${cl.acreage_input} form-group`}>
+                    <input
+                        className={`${cl.hand_input} input`}
+                        value={acreageFilterBox.value[0]}
+                        onChange={(e)=>{
+                            handleChangeMinValue(e.target.value);
                         }}
-                    ><i className="fal fa-times-circle"></i></button>
+                        onBlur={()=>{
+                            handleFixChangeMinValue();
+                        }}
+                    ></input>
+                    <span>-</span>
+                    <input
+                        className={`${cl.hand_input} input`}
+                        value={acreageFilterBox.value[1]}
+                        onChange={(e)=>{
+                            handleChangeMaxValue(e.target.value);
+                        }}
+                        onBlur={(e)=>{
+                            fixChangeMaxValue(e.target.value);
+                        }}
+                    ></input>
                 </div>
-                <div className={cl.modal_filter_main}>
-                    <div className={cl.acreage}>
-                        <div className={cl.acreage_input}>
-                            <input
-                                className={cl.hand_input}
-                                value={acreageFilterBox.value[0]}
-                                onChange={(e)=>{
-                                    handleChangeMinValue(e.target.value);
-                                }}
-                                onBlur={()=>{
-                                    handleFixChangeMinValue();
-                                }}
-                            ></input>
-                            <span>-</span>
-                            <input
-                                className={cl.hand_input}
-                                value={acreageFilterBox.value[1]}
-                                onChange={(e)=>{
-                                    handleChangeMaxValue(e.target.value);
-                                }}
-                                onBlur={(e)=>{
-                                    fixChangeMaxValue(e.target.value);
-                                }}
-                            ></input>
-                        </div>
-                        <div className={cl.acreage_slider}>
-                            <PrettoSlider
-                                min={0}
-                                max={100}
-                                value={acreageFilterBox.value}
-                                disableSwap
-                                valueLabelDisplay="auto"
-                                step={5}
-                                onChange={(e, value)=>{
-                                    dispatch(changeValue(value));
-                                }}
-                            />
-                        </div>
-                        <div className={cl.radio_list}>
-                            {renderRadio()}
-                        </div>
-                    </div>
+                <div className={`${cl.acreage_slider} form-group`}>
+                    <PrettoSlider
+                        min={0}
+                        max={100}
+                        value={acreageFilterBox.value}
+                        disableSwap
+                        valueLabelDisplay="auto"
+                        step={5}
+                        onChange={(e, value)=>{
+                            dispatch(changeValue(value));
+                        }}
+                    />
                 </div>
-                <div className={cl.modal_filter_foot}>
-                    <button
-                        type='button'
-                        className={cl.cancel_filter_btn}
-                        onClick={()=>{
-                            handleDisableModalFilter({
-                                is_enable: false,
-                            })
-                        }}
-                    >
-                        <span>Đóng</span>
-                    </button>
-                    <button
-                        type='button'
-                        className={cl.re_edit_btn}
-                        onClick={()=>{
-                            dispatch(resetValue());
-                        }}
-                    >
-                        <span>Đặt lại</span>
-                        <span><i className="fal fa-undo"></i></span>
-                    </button>
-                    <button
-                        type='button'
-                        className={cl.apply_filter_btn}
-                        onClick={()=>{
-                            handleDisableModalFilter({
-                                is_enable: false,
-                            });
-                            dispatch(submitValue());
-                        }}
-                    >
-                        <span>Lọc kết quả</span>
-                        <span><i className="fal fa-search"></i></span>
-                    </button>
+                <div className={`${cl.radio_list} form-group`}>
+                    {renderRadio()}
                 </div>
             </div>
-        </div>
+        </Modal>
     );
 }
 

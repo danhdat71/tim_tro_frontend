@@ -5,6 +5,7 @@ import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
 import { changeMaxValue, changeMinValue, changeValue, resetValue, submitValue } from '@/redux/features/filter_box/price_range_box';
 import { PrettoSlider } from '@/config/mui';
+import Modal from '@/components/modals/modal/modal';
 
 const ModalPriceRange = () => {
 
@@ -26,8 +27,8 @@ const ModalPriceRange = () => {
     function isEnableModalFilter()
     {
         return modalFilter.is_enable == true && modalFilter.box_type == 'price_range'
-            ? `${cl.wrap_modal_filter} ${cl.show_modal_filter}`
-            : `${cl.wrap_modal_filter}`;
+            ? true
+            : false;
     }
 
     function handleChangeMinValue(minValue)
@@ -72,111 +73,70 @@ const ModalPriceRange = () => {
     console.log('priceFilterBox', priceFilterBox);
 
     return (
-        <div className={isEnableModalFilter()}>
-            <div
-                className={cl.backdrop}
-                onClick={()=>{
-                    handleDisableModalFilter({
-                        is_enable: false,
-                    })
-                }}
-            ></div>
-            <div className={cl.main_modal_filter}>
-                <div className={cl.modal_filter_title}>
-                    <span>Lọc khoảng giá</span>
-                    <button
-                        type='button'
-                        onClick={()=>{
-                            handleDisableModalFilter({
-                                is_enable: false,
-                            })
-                        }}
-                    ><i className="fal fa-times-circle"></i></button>
-                </div>
-                <div className={cl.modal_filter_main}>
-                    <div className={cl.preview_range}>
-                        <div>Từ: <b>{parseInt(priceFilterBox.value[0]).toLocaleString('en-US')}đ</b></div>
-                        <div>Đến: <b>{parseInt(priceFilterBox.value[1]).toLocaleString('en-US')}đ</b></div>
-                    </div>
-                    <div className={cl.input_range}>
-                        <input
-                            className={cl.hand_input}
-                            value={priceFilterBox.value[0]}
-                            onChange={(e)=>{
-                                handleChangeMinValue(e.target.value);
-                            }}
-                            onBlur={()=>{
-                                fixChangeMinValue();
-                            }}
-                        ></input>
-                        <span>-</span>
-                        <input
-                            className={cl.hand_input}
-                            value={priceFilterBox.value[1]}
-                            onChange={(e)=>{
-                                handleChangeMaxValue(e.target.value);
-                            }}
-                            onBlur={(e)=>{
-                                fixChangeMaxValue(e.target.value);
-                            }}
-                        ></input>
-                    </div>
-                    <div className={cl.price_slider_wrapper}>
-                        <PrettoSlider
-                            min={500000}
-                            max={20000000}
-                            value={priceFilterBox.value}
-                            disableSwap
-                            valueLabelDisplay="auto"
-                            step={100000}
-                            onChange={(e, value)=>{
-                                dispatch(changeValue(value))
-                            }}
-                            valueLabelFormat={(value)=>{
-                                return value.toLocaleString('en-US') + "đ";
-                            }}
-                        />
-                    </div>
-                </div>
-                <div className={cl.modal_filter_foot}>
-                    <button
-                        type='button'
-                        className={cl.cancel_filter_btn}
-                        onClick={()=>{
-                            handleDisableModalFilter({
-                                is_enable: false,
-                            })
-                        }}
-                    >
-                        <span>Đóng</span>
-                    </button>
-                    <button
-                        type='button'
-                        className={cl.re_edit_btn}
-                        onClick={()=>{
-                            dispatch(resetValue());
-                        }}
-                    >
-                        <span>Đặt lại</span>
-                        <span><i className="fal fa-undo"></i></span>
-                    </button>
-                    <button
-                        type='button'
-                        className={cl.apply_filter_btn}
-                        onClick={()=>{
-                            dispatch(submitValue());
-                            handleDisableModalFilter({
-                                is_enable: false,
-                            });
-                        }}
-                    >
-                        <span>Lọc kết quả</span>
-                        <span><i className="fal fa-search"></i></span>
-                    </button>
-                </div>
+        <Modal
+            isShowModal={isEnableModalFilter()}
+            title="Lọc khoảng giá"
+            submitBtnText="Lọc kết quả"
+            submitBtnIcon={<i className="fal fa-search"></i>}
+            onClose={()=>{
+                handleDisableModalFilter({
+                    is_enable: false,
+                })
+            }}
+            onRefresh={()=>{
+                dispatch(resetValue());
+            }}
+            onSubmit={()=>{
+                dispatch(submitValue());
+                handleDisableModalFilter({
+                    is_enable: false,
+                });
+            }}
+        >
+            <div className={cl.preview_range}>
+                <div>Từ: <b>{parseInt(priceFilterBox.value[0]).toLocaleString('en-US')}đ</b></div>
+                <div>Đến: <b>{parseInt(priceFilterBox.value[1]).toLocaleString('en-US')}đ</b></div>
             </div>
-        </div>
-        
+            <div className={cl.input_range}>
+                <input
+                    className={`${cl.hand_input} input`}
+                    value={priceFilterBox.value[0]}
+                    onChange={(e)=>{
+                        handleChangeMinValue(e.target.value);
+                    }}
+                    onBlur={()=>{
+                        fixChangeMinValue();
+                    }}
+                ></input>
+                <span>-</span>
+                <input
+                    className={`${cl.hand_input} input`}
+                    value={priceFilterBox.value[1]}
+                    onChange={(e)=>{
+                        handleChangeMaxValue(e.target.value);
+                    }}
+                    onBlur={(e)=>{
+                        fixChangeMaxValue(e.target.value);
+                    }}
+                ></input>
+            </div>
+            <div className={cl.price_slider_wrapper}>
+                <PrettoSlider
+                    min={500000}
+                    max={20000000}
+                    value={priceFilterBox.value}
+                    disableSwap
+                    valueLabelDisplay="auto"
+                    step={100000}
+                    onChange={(e, value)=>{
+                        dispatch(changeValue(value))
+                    }}
+                    valueLabelFormat={(value)=>{
+                        return value.toLocaleString('en-US') + "đ";
+                    }}
+                />
+            </div>
+        </Modal>
     );
 }
 
