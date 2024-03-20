@@ -1,0 +1,22 @@
+.button {
+    height: 40px;
+    padding: 0 40px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.icon {
+    padding-left: 7px;
+}
+
+.button:disabled {
+    opacity: .5;
+}
+
+@media screen and (max-width: 425px) {
+    .button {
+        padding: 0 15px;
+        font-size: 14px;
+    }    
+}

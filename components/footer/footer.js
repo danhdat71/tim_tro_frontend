@@ -32,7 +32,7 @@ const Footer = () => {
                 </div>
                 <div className={cl.col}>
                     <div className={cl.col_title}>Tài khoản</div>
-                    <Link className={cl.col_item} href=''><div>Đăng ký</div></Link>
+                    <Link className={cl.col_item} href='/auth/register'><div>Đăng ký</div></Link>
                     <Link className={cl.col_item} href=''><div>Đăng nhập</div></Link>
                     <Link className={cl.col_item} href=''><div>Quên mật khẩu</div></Link>
                 </div>
