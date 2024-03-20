@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import cl from './modal-booking.module.css';
-import DatePicker, { registerLocale } from "react-datepicker";
+import Calendar from 'react-calendar';
 import "react-datepicker/dist/react-datepicker.css";
-import { vi } from 'date-fns/locale/vi';
 import { dateToYmd, getToday } from '@/helpers/dateHelper';
 import Modal from '../modal/modal';
-registerLocale('vi', vi)
 
 const ModalBooking = (props) => {
     let [selectedDate, setSelectedDate] = useState(getToday());
@@ -29,25 +27,19 @@ const ModalBooking = (props) => {
         >
             <div className={cl.form_group}>
                 <label className='label label-block'>Chọn ngày xem <span>*</span></label>
-                <div className='date-picker-1'>
-                    <DatePicker
-                        locale="vi"
-                        className={`${cl.input} input`}
-                        minDate={getToday()}
-                        selected={selectedDate}
-                        onChange={(date)=>{
-                            setSelectedDate(dateToYmd(date));
-                        }}
-                        dateFormat='dd-MM-yyyy'
-                    />
-                </div>
+                <Calendar
+                    className='calendar'
+                    locale="vi"
+                    minDate={new Date()}
+                    onChange={(value)=>{
+                        console.log(dateToYmd(value));
+                    }}
+                />
                 <div className='err-msg'>Vui lòng chọn ngày xem</div>
             </div>
             <div className={cl.form_group}>
                 <label className='label label-block'>Chọn giờ xem <span>*</span></label>
-                <div className='date-picker-1'>
-                    <input type='time' className={`${cl.input} input`}></input>
-                </div>
+                <input type='time' className={`${cl.input} input`}></input>
                 <div className='err-msg'>Vui lòng chọn giờ xem</div>
             </div>
             <div className={cl.form_group}>

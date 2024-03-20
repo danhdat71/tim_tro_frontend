@@ -7,3 +7,11 @@
         width: 100%;
     }
 }
+
+.calendar_picker {
+    display: flex;
+}
+
+.preview_calendar {
+    width: 30%;
+}
