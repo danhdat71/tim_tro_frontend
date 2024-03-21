@@ -6,7 +6,7 @@ const Product = () => {
     return (
         <div className={cl.product_item}>
             <div className={cl.left_card}>
-                <Link href='hostels/25' className={cl.product_item_link}>
+                <Link href='/hostels/25' className={cl.product_item_link}>
                     <div className={cl.wrap_img}>
                         <img
                             src='https://ctpt.cdn.static123.com/images/thumbs/900x600/fit/2024/03/16/z4834343444622-eeda2f9adfefabf22233c7bb3b488d25_1710572307.jpg'

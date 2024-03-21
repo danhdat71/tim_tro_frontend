@@ -28,10 +28,10 @@ const Header = () => {
                     <span className={cl.count}>1</span>
                     <span><i className="fal fa-heart"></i></span>
                 </Link>
-                <div className={cl.menu_button}>
+                <Link href='/notifications' className={cl.menu_button}>
                     <span className={cl.count}>1</span>
                     <span><i className="fal fa-bell"></i></span>
-                </div>
+                </Link>
                 <div
                     className={cl.menu_button}
                     onClick={()=>{handleSetEnableHeader(true)}}
