@@ -9,7 +9,7 @@ const NotificationItem = () => {
                 <i class="fas fa-bell"></i>
             </div>
             <div>
-                <Link href='/' className={cl.link}>
+                <Link href='/notifications/notification-detail-1' className={cl.link}>
                     <div className={cl.title}>Vui lòng đánh giá buổi xem trọ</div>
                 </Link>
                 <div className={cl.desc}>Hi Nguyễn</div>

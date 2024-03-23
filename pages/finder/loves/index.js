@@ -3,6 +3,7 @@ import cl from './index.module.css';
 import ListOrderBar from '@/components/list-order-bar/list-order-bar';
 import Product from '@/components/product/product';
 import EmptyList from '@/components/empty-list/empty-list';
+import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
 
 
@@ -17,6 +18,7 @@ const Index = () => {
 
     return (
         <div className={cl.loves}>
+            <Breadcrumb></Breadcrumb>
             <ListOrderBar
                 title="Các trọ quan tâm"
                 paddingBottom={'15px'}

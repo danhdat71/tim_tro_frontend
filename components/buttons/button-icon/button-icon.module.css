@@ -8,6 +8,7 @@
 
 .icon {
     padding-left: 7px;
+    padding-right: 7px;
 }
 
 .button:disabled {

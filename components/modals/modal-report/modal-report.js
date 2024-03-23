@@ -78,7 +78,10 @@ const ModalReport = (props) => {
             <div className={cl.group_info}>
                 <div className='form-group'>
                     <label htmlFor='description' className='label label-block'>Mô tả</label>
-                    <textarea id='description' className={`textarea ${cl.textarea}`}></textarea>
+                    <textarea
+                        id='description'
+                        className={`textarea ${cl.textarea}`}
+                    ></textarea>
                     <div className='err-msg'>Mô tả quá 200 ký tự</div>
                 </div>
             </div>

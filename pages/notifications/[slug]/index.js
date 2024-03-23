@@ -1,8 +1,7 @@
+import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import React from 'react';
 import cl from './index.module.css';
-import EmptyList from '@/components/empty-list/empty-list';
-import NotificationItem from '@/components/notification-item/notification-item';
-import Breadcrumb from '@/components/breadcrumb/breadcrumb';
+import NotificationVote from '@/components/notification-detail/notification-vote/notification-vote';
 
 const breadcrumbs = [
     {
@@ -13,16 +12,19 @@ const breadcrumbs = [
         'label' : 'Thông báo',
         'href' : '/notifications'
     },
+    {
+        'label' : 'Tiêu đề thông báo 1',
+        'href' : '/notifications/notification-slug-1'
+    }
 ];
 
 const Index = () => {
     return (
-        <div className={cl.notifications}>
+        <div className={cl.notification}>
             <Breadcrumb
                 items={breadcrumbs}
             />
-            {/* <EmptyList title="Hiện chưa có thông báo nào"></EmptyList> */}
-            <NotificationItem></NotificationItem>
+            <NotificationVote />
         </div>
     );
 }

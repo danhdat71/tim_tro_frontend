@@ -10,8 +10,27 @@ const ButtonIcon = (props) => {
         color,
         text,
         icon,
-        disabled
+        disabled,
+        isIconLeft
     } = props;
+
+    function handleLeftRightIcon () {
+        if (isIconLeft == true) {
+            return (
+                <>
+                    <span className={cl.icon}>{icon}</span>
+                    <span>{text}</span>
+                </>
+            );
+        }
+
+        return (
+            <>
+                <span>{text}</span>
+                <span className={cl.icon}>{icon}</span>
+            </>
+        );
+    }
 
     return (
         <button
@@ -24,8 +43,7 @@ const ButtonIcon = (props) => {
                 color: color,
             }}
         >
-            <span>{text}</span>
-            <span className={cl.icon}>{icon}</span>
+            {handleLeftRightIcon()}
         </button>
     );
 }
