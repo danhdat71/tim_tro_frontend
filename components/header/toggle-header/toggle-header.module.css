@@ -90,6 +90,7 @@
     height: 60px;
     overflow: hidden;
     border-radius: 999px;
+    text-decoration: none;
 }
 
 .person .person_avatar img {
@@ -106,6 +107,7 @@
     color: rgb(28, 28, 28);
     font-size: 17px;
     padding-bottom: 5px;
+    text-decoration: none;
 }
 
 .little_info .person_link {

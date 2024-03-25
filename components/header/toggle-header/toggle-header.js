@@ -46,11 +46,23 @@ const ToggleHeader = () => {
                         <i className="fal fa-times"></i>
                     </div>
                     <div className={cl.person}>
-                        <div className={cl.person_avatar}>
+                        <Link
+                            onClick={()=>{
+                                handleSetEnableHeader(false);
+                            }}
+                            href='/finder/mypage'
+                            className={cl.person_avatar}
+                        >
                             <img loading='lazy' src='https://cafebiz.cafebizcdn.vn/162123310254002176/2023/10/25/z4813277701687-510933581a70b464516d3e146ac34edc-4735-1698218519720-16982185198431013731516.jpg' alt='avatar'></img>
-                        </div>
+                        </Link>
                         <div className={cl.little_info}>
-                            <div className={cl.name}>Nguyễn Thị Xuân</div>
+                            <Link
+                                onClick={()=>{
+                                    handleSetEnableHeader(false);
+                                }}
+                                href='/finder/mypage'
+                                className={cl.name}
+                            >Nguyễn Thị Xuân</Link>
                             <div className={cl.person_link}>
                                 <span>
                                     <span className={cl.person_domain}>timtro.com</span>
