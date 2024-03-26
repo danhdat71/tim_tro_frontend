@@ -22,9 +22,26 @@ const ProductProcessing = () => {
                     <div className={cl.product_name}>Phòng trọ Sao Mai, Tân Bình. Phòng sạch đẹp, full nội thất, có ban công. Giá tốt, ở ngay</div>
                 </Link>
                 <div className={cl.price}>1.5 triệu / tháng</div>
-                <div className={cl.info_item}>Trạng thái: Đang yêu cầu</div>
-                <div>
-                    
+                <div className={cl.info_item}>
+                    <span>Xem lúc: </span>
+                    <b>07:00 21/12/2025</b>
+                </div>
+                <div className={cl.info_item}>
+                    <span>Trạng thái: </span>
+                    {/* <span className={cl.text_waiting}>Đang yêu cầu</span> */}
+                    {/* <span className={cl.text_waiting_view}>Đang chờ xem</span> */}
+                    {/* <span className={cl.text_success}>Đã xem</span> */}
+                    <span className={cl.text_cancel}>Đã bị huỷ</span>
+                </div>
+                <div className={cl.button_bar}>
+                    <button className={`${cl.button} ${cl.button_cancel}`}>
+                        <span>Yêu cầu huỷ</span>
+                        <span><i className="far fa-ban"></i></span>
+                    </button>
+                    <button className={`${cl.button} ${cl.button_vote}`}>
+                        <span>Đánh giá</span>
+                        <span><i className="far fa-clipboard-list-check"></i></span>
+                    </button>
                 </div>
             </div>
         </div>

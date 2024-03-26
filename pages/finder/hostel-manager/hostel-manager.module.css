@@ -5,8 +5,10 @@
 
 .button_bar {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    padding-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .button {
@@ -26,4 +28,24 @@
 .button.active {
     background-color: rgb(0, 153, 91);
     color: white;
+}
+
+.wrap_paginate {
+    padding-top: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 534px) {
+    .button_bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 5px;
+    }
+
+    .button {
+        height: 35px;
+        padding: 0 10px;
+        font-size: 14px;
+    }
 }
