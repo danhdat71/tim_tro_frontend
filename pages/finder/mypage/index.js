@@ -14,6 +14,7 @@ import ModalGender from '@/components/modals/modal-gender/modal-gender';
 import ModalBirthday from '@/components/modals/modal-birthday/modal-birthday';
 import ModalAboutDesc from '@/components/modals/modal-about-desc/modal-about-desc';
 import ModalChangePassword from '@/components/modals/modal-change-password/modal-change-password';
+import Product from '@/components/product/product';
 
 const Index = () => {
     let [isShowAvatarModal, setIsShowAvatarModal] = useState(false);
@@ -50,6 +51,16 @@ const Index = () => {
                         <i className="fas fa-camera"></i>
                     </div>
                 </div>
+            </div>
+            <div className={cl.wrap_action_btns}>
+                <ButtonIcon
+                    text="Theo dõi"
+                    icon={<i className="far fa-heart"></i>}
+                ></ButtonIcon>
+                <ButtonIcon
+                    text="Chặn"
+                    icon={<i className="fas fa-ban"></i>}
+                ></ButtonIcon>
             </div>
             <div
                 className={cl.info_item_box}
@@ -163,6 +174,16 @@ const Index = () => {
                 </div>
             </div>
 
+            <TitleLeftBig
+                title="Các trọ đăng tuyển"
+                style={{paddingTop: '20px'}}
+            ></TitleLeftBig>
+            <div>
+                <Product></Product>
+                <Product></Product>
+                <Product></Product>
+                <Product></Product>
+            </div>
 
             <ModalAvatar
                 isShowModal={isShowAvatarModal}

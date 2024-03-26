@@ -93,3 +93,10 @@
     justify-content: center;
     padding-top: 15px;
 }
+
+.wrap_action_btns {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding-bottom: 25px;
+}
