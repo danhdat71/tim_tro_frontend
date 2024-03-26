@@ -74,8 +74,8 @@ const ToggleHeader = () => {
                     </div>
                 </div>
                 <div className={cl.header_main}>
-                    {/* <ProviderMenuItems></ProviderMenuItems> */}
-                    <FinderMenuItems></FinderMenuItems>
+                    <ProviderMenuItems></ProviderMenuItems>
+                    {/* <FinderMenuItems></FinderMenuItems> */}
                 </div>
             </div>
         </div>
