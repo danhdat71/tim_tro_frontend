@@ -5,20 +5,29 @@ import Product from '@/components/product/product';
 import EmptyList from '@/components/empty-list/empty-list';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
-
+const breadcrumbs = [
+    {
+        href:'/',
+        label: 'Trang chủ'
+    },
+    {
+        href:'/finder/loves',
+        label: 'Trọ quan tâm'
+    }
+];
 
 const Index = () => {
     
 
-    function renderHostels() {
-        if (products.length == 0) {
-            return <EmptyList title="Danh sách yêu thích rỗng"></EmptyList>
-        }
-    }
+    // function renderHostels() {
+    //     if (products.length == 0) {
+    //         return <EmptyList title="Danh sách yêu thích rỗng"></EmptyList>
+    //     }
+    // }
 
     return (
         <div className={cl.loves}>
-            <Breadcrumb></Breadcrumb>
+            <Breadcrumb items={breadcrumbs}></Breadcrumb>
             <ListOrderBar
                 title="Các trọ quan tâm"
                 paddingBottom={'15px'}

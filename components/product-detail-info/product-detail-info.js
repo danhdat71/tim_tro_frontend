@@ -4,7 +4,7 @@ import cl from './product-detail-info.module.css';
 const ProductDetailInfo = () => {
     return (
         <>
-            <b class={cl.title}>Thông tin chính:</b>
+            <b className={cl.title}>Thông tin chính:</b>
             <table className={cl.detail_product_table}>
                 <tbody>
                     <tr>
@@ -66,7 +66,7 @@ const ProductDetailInfo = () => {
                 </tbody>
             </table>
 
-            <b class={cl.title}>Mô tả:</b>
+            <b className={cl.title}>Mô tả:</b>
             <div className={cl.product_desc}>
                 Chính chủ cho thuê phòng mới đầy đủ nội thất cao cấp: Nguyễn Văn Đậu, Phường 11, Quận Bình Thạnh.<br />
                 + Diện tích 20m², có ban công hoặc giếng trời thoáng mát.<br />
@@ -84,7 +84,7 @@ const ProductDetailInfo = () => {
                 Internet: 50k/ người.<br />
             </div>
 
-            <b class={cl.title}>Bản đồ</b>
+            <b className={cl.title}>Bản đồ</b>
             <div>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1648.0498473918467!2d106.66451412275332!3d10.754109483219375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ef09d900001%3A0xa74756f802908594!2zU2nDqnUgVGjhu4sgxJBp4buHbiBNw6F5IE7hu5lpIFRo4bqldCBDaOG7oyBM4bubbg!5e0!3m2!1sen!2s!4v1710772976729!5m2!1sen!2s" width="100%" height="450" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>

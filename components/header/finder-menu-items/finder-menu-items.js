@@ -1,12 +1,25 @@
 import React from 'react';
 import cl from './finder-menu-items.module.css';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { toggleMenuHeader } from '@/redux/features/header';
 
 const FinderMenuItems = () => {
+
+    const dispatch = useDispatch();
+
+    function handleSetEnableHeader(status) {
+        dispatch(toggleMenuHeader(status));
+    }
+
     return (
         <>
             <div className={cl.list_menu_item}>
-                <Link href="" className={cl.menu_item_wrap}>
+                <Link
+                    href="/"
+                    className={cl.menu_item_wrap}
+                    onClick={()=>{handleSetEnableHeader(false)}}
+                >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
                             <i className="fal fa-home"></i>
@@ -16,7 +29,11 @@ const FinderMenuItems = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="" className={cl.menu_item_wrap}>
+                <Link
+                    href="/notifications"
+                    className={cl.menu_item_wrap}
+                    onClick={()=>{handleSetEnableHeader(false)}}
+                >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
                             <i className="fal fa-bell"></i>
@@ -29,7 +46,11 @@ const FinderMenuItems = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="" className={cl.menu_item_wrap}>
+                <Link
+                    href="/"
+                    className={cl.menu_item_wrap}
+                    onClick={()=>{handleSetEnableHeader(false)}}
+                >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
                             <i className="fal fa-search"></i>
@@ -39,7 +60,11 @@ const FinderMenuItems = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="" className={cl.menu_item_wrap}>
+                <Link
+                    href="/finder/hostel-manager"
+                    className={cl.menu_item_wrap}
+                    onClick={()=>{handleSetEnableHeader(false)}}
+                >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
                             <i className="fal fa-list-ul"></i>
@@ -49,7 +74,11 @@ const FinderMenuItems = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="" className={cl.menu_item_wrap}>
+                <Link
+                    href="/finder/loves"
+                    className={cl.menu_item_wrap}
+                    onClick={()=>{handleSetEnableHeader(false)}}
+                >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
                             <i className="fal fa-heart"></i>
@@ -59,7 +88,11 @@ const FinderMenuItems = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="" className={cl.menu_item_wrap}>
+                <Link
+                    href="/finder/mypage"
+                    className={cl.menu_item_wrap}
+                    onClick={()=>{handleSetEnableHeader(false)}}
+                >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
                             <i className="fal fa-address-card"></i>
@@ -69,7 +102,11 @@ const FinderMenuItems = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="" className={cl.menu_item_wrap}>
+                <Link
+                    href=""
+                    className={cl.menu_item_wrap}
+                    onClick={()=>{handleSetEnableHeader(false)}}
+                >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
                             <i className="fal fa-exclamation-triangle"></i>
@@ -79,7 +116,11 @@ const FinderMenuItems = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="" className={cl.menu_item_wrap}>
+                <Link
+                    href=""
+                    className={cl.menu_item_wrap}
+                    onClick={()=>{handleSetEnableHeader(false)}}
+                >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
                             <i className="fal fa-user-alt-slash"></i>
@@ -89,7 +130,11 @@ const FinderMenuItems = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="" className={cl.menu_item_wrap}>
+                <Link
+                    href=""
+                    className={cl.menu_item_wrap}
+                    onClick={()=>{handleSetEnableHeader(false)}}
+                >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
                             <i className="fal fa-sign-out"></i>

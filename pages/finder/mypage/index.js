@@ -40,7 +40,7 @@ const Index = () => {
                 <div
                     className={cl.wrap_avatar}
                     onClick={()=>{
-                        handleShowAvatarModal(true);
+                        setIsShowAvatarModal(true);
                     }}
                 >
                     <div className={cl.preview_img}>

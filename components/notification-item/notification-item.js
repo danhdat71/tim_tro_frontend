@@ -6,7 +6,7 @@ const NotificationItem = () => {
     return (
         <div className={cl.item}>
             <div className={cl.icon}>
-                <i class="fas fa-bell"></i>
+                <i className="fas fa-bell"></i>
             </div>
             <div>
                 <Link href='/notifications/notification-detail-1' className={cl.link}>
@@ -16,7 +16,7 @@ const NotificationItem = () => {
                 <div className={cl.time}>2 phút trước</div>
             </div>
             <div className={cl.wrap_clear}>
-                <button><i class="far fa-times"></i></button>
+                <button><i className="far fa-times"></i></button>
             </div>
         </div>
     );

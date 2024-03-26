@@ -41,7 +41,7 @@ const ModalReport = (props) => {
             title="Báo cáo vi phạm"
             subTitle="Chúng tôi sẽ xem xét bài viết này"
             submitBtnText="Gửi báo cáo"
-            submitBtnIcon={<i class="far fa-paper-plane"></i>}
+            submitBtnIcon={<i className="far fa-paper-plane"></i>}
             onClose={()=>{
                 handleShowModalReport(false);
             }}

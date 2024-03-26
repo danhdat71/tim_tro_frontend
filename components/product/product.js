@@ -39,7 +39,7 @@ const Product = () => {
                 </div>
                 <div className={cl.like_btn}>
                     <button><i className="far fa-heart"></i></button>
-                    {/* <button><i class="fas fa-heart"></i></button> */}
+                    {/* <button><i className="fas fa-heart"></i></button> */}
                 </div>
             </div>
         </div>
