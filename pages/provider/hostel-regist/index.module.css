@@ -1,0 +1,14 @@
+.rooms,
+.other_info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 15px;
+}
+
+.buttons {
+    display: flex;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    gap: 15px;
+    justify-content: center;
+}

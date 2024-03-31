@@ -28,6 +28,12 @@ function formatNumber(num) {
     }
 }
 
+function formatDotEach3Num(number) {
+    number = number.split('.').join('');
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 export {
-    convertPriceStringToVnMoneyKey
+    convertPriceStringToVnMoneyKey,
+    formatDotEach3Num,
 };

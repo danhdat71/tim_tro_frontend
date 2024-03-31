@@ -1,0 +1,68 @@
+.sublabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+
+.sublabel div:last-child {
+    color: rgb(113, 113, 113);
+}
+
+.text_red {
+    color: rgb(217, 0, 0);
+}
+
+.textarea {
+    resize: vertical;
+}
+
+.button_show_help {
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    color: rgb(107, 107, 107);
+}
+
+.button_show_help span:first-child {
+    padding-right: 7px;
+}
+
+.help {
+    width: 100%;
+    padding: 15px;
+    background-color: rgb(240 252 255);
+}
+
+.wrap_button {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #7ca0af;
+    cursor: pointer;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid transparent;
+    transition: .1s;
+}
+
+.button:hover,
+.button.active {
+    border: 1px solid #2d98c5;
+    background-color: transparent;
+    color: #2d98c5;
+}
+
+.help_label {
+    padding-bottom: 15px;
+    font-size: 14px;
+    font-weight: 500;
+}
