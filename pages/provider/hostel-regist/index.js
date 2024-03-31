@@ -11,8 +11,15 @@ import InputGroup from '@/components/inputs/input-group/input-group';
 import cl from './index.module.css';
 import ButtonIcon from '@/components/buttons/button-icon/button-icon';
 import InputFiles from '@/components/inputs/input-files/input-files';
+import InputMap from '@/components/inputs/input-map/input-map';
 
 const Index = () => {
+
+    let [center, setCenter] = useState({
+        lat: 0,
+        lng: 0
+    });
+
     return (
         <div>
             <TitleCenterBig title="Đăng tin cho thuê trọ"></TitleCenterBig>
@@ -60,6 +67,13 @@ const Index = () => {
                 <div className='form-group'>
                     <label className='label label-block'>Địa chỉ <span>*</span></label>
                     <InputAddress></InputAddress>
+                </div>
+                <div className='form-group'>
+                    <label onClick={()=>{setCenter({
+                        lat: 10.244310036658074,
+                        lng: 105.81147844275095
+                    })}} className='label label-block'>Bản đồ <span>*</span></label>
+                    <InputMap address="Tổ 4, Khu phố 1, thị trấn thứ ba, an biên, kiên giang"></InputMap>
                 </div>
                 <div className='form-group'>
                     <label className='label label-block'>Địa chỉ chi tiết <span>*</span></label>
