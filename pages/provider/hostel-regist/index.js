@@ -12,13 +12,16 @@ import cl from './index.module.css';
 import ButtonIcon from '@/components/buttons/button-icon/button-icon';
 import InputFiles from '@/components/inputs/input-files/input-files';
 import InputMap from '@/components/inputs/input-map/input-map';
+import Modal from '@/components/modals/modal/modal';
+import ModalPreviewHostel from '@/components/modals/modal-preview-hostel/modal-preview-hostel';
 
 const Index = () => {
 
-    let [center, setCenter] = useState({
-        lat: 0,
-        lng: 0
-    });
+    let [showPreview, setShowPreview] = useState(false);
+
+    function handleShowPreview(showPreview) {
+        setShowPreview(showPreview);
+    }
 
     return (
         <div>
@@ -69,13 +72,6 @@ const Index = () => {
                     <InputAddress></InputAddress>
                 </div>
                 <div className='form-group'>
-                    <label onClick={()=>{setCenter({
-                        lat: 10.244310036658074,
-                        lng: 105.81147844275095
-                    })}} className='label label-block'>Bản đồ <span>*</span></label>
-                    <InputMap address="Tổ 4, Khu phố 1, thị trấn thứ ba, an biên, kiên giang"></InputMap>
-                </div>
-                <div className='form-group'>
                     <label className='label label-block'>Địa chỉ chi tiết <span>*</span></label>
                     <InputGroup
                         type='text'
@@ -84,7 +80,12 @@ const Index = () => {
                         onChange={(value)=>{
                             console.log(value);
                         }}
+                        placeholder="Vị trí để dễ tìm thấy trọ. Ví dụ: 64/62/62 Nguyễn Khoái, Phường 2, Quận 4, TP. Hồ Chí Minh"
                     ></InputGroup>
+                </div>
+                <div className='form-group'>
+                    <label className='label label-block'>Bản đồ <span>*</span></label>
+                    <InputMap address="Tổ 4, Khu phố 1, thị trấn thứ ba, an biên, kiên giang"></InputMap>
                 </div>
                 <div className='form-group'>
                     <label className='label label-block'>Diện tích (mét vuông) <span>*</span></label>
@@ -159,21 +160,38 @@ const Index = () => {
                     ></InputFiles>
                 </div>
                 <div className={cl.buttons}>
-                    <ButtonIcon text="Xem trước" icon={<i className="fas fa-file-alt"></i>}></ButtonIcon>
                     <ButtonIcon
                         text="Lưu nháp"
                         icon={<i className="fas fa-file"></i>}
-                        backgroundColor="#c15422"
-                        color="white"
+                        backgroundColor="transparent"
+                        color="#181818"
+                        border="1px solid gray"
                     ></ButtonIcon>
                     <ButtonIcon
-                        text="Đăng ngay"
-                        icon={<i className="fal fa-check"></i>}
+                        text="Tiếp tục"
+                        icon={<i className="far fa-angle-right"></i>}
                         backgroundColor="rgb(0, 153, 91)"
                         color="white"
+                        onClick={()=>{
+                            handleShowPreview(true);
+                        }}
                     ></ButtonIcon>
                 </div>
             </div>
+            <Modal
+                isShowModal={showPreview}
+                title="Xem lại tin đăng"
+                subTitle="Sau khi đăng tải, bài đăng của bạn sẽ tiếp cận đến mọi người sớm nhất"
+                top={'5%'}
+                mobileTop={'10%'}
+                submitBtnText="Đăng ngay"
+                submitBtnIcon={<i className="far fa-check"></i>}
+                onClose={()=>{
+                    handleShowPreview(false);
+                }}
+            >
+                <ModalPreviewHostel></ModalPreviewHostel>
+            </Modal>
         </div>
     );
 }

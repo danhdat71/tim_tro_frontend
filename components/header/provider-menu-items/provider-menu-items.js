@@ -1,11 +1,24 @@
 import React from 'react';
 import cl from './provider-menu-items.module.css';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { toggleMenuHeader } from '@/redux/features/header';
 
 const ProviderMenuItems = () => {
+
+    const dispatch = useDispatch();
+
+    function handleSetEnableHeader(status) {
+        dispatch(toggleMenuHeader(status));
+    }
+
     return (
         <div className={cl.list_menu_item}>
-            <Link href="" className={cl.menu_item_wrap}>
+            <Link
+                href="/provider/hostel-regist"
+                className={cl.menu_item_wrap}
+                onClick={()=>{handleSetEnableHeader(false)}}
+            >
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
                         <i className="fal fa-comment-alt-edit"></i>

@@ -8,3 +8,10 @@
     border: none;
     outline: none;
 }
+
+@media screen and (max-width: 425px) {
+    .wrap_select {
+        grid-template-columns: 1fr;
+        grid-column-gap: 5px;
+    }
+}

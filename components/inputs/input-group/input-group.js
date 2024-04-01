@@ -10,7 +10,8 @@ const InputGroup = (props) => {
         type,
         min = 0,
         max = 999999,
-        onChange
+        onChange,
+        placeholder
     } = props;
 
     function handleInputValue(e) {
@@ -77,6 +78,7 @@ const InputGroup = (props) => {
                     onChange={(e)=>{
                         handleInputValue(e);
                     }}
+                    placeholder={placeholder}
                 ></input>
                 <div className={cl.button_list}>
                     <div>

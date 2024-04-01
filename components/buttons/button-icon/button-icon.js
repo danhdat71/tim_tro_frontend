@@ -27,7 +27,7 @@ const ButtonIcon = (props) => {
 
         return (
             <>
-                <span>{text}</span>
+                <span className={cl.text}>{text}</span>
                 <span className={cl.icon}>{icon}</span>
             </>
         );

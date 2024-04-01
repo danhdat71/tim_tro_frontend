@@ -1,16 +1,40 @@
 .input_map {
+    padding-bottom: 15px;
+}
+
+.wrap_map {
     width: 100%;
     height: 400px;
 }
 
 .marker {
     position: relative;
+    transition: .3s;
 }
 
 .marker_icon {
-    font-size: 40px;
+    font-size: 50px;
     position: absolute;
     left: 0;
     top: 0;
     transform: translate(-50%, -100%);
+    color: rgb(234, 0, 0);
+}
+
+
+.helper {
+    padding-top: 10px;
+}
+
+.helper_item {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: rgb(97, 97, 97);
+    padding: 2px 0;
+}
+
+.helper .icon {
+    font-size: 10px;
+    padding-right: 10px;
 }

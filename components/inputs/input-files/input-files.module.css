@@ -63,6 +63,13 @@
     padding: 15px 0;
 }
 
+@media screen and (max-width: 425px) {
+    .wrap_preview {
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 5px;
+    }
+}
+
 .preview_item {
     width: 100%;
     aspect-ratio: 10/5;

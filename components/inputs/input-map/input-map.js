@@ -17,11 +17,7 @@ const InputMap = (props) => {
     let [center, setCenter] = useState({
         lat: 0,
         lng: 0,
-        zoom: 12,
-    });
-    let [marker, setMarker] = useState({
-        lat: 0,
-        lng: 0,
+        zoom: 18,
     });
 
     useEffect(function(){
@@ -45,45 +41,50 @@ const InputMap = (props) => {
         setCenter(newCenter);
     }
 
-    function handleSetMarker(value) {
-        let newMarker = {...marker};
-        newMarker.lat = value.lat;
-        newMarker.lng = value.lng;
-        newMarker.zoom = value.zoom;
-
-        setMarker(newMarker);
-    }
-
     return (
         <div className={cl.input_map}>
-            <GoogleMapReact
-                bootstrapURLKeys={config}
-                center={center}
-                zoom={center.zoom}
-                onClick={(value)=>{
-                    handleSetMarker({
-                        lat: value?.lat,
-                        lng: value?.lng,
-                    });
-                }}
-                onZoomAnimationEnd={(zoom)=>{
-                    handleSetCenter({
-                        lat: center?.lat,
-                        lng: center?.lng,
-                        zoom: zoom?.zoom,
-                    });
-                }}
-            >
-                <div
-                    className={cl.marker}
-                    lat={marker.lat}
-                    lng={marker.lng}
+            <div className={cl.wrap_map}>
+                <GoogleMapReact
+                    bootstrapURLKeys={config}
+                    center={center}
+                    zoom={center.zoom}
+                    onClick={(value)=>{
+                        handleSetCenter({
+                            lat: value?.lat,
+                            lng: value?.lng,
+                            zoom: 18,
+                        });
+                    }}
                 >
-                    <div className={cl.marker_icon}>
-                        <i className="fas fa-map-marker-alt"></i>
+                    <div
+                        className={cl.marker}
+                        lat={center.lat}
+                        lng={center.lng}
+                    >
+                        <div className={cl.marker_icon}>
+                            <i className="fas fa-map-marker-alt"></i>
+                        </div>
                     </div>
+                </GoogleMapReact>
+            </div>
+            <div className={cl.helper}>
+                <div className={cl.helper_item}>
+                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
+                    <span>Kéo thả chuột hoặc giữ 2 ngón tay và kéo thả để di chuyển bản đồ</span>
                 </div>
-            </GoogleMapReact>
+                <div className={cl.helper_item}>
+                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
+                    <span>Nháy đúp vào bản đồ hoặc giữ Ctrl + lăn chuột để phóng to nhanh</span>
+                </div>
+                <div className={cl.helper_item}>
+                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
+                    <span>Nháy vào bản đồ để ghim vị trí</span>
+                </div>
+                <div className={cl.helper_item}>
+                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
+                    <span>Khuyến khích chọn vị trí chuẩn nhất để người tìm có thể dễ dàng tìm thấy trọ</span>
+                </div>
+            </div>
         </div>
     );
 }
