@@ -28,7 +28,11 @@ const ProviderMenuItems = () => {
                     </div>
                 </div>
             </Link>
-            <Link href="" className={cl.menu_item_wrap}>
+            <Link
+                href="/provider/hostel-manager"
+                className={cl.menu_item_wrap}
+                onClick={()=>{handleSetEnableHeader(false)}}
+            >
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
                         <i className="fal fa-list-ul"></i>
@@ -38,7 +42,10 @@ const ProviderMenuItems = () => {
                     </div>
                 </div>
             </Link>
-            <Link href="" className={cl.menu_item_wrap}>
+            <Link
+                href=""
+                className={cl.menu_item_wrap}
+            >
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
                         <i className="fal fa-address-card"></i>
