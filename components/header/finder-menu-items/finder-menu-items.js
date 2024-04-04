@@ -22,27 +22,10 @@ const FinderMenuItems = () => {
                 >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
-                            <i className="fal fa-home"></i>
+                            <i className="fal fa-house-user"></i>
                         </div>
                         <div className={cl.text}>
-                            Trang chủ
-                        </div>
-                    </div>
-                </Link>
-                <Link
-                    href="/notifications"
-                    className={cl.menu_item_wrap}
-                    onClick={()=>{handleSetEnableHeader(false)}}
-                >
-                    <div className={cl.menu_item}>
-                        <div className={cl.icon}>
-                            <i className="fal fa-bell"></i>
-                        </div>
-                        <div className={cl.text}>
-                            Thông báo
-                        </div>
-                        <div className={cl.counter}>
-                            10
+                            Tìm phòng trọ
                         </div>
                     </div>
                 </Link>
@@ -53,80 +36,52 @@ const FinderMenuItems = () => {
                 >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
-                            <i className="fal fa-search"></i>
+                            <i className="fal fa-home"></i>
                         </div>
                         <div className={cl.text}>
-                            Tìm phòng trọ
+                            Tìm nhà nguyên căn
                         </div>
                     </div>
                 </Link>
                 <Link
-                    href="/finder/hostel-manager"
+                    href="/"
                     className={cl.menu_item_wrap}
                     onClick={()=>{handleSetEnableHeader(false)}}
                 >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
-                            <i className="fal fa-list-ul"></i>
+                            <i className="fal fa-users-medical"></i>
                         </div>
                         <div className={cl.text}>
-                            Quản lý tìm trọ
+                            Tìm ở ghép
                         </div>
                     </div>
                 </Link>
                 <Link
-                    href="/finder/loves"
+                    href="/"
                     className={cl.menu_item_wrap}
                     onClick={()=>{handleSetEnableHeader(false)}}
                 >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
-                            <i className="fal fa-heart"></i>
+                            <i className="fal fa-list"></i>
                         </div>
                         <div className={cl.text}>
-                            Trọ quan tâm
+                            Bảng giá
                         </div>
                     </div>
                 </Link>
                 <Link
-                    href="/finder/mypage"
+                    href="/"
                     className={cl.menu_item_wrap}
                     onClick={()=>{handleSetEnableHeader(false)}}
                 >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
-                            <i className="fal fa-address-card"></i>
+                            <i className="fal fa-rss-square"></i>
                         </div>
                         <div className={cl.text}>
-                            Trang cá nhân
-                        </div>
-                    </div>
-                </Link>
-                <Link
-                    href=""
-                    className={cl.menu_item_wrap}
-                    onClick={()=>{handleSetEnableHeader(false)}}
-                >
-                    <div className={cl.menu_item}>
-                        <div className={cl.icon}>
-                            <i className="fal fa-exclamation-triangle"></i>
-                        </div>
-                        <div className={cl.text}>
-                            Báo lỗi & góp ý
-                        </div>
-                    </div>
-                </Link>
-                <Link
-                    href=""
-                    className={cl.menu_item_wrap}
-                    onClick={()=>{handleSetEnableHeader(false)}}
-                >
-                    <div className={cl.menu_item}>
-                        <div className={cl.icon}>
-                            <i className="fal fa-user-alt-slash"></i>
-                        </div>
-                        <div className={cl.text}>
-                            Xóa tài khoản
+                            Tin tức
                         </div>
                     </div>
                 </Link>

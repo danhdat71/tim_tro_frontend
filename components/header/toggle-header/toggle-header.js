@@ -7,6 +7,7 @@ import FinderMenuItems from '../finder-menu-items/finder-menu-items';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleMenuHeader } from '@/redux/features/header';
+import SubHeader from '../sub-header/sub-header';
 
 const ToggleHeader = () => {
 
@@ -76,6 +77,9 @@ const ToggleHeader = () => {
                 <div className={cl.header_main}>
                     <ProviderMenuItems></ProviderMenuItems>
                     {/* <FinderMenuItems></FinderMenuItems> */}
+                </div>
+                <div>
+                    <SubHeader></SubHeader>
                 </div>
             </div>
         </div>

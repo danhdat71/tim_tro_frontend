@@ -4,7 +4,7 @@
 }
 
 .main_container {
-    max-width: 800px;
+    max-width: 1080px;
     margin: auto;
     background-color: white;
 }
@@ -12,4 +12,6 @@
 .padding_container {
     padding-left: 15px;
     padding-right: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

@@ -41,27 +41,6 @@
     }
 }
 
-@media screen and (max-width: 440px) {
-    /* .wrap_main_button {
-        display: flex;
-        column-gap: 15px;
-        flex-direction: column;
-    }
-    .wrap_main_button button {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 10px;
-    } */
-}
-
-.desc_booking {
-    padding-top: 15px;
-    font-size: 14px;
-    font-style: italic;
-    color: rgb(162, 162, 162);
-    font-weight: 300;
-}
-
 .wrap_avatar {
     border-top: 1px solid rgb(240, 240, 240);
     border-bottom: 1px solid rgb(240, 240, 240);
@@ -76,4 +55,31 @@
 .created_at {
     font-size: 15px;
     color: rgb(62, 62, 62);
+}
+
+@media screen and (max-width: 540px) {
+    .wrap_avatar {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .created_at {
+        padding-top: 25px;
+    }
+}
+
+.other_search {
+    padding-bottom: 30px;
+}
+
+.wrap_main_button {
+    display: flex;
+    gap: 10px;
+}
+
+@media screen and (max-width: 408px) {
+    .wrap_main_button {
+        flex-direction: column;
+        gap: 5px;
+    }
 }

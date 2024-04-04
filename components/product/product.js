@@ -2,14 +2,19 @@ import React from 'react';
 import cl from './product.module.css';
 import Link from 'next/link';
 
-const Product = () => {
+const Product = (props) => {
+
+    let {
+        image
+    } = props;
+
     return (
         <div className={cl.product_item}>
             <div className={cl.left_card}>
                 <Link href='/hostels/25' className={cl.product_item_link}>
                     <div className={cl.wrap_img}>
                         <img
-                            src='https://picsum.photos/1000'
+                            src={image}
                             alt='image'
                             loading='lazy'
                         />

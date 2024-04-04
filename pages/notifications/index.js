@@ -3,6 +3,7 @@ import cl from './index.module.css';
 import EmptyList from '@/components/empty-list/empty-list';
 import NotificationItem from '@/components/notification-item/notification-item';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
+import TitleLeftBig from '@/components/titles/title-left-big/title-left-big';
 
 const breadcrumbs = [
     {
@@ -21,8 +22,11 @@ const Index = () => {
             <Breadcrumb
                 items={breadcrumbs}
             />
+            <TitleLeftBig title="Thông báo" />
             {/* <EmptyList title="Hiện chưa có thông báo nào"></EmptyList> */}
-            <NotificationItem></NotificationItem>
+            <div className={cl.notification_list}>
+                <NotificationItem></NotificationItem>
+            </div>
         </div>
     );
 }

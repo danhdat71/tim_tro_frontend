@@ -1,35 +1,29 @@
 import React from 'react';
 import cl from './best-area-box.module.css';
 
-const bestAreas = [
+const BestAreaBox = (props) => {
 
-];
+    let {
+        title,
+        items,
+    } = props;
 
-const BestAreaBox = () => {
+    function renderItems() {
+        return items?.map(function(value, index) {
+            return (
+                <div key={index} className={cl.item}>
+                    <span>{value.label}</span>
+                    <span>{value?.total}</span>
+                </div>
+            );
+        })
+    }
+
     return (
         <div className={cl.best_area_box}>
-            <div className={cl.title}>Các khu vực nổi bật</div>
+            <div className={cl.title}>{title}</div>
             <div className={cl.list}>
-                <div className={cl.item}>
-                    <span>Hồ Chí Minh</span>
-                    <span>10</span>
-                </div>
-                <div className={cl.item}>
-                    <span>Cần Thơ</span>
-                    <span>10</span>
-                </div>
-                <div className={cl.item}>
-                    <span>Bình Dương</span>
-                    <span>10</span>
-                </div>
-                <div className={cl.item}>
-                    <span>Đà Nẵng</span>
-                    <span>10</span>
-                </div>
-                <div className={cl.item}>
-                    <span>Hà Nội</span>
-                    <span>10</span>
-                </div>
+                {renderItems()}
             </div>
         </div>
     );

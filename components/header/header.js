@@ -18,11 +18,20 @@ const Header = () => {
 
     return (
         <div className={cl.wrap_header}>
-            <Link href='/'>
-                <div className={cl.left}>
-                    <img src={logoImg.src} alt='logo'></img>
+            <div className={cl.left}>
+                <div className={cl.brand_logo}>
+                    <Link href='/'><img src={'https://mogi.vn/content/Images/logo.svg'} alt='logo'></img></Link>
                 </div>
-            </Link>
+                <div className={cl.fast_menu}>
+                    <div className={`${cl.fast_menu_item} ${cl.active}`}><Link href=''>Tìm phòng trọ</Link></div>
+                    <div className={cl.fast_menu_item}><Link href=''>Tìm văn phòng</Link></div>
+                    <div className={cl.fast_menu_item}><Link href=''>Tìm nhà nguyên căn</Link></div>
+                    <div className={cl.fast_menu_item}><Link href=''>Tìm ở ghép</Link></div>
+                    <div className={cl.fast_menu_item}><Link href=''>Bảng giá trọ</Link></div>
+                    <div className={cl.fast_menu_item}><Link href=''>Tin tức</Link></div>
+                </div>
+            </div>
+
             <div className={cl.right}>
                 <Link href='/finder/loves' className={cl.menu_button}>
                     <span className={cl.count}>1</span>
@@ -32,6 +41,12 @@ const Header = () => {
                     <span className={cl.count}>1</span>
                     <span><i className="fal fa-bell"></i></span>
                 </Link>
+                {/* <Link href='/auth/login' className={cl.menu_button}>
+                    <span>Đăng nhập</span>
+                </Link>
+                <Link href='/auth/register' className={`${cl.menu_button} ${cl.register}`}>
+                    <span>Đăng ký</span>
+                </Link> */}
                 <div
                     className={cl.menu_button}
                     onClick={()=>{handleSetEnableHeader(true)}}

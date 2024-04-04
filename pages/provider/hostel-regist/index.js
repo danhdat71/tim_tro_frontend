@@ -14,6 +14,12 @@ import InputFiles from '@/components/inputs/input-files/input-files';
 import InputMap from '@/components/inputs/input-map/input-map';
 import Modal from '@/components/modals/modal/modal';
 import ModalPreviewHostel from '@/components/modals/modal-preview-hostel/modal-preview-hostel';
+import Breadcrumb from '@/components/breadcrumb/breadcrumb';
+
+const breadcrumbs = [
+    {label:'Trang chủ', href:'/'},
+    {label:'Đăng tin', href:'/provider/hostel-regist'}
+];
 
 const Index = () => {
 
@@ -25,6 +31,7 @@ const Index = () => {
 
     return (
         <div>
+            <Breadcrumb items={breadcrumbs}></Breadcrumb>
             <TitleCenterBig title="Đăng tin cho thuê trọ"></TitleCenterBig>
             <div>
                 <div className='form-group'>

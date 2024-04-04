@@ -84,10 +84,6 @@
     font-weight: 400;
 }
 
-.voters {
-    padding-top: 15px;
-}
-
 .voter_paginate {
     display: flex;
     justify-content: center;

@@ -157,24 +157,6 @@ const Index = () => {
             </div>
 
             <TitleLeftBig
-                title="Lượt đánh giá"
-                style={{paddingTop: '20px'}}
-            ></TitleLeftBig>
-            <div className={cl.voters}>
-                <VoterBar></VoterBar>
-                <VoterBar></VoterBar>
-                <div className={cl.voter_paginate}>
-                    <Pagination
-                        count={10}
-                        color="success"
-                        shape="rounded"
-                        variant="outlined"
-                        size={'small'}
-                    />
-                </div>
-            </div>
-
-            <TitleLeftBig
                 title="Các trọ đăng tuyển"
                 style={{paddingTop: '20px'}}
             ></TitleLeftBig>

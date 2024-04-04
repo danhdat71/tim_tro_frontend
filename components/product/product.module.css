@@ -15,11 +15,11 @@
     bottom: 10px;
     right: 10px;
     color: white;
-    font-size: 13px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.591);
-    padding: 2px 5px;
+    padding: 4px 10px;
 }
 
 .count_img_num span:first-child {
@@ -27,7 +27,7 @@
 }
 
 .left_card {
-    width: 30%;
+    width: 27%;
 }
 
 .wrap_img {
@@ -44,9 +44,18 @@
 }
 
 .right_card {
-    width: 70%;
+    width: 83%;
     padding-left: 15px;
     position: relative;
+}
+
+@media screen and (max-width: 910px) {
+    .left_card {
+        width: 33%;
+    }
+    .right_card {
+        width: 67%;
+    }
 }
 
 @media screen and (max-width: 489px) {
@@ -68,6 +77,7 @@
     color: rgb(60, 60, 60);
     padding-bottom: 10px;
     line-height: 1.4;
+    font-size: 17px;
 }
 
 .price {
@@ -93,10 +103,14 @@
     position: absolute;
     right: 10px;
     bottom: 10px;
+    border: 1px solid rgb(216, 216, 216);
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .like_btn button {
-    font-size: 23px;
+    font-size: 15px;
     cursor: pointer;
     border: none;
     outline: none;

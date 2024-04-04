@@ -1,0 +1,32 @@
+.button_call {
+    font-size: 15px;
+    border: 1px solid rgb(12, 159, 86);
+    color: rgb(12, 159, 86);
+    outline: none;
+    padding: 10px 20px;
+    background-color: rgb(242, 255, 248);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .3s;
+    user-select: none;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.tel {
+    padding-left: 10px;
+    padding-right: 15px;
+    color: black;
+}
+
+@media screen and (max-width: 408px) {
+    .button_call {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .tel {
+        padding: 0;
+    }
+}

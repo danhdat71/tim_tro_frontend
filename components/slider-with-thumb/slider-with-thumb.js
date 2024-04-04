@@ -68,7 +68,7 @@ const SliderWithThumb = () => {
                 <Swiper
                     onSwiper={setThumbsSwiper}
                     spaceBetween={10}
-                    slidesPerView={windowSize.width > 520 ? 5 : 4}
+                    slidesPerView={windowSize.width > 520 ? 6 : 4}
                     freeMode={true}
                     watchSlidesProgress={true}
                     modules={[FreeMode, Navigation, Thumbs]}
