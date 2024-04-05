@@ -5,7 +5,7 @@ const TitleLeftBig = (props) => {
     let {title, style} = props;
     return (
         <div style={style} className={`${cl.title}`}>
-            {title}
+            <div>{title}</div>
         </div>
     );
 }

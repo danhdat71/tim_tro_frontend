@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cl from './finder-guide.module.css';
 import contractSignImg from '../../assets/imgs/contract_sign.png';
 import searchIconImg from '../../assets/imgs/search_icon.png';
@@ -77,4 +77,4 @@ const FinderGuide = () => {
     );
 }
 
-export default FinderGuide;
+export default memo(FinderGuide);

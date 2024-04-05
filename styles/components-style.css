@@ -49,3 +49,30 @@
 .mb-15px {
     margin-bottom: 15px;
 }
+
+/* Paginate */
+.paginate-md button,
+.paginate-md div {
+    width: 35px;
+    height: 35px;
+    border: 1px solid rgb(219, 219, 219);
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    border-left: 0;
+    transition: .1s;
+}
+.paginate-md div {
+    padding-top: 3px;
+}
+.paginate-md li:first-child button {
+    border-left: 1px solid rgb(219, 219, 219);
+}
+.paginate-md button:hover {
+    background-color: rgb(35, 35, 35)!important;
+    color: white;
+}
+.paginate-md .Mui-selected {
+    background-color: rgb(35, 35, 35);
+    color: white;
+}

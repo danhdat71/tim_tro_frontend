@@ -74,6 +74,17 @@ const Index = () => {
                         helpLabel={suggestDescription()}
                     ></TextareaInputWithCount>
                 </div>
+                <div className={`form-group ${cl.input_tel}`}>
+                    <label className='label label-block'>Số điện thoại liên hệ <span>*</span></label>
+                    <InputGroup
+                        type='number'
+                        min='1'
+                        max='20'
+                        onChange={(inputed)=>{
+                            console.log('Giá cho thuê', inputed);
+                        }}
+                    ></InputGroup>
+                </div>
                 <div className='form-group'>
                     <label className='label label-block'>Địa chỉ <span>*</span></label>
                     <InputAddress></InputAddress>

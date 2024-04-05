@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import cl from './input-group.module.css';
 import { formatDotEach3Num } from '@/helpers/priceHelper';
 
@@ -94,4 +94,4 @@ const InputGroup = (props) => {
     );
 }
 
-export default InputGroup;
+export default memo(InputGroup);

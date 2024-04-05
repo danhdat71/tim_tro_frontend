@@ -2,3 +2,12 @@
     min-height: calc(100vh - (78.64px + 466.16px));
     padding-bottom: 30px;
 }
+
+.wrap_paginate {
+    display: flex;
+    justify-content: center;
+}
+
+.wrap_products {
+    padding-bottom: 40px;
+}

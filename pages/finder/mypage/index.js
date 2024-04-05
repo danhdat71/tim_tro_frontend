@@ -8,13 +8,13 @@ import ModalFullName from '@/components/modals/modal-full-name/modal-full-name';
 import ModalTel from '@/components/modals/modal-tel/modal-tel';
 import ButtonIcon from '@/components/buttons/button-icon/button-icon';
 import TitleLeftBig from '@/components/titles/title-left-big/title-left-big';
-import VoterBar from '@/components/voter-bar/voter-bar';
 import { Pagination } from '@mui/material';
 import ModalGender from '@/components/modals/modal-gender/modal-gender';
 import ModalBirthday from '@/components/modals/modal-birthday/modal-birthday';
 import ModalAboutDesc from '@/components/modals/modal-about-desc/modal-about-desc';
 import ModalChangePassword from '@/components/modals/modal-change-password/modal-change-password';
 import Product from '@/components/product/product';
+import AvatarUsername from '@/components/avatar-username/avatar-username';
 
 const Index = () => {
     let [isShowAvatarModal, setIsShowAvatarModal] = useState(false);
@@ -154,6 +154,16 @@ const Index = () => {
                 <div className={cl.info_item_icon}>
                     <i className="fal fa-edit"></i>
                 </div>
+            </div>
+
+            <TitleLeftBig
+                title="Người theo dõi"
+                style={{paddingTop: '20px', paddingBottom: '5px'}}
+            ></TitleLeftBig>
+            <div>
+                <AvatarUsername></AvatarUsername>
+                <AvatarUsername></AvatarUsername>
+                <AvatarUsername></AvatarUsername>
             </div>
 
             <TitleLeftBig

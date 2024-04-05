@@ -13,10 +13,6 @@ const ProductList = () => {
         return (
             <Pagination
                 count={10}
-                color="success"
-                shape="rounded"
-                variant="outlined"
-                size={windowSize.width > 600 ? 'large' : 'small'}
             />
         )
     }
@@ -57,8 +53,23 @@ const ProductList = () => {
                 <Product
                     image="https://file4.batdongsan.com.vn/resize/1275x717/2022/03/30/20220330092143-9e64_wm.jpg"
                 />
+                <Product
+                    image="https://file4.batdongsan.com.vn/resize/1275x717/2024/03/31/20240331154353-f24c_wm.jpg"
+                />
+                <Product
+                    image="https://file4.batdongsan.com.vn/crop/232x186/2024/04/05/20240405142156-d377_wm.jpg"
+                />
+                <Product
+                    image="https://file4.batdongsan.com.vn/resize/1275x717/2022/03/30/20220330092143-9e64_wm.jpg"
+                />
+                <Product
+                    image="https://file4.batdongsan.com.vn/2024/03/28/20240328234333-a7fe_wm.jpg"
+                />
+                <Product
+                    image="https://file4.batdongsan.com.vn/2024/01/19/20240119131153-df22_wm.jpg"
+                />
             </div>
-            <div className={cl.paginate_bar}>
+            <div className={`${cl.paginate_bar} paginate-md`}>
                 {handleRenderPaginate()}
             </div>
         </div>
