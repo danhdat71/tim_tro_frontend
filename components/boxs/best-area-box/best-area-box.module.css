@@ -21,6 +21,12 @@
     }
 }
 
+@media screen and (max-width: 375px) {
+    .list {
+        grid-template-columns: 1fr;
+    }
+}
+
 .item {
     cursor: pointer;
     display: flex;

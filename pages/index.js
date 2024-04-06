@@ -1,4 +1,4 @@
-import BestAreaBox from "@/components/best-area-box/best-area-box";
+import BestAreaBox from "@/components/boxs/best-area-box/best-area-box";
 import Breadcrumb from "@/components/breadcrumb/breadcrumb";
 import FilterForm from "@/components/filter-form/filter-form";
 import FinderGuide from "@/components/finder-guide/finder-guide";

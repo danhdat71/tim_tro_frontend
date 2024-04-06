@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cl from './best-area-box.module.css';
 
 const BestAreaBox = (props) => {
@@ -29,4 +29,4 @@ const BestAreaBox = (props) => {
     );
 }
 
-export default BestAreaBox;
+export default memo(BestAreaBox);

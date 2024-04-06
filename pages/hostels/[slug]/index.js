@@ -15,8 +15,9 @@ import axios from 'axios';
 import { getDetailProduct } from '@/helpers/http-requests/product';
 import Product from '@/components/product/product';
 import TitleLeftBig from '@/components/titles/title-left-big/title-left-big';
-import BestAreaBox from '@/components/best-area-box/best-area-box';
+import BestAreaBox from '@/components/boxs/best-area-box/best-area-box';
 import ButtonCall from '@/components/buttons/button-call/button-call';
+import OtherAreaBox from '@/components/boxs/other-area-box/other-area-box';
 
 export async function getServerSideProps(context) {
     let slug = context.query.slug;
@@ -50,6 +51,16 @@ const searchKeyword = [
     {label:'Trọ Quận 10', href:'/', total: 22353},
     {label:'Trọ Quận 12', href:'/', total: 4543},
     {label:'Trọ Bình Tân', href:'/', total: 12},
+];
+
+const otherPriceSameArea = [
+    {label:'Phường 1', price: '10tr', result: 563, href: '/'},
+    {label:'Phường 2', price: '5tr', result: 43453, href: '/'},
+    {label:'Phường 3', price: '2tr', result: 12, href: '/'},
+    {label:'Phường 4', price: '1tr', result: 3, href: '/'},
+    {label:'Phường 5', price: '500k', result: 1, href: '/'},
+    {label:'Phường 6', price: '12tr', result: 122, href: '/'},
+    {label:'Phường 7', price: '17tr', result: 100, href: '/'},
 ];
 
 const Index = ({ data }) => {
@@ -103,6 +114,12 @@ const Index = ({ data }) => {
                     <AvatarUsername></AvatarUsername>
                     <div className={cl.created_at}>Đăng lúc: <i>14:40 ngày 23/02/2024</i></div>
                 </div>
+            </div>
+            <div className={cl.search_other_price}>
+                <TitleLeftBig title="Bảng giá theo khu vực"></TitleLeftBig>
+                <OtherAreaBox
+                    items={otherPriceSameArea}
+                ></OtherAreaBox>
             </div>
             <div className={cl.other_search}>
                 <BestAreaBox
