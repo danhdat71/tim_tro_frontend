@@ -14,7 +14,14 @@ const Breadcrumb = (props) => {
         }
         return props.items.map(function(val, index) {
             return (
-                <Link href={val.href} className={cl.breadcrumb_item} key={index}>
+                <Link
+                    href={val.href}
+                    className={`${cl.breadcrumb_item}`}
+                    key={index}
+                    style={{
+                        fontWeight: props.items != null && index == props.items.length - 1 ? '500' : '300'
+                    }}
+                >
                     <span>{val.label}</span>
                     {props.items.length != index + 1 ? <span>/</span> : ''}
                 </Link>

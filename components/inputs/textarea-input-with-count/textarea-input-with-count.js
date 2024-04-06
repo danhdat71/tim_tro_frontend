@@ -10,8 +10,9 @@ const TextareaInputWithCount = (props) => {
         style,
         min = 0,
         max = 999999,
-        onChange,
+        onChange = function(){},
         helpLabel,
+        errMsg = ""
     } = props;
 
     let [inputed, setInputed] = useState('');
@@ -117,7 +118,7 @@ const TextareaInputWithCount = (props) => {
                 }}
             ></textarea></div>
             <div className={cl.sublabel}>
-                {renderSubLabelToggleButton()}
+                {errMsg ? <div className='err-msg'>{errMsg}</div> : renderSubLabelToggleButton()}
                 {renderSubLabel()}
             </div>
             {isFocus && handleRenderHelpLabel()}

@@ -10,8 +10,9 @@ const InputGroup = (props) => {
         type,
         min = 0,
         max = 999999,
-        onChange,
-        placeholder
+        onChange = function(){},
+        placeholder,
+        errMsg
     } = props;
 
     function handleInputValue(e) {
@@ -87,7 +88,7 @@ const InputGroup = (props) => {
                 </div>
             </div>
             <div className={cl.sublabel}>
-                <div></div>
+                <div className='err-msg'>{errMsg}</div>
                 {renderSubLabel()}
             </div>
         </>

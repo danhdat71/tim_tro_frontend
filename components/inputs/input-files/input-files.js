@@ -4,7 +4,9 @@ import cl from './input-files.module.css';
 const InputFiles = (props) => {
 
     let {
-        onChange,
+        onChange = function(){},
+        isShowHelper = true,
+        isShowLabelProfile = true,
     } = props;
 
     let [files, setFiles] = useState([]);
@@ -65,13 +67,36 @@ const InputFiles = (props) => {
                         <i className="far fa-times"></i>
                     </div>
                     {
-                        index == 0
+                        index == 0 && isShowLabelProfile
                         ? <div className={cl.avatar_tag}>Ảnh đại diện</div>
                         : null
                     }
                 </div>
             );
         });
+    }
+
+    function renderHelper() {
+        if (isShowHelper) {
+            return <div className={cl.helper}>
+                <div className={cl.helper_item}>
+                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
+                    <span>Bạn có thể chọn nhiều ảnh (tối đa 10 ảnh) cùng lúc</span>
+                </div>
+                <div className={cl.helper_item}>
+                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
+                    <span>Bạn nên chọn các ảnh khác nhau</span>
+                </div>
+                <div className={cl.helper_item}>
+                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
+                    <span>Mỗi bức ảnh nên chọn dưới 10MB để xử lý nhanh hơn</span>
+                </div>
+                <div className={cl.helper_item}>
+                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
+                    <span>Ảnh có định dạng JPG, JPEG, PNG</span>
+                </div>
+            </div>
+        }
     }
 
     return (
@@ -96,24 +121,7 @@ const InputFiles = (props) => {
             <div className={cl.wrap_preview}>
                 {renderPreviewFiles()}
             </div>
-            <div className={cl.helper}>
-                <div className={cl.helper_item}>
-                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
-                    <span>Bạn có thể chọn nhiều ảnh (tối đa 10 ảnh) cùng lúc</span>
-                </div>
-                <div className={cl.helper_item}>
-                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
-                    <span>Bạn nên chọn các ảnh khác nhau</span>
-                </div>
-                <div className={cl.helper_item}>
-                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
-                    <span>Mỗi bức ảnh nên chọn dưới 10MB để xử lý nhanh hơn</span>
-                </div>
-                <div className={cl.helper_item}>
-                    <span className={cl.icon}><i className="fas fa-circle"></i></span>
-                    <span>Ảnh có định dạng JPG, JPEG, PNG</span>
-                </div>
-            </div>
+            {renderHelper()}
         </div>
     );
 }
