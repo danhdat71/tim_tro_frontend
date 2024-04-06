@@ -20,7 +20,7 @@ const Header = () => {
         <div className={cl.wrap_header}>
             <div className={cl.left}>
                 <div className={cl.brand_logo}>
-                    <Link href='/'><img src={'https://mogi.vn/content/Images/logo.svg'} alt='logo'></img></Link>
+                    <Link href='/'><img src={logoImg.src} alt='logo'></img></Link>
                 </div>
                 <div className={cl.fast_menu}>
                     <div className={`${cl.fast_menu_item} ${cl.active}`}><Link href=''>Tìm phòng trọ</Link></div>

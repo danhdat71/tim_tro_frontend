@@ -11,7 +11,7 @@ const Footer = () => {
                     <Link href='/'>
                         <img src={logoImg.src} alt='logo'></img>
                     </Link>
-                    <span>Tìm Trọ 123 là kênh tìm trọ miễn phí cho tất cả mọi người. Bằng cách đăng ký để sử dụng các tính năng của hệ thống.</span>
+                    <span>Stay Seeker là kênh tìm trọ miễn phí cho tất cả mọi người. Bằng cách đăng ký để sử dụng các tính năng của hệ thống.</span>
                 </div>
                 <div className={cl.social_links}>
                     <a className={cl.social_item}>
