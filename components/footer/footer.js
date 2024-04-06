@@ -11,7 +11,7 @@ const Footer = () => {
                     <Link href='/'>
                         <img src={logoImg.src} alt='logo'></img>
                     </Link>
-                    <span>Stay Seeker là kênh tìm trọ miễn phí cho tất cả mọi người. Bằng cách đăng ký để sử dụng các tính năng của hệ thống.</span>
+                    <span>Stay Seeker là kênh tìm trọ tốt cho mọi người. Bằng cách đăng ký để sử dụng các tính năng của hệ thống. Mọi người có thể tìm được trọ như ý với chi phí phải chăng. Stay Seeker miễn phí & hiện không thu phí trên toàn hệ thống.</span>
                 </div>
                 <div className={cl.social_links}>
                     <a className={cl.social_item}>
@@ -39,14 +39,25 @@ const Footer = () => {
                     </div>
                     <div className={cl.col}>
                         <div className={cl.col_title}>Về chúng tôi</div>
-                        <Link className={cl.col_item} href=''><div>Giới thiệu</div></Link>
-                        <Link className={cl.col_item} href=''><div>Chính sách bảo mật</div></Link>
+                        <Link className={cl.col_item} href='/about'><div>Giới thiệu</div></Link>
+                        <Link className={cl.col_item} href='/about-security'><div>Chính sách bảo mật</div></Link>
                     </div>
                     <div className={cl.col}>
                         <div className={cl.col_title}>Liên hệ</div>
-                        <Link className={cl.col_item} href=''><div>Gmail</div></Link>
-                        <Link className={cl.col_item} href=''><div>Zalo</div></Link>
-                        <Link className={cl.col_item} href=''><div>Facebook</div></Link>
+                        <Link
+                            className={cl.col_item}
+                            target='_blank'
+                            href={`mailto:${process.env.GMAIL}`}
+                        ><div>Gmail</div></Link>
+                        <Link
+                            className={cl.col_item}
+                            target='_blank'
+                            href={`https://zalo.me/${process.env.ZALO}`}
+                        ><div>Zalo</div></Link>
+                        <Link
+                            className={cl.col_item}
+                            href={`${process.env.FACEBOOK}`}
+                        ><div>Facebook</div></Link>
                     </div>
                 </div>
             </div>

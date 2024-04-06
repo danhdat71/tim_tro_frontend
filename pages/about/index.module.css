@@ -1,0 +1,13 @@
+.brand_logo {
+    text-align: center;
+}
+.brand_logo img {
+    width: 170px;
+}
+.content div {
+    line-height: 1.7;
+}
+.about {
+    min-height: calc(100vh - (465.72px + 70.03px));
+    padding-bottom: 30px;
+}
