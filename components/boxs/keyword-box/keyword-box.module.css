@@ -1,0 +1,13 @@
+.search_keyword h3 {
+    font-size: 17px;
+    color: rgb(106, 106, 106);
+    padding-bottom: 5px;
+}
+
+.item a {
+    display: block;
+    padding: 3px 0;
+    font-size: 15px;
+    text-decoration: none;
+    color: rgb(130, 130, 130);
+}

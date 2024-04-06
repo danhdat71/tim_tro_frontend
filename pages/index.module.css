@@ -1,3 +1,21 @@
 .best_area {
     padding: 10px 0;
 }
+.wrap_search_keyword {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 20px 15px;
+    grid-gap: 15px;
+    background-color: rgb(246, 246, 246);
+    margin-bottom: 20px;
+}
+@media screen and (max-width: 877px) {
+    .wrap_search_keyword {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media screen and (max-width: 375px) {
+    .wrap_search_keyword {
+        grid-template-columns: 1fr;
+    }
+}

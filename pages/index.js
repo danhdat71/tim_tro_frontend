@@ -6,6 +6,7 @@ import ProductList from "@/components/product-list/product-list";
 import Head from "next/head";
 import cl from './index.module.css';
 import TitleLeftBig from "@/components/titles/title-left-big/title-left-big";
+import KeywordBox from "@/components/boxs/keyword-box/keyword-box";
 
 const breadcrumbItems = [
   {label: 'Trang chủ', href:'/'},
@@ -34,6 +35,18 @@ const prices = [
   {label: 'Trên 12 triệu', href:'/', total:1234},
 ];
 
+const keywordHCM = [
+  {label: 'Tìm trọ Quận 1', href:'/'},
+  {label: 'Tìm trọ Quận 2', href:'/'},
+  {label: 'Tìm trọ Quận 3', href:'/'},
+  {label: 'Tìm trọ Quận 4', href:'/'},
+  {label: 'Tìm trọ Quận 5', href:'/'},
+  {label: 'Tìm trọ Quận 6', href:'/'},
+  {label: 'Tìm trọ Bình Thạnh', href:'/'},
+  {label: 'Tìm trọ Bình Tân', href:'/'},
+  {label: 'Tìm trọ Tân Bình', href:'/'},
+];
+
 export default function Home() {
   return (
     <>
@@ -54,7 +67,25 @@ export default function Home() {
       <div className='wrap-layout-main'>
         <ProductList></ProductList>
       </div>
-      <FinderGuide></FinderGuide>
+      <div className={cl.wrap_search_keyword}>
+        <KeywordBox
+          title="Tìm trọ TP.HCM"
+          items={keywordHCM}
+        />
+        <KeywordBox
+          title="Tìm trọ Hà Nội"
+          items={keywordHCM}
+        />
+        <KeywordBox
+          title="Tìm trọ Đà Nẵng"
+          items={keywordHCM}
+        />
+        <KeywordBox
+          title="Tìm trọ Quảng Ninh"
+          items={keywordHCM}
+        />
+      </div>
+      {/* <FinderGuide></FinderGuide> */}
     </>
   );
 }
