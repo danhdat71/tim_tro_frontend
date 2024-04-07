@@ -35,6 +35,7 @@ const ButtonIcon = (props) => {
 
     return (
         <button
+            type='button'
             disabled={disabled}
             className={`${cl.button} ${className}`}
             onClick={onClick}

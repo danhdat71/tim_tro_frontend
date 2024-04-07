@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import cls from './input-password.module.css';
 
 const InputPassword = (props) => {
@@ -6,6 +6,7 @@ const InputPassword = (props) => {
     let {
         className,
         onChange = function(e){},
+        value = '',
     } = props;
 
     let [isShow, setIsShow] = useState(false);
@@ -25,6 +26,7 @@ const InputPassword = (props) => {
                 onChange={(e)=>{
                     onChange(e.target.value);
                 }}
+                value={value}
             ></input>
             <button
                 type='button'

@@ -1,9 +1,8 @@
 .alert_error {
     position: fixed;
     z-index: 9999999;
-    bottom: 15px;
-    right: 15px;
-    display: inline-flex;
+    bottom: 50px;
+    right: -30%;
     align-items: center;
     border: 1px solid rgb(180, 6, 0);
     background-color: rgb(255, 241, 241);
@@ -11,8 +10,13 @@
     border-radius: 5px;
     color: rgb(180, 6, 0);
     cursor: pointer;
-    transition: .3s;
     max-width: 100%;
+    display: inline-flex;
+    transition: .5s;
+}
+
+.alert_error.show {
+    right: 20px;
 }
 
 .icon {

@@ -5,12 +5,19 @@ import ModalReviewRegister from '@/components/modals/modal-review-register/modal
 import TitleCenterBig from '@/components/titles/title-center-big/title-center-big';
 import ButtonIcon from '@/components/buttons/button-icon/button-icon';
 import InputGroup from '@/components/inputs/input-group/input-group';
+import axios from '../../../helpers/http-requests/axios';
+import { FINDER, PROVIDER } from '../../../config/userType';
+import { useRouter } from 'next/navigation'
 
 const Register = () => {
 
     let [registerData, setRegisterData] = useState({
-        user_type: 1,
+        user_type: FINDER,
     });
+    let [isShowModalReview, setIsShowModalReview] = useState(false);
+    let [errors, setErrors] = useState({});
+    let [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
+    let router = useRouter();
 
     function handleSetRegisterData(key, value) {
         let newRegisterData = {...registerData};
@@ -18,8 +25,43 @@ const Register = () => {
         setRegisterData(newRegisterData);
     };
 
-    function handleSubmitRegister() {
-        
+    function handleSubmitCheckValidate() {
+        setErrors({});
+        axios.post(`/auth/register?check=true`, registerData)
+            .then(response => {
+                if (response.status == 422) {
+                    window.scrollTo(0, 0)
+                    setErrors(response.errors);
+                }
+                if (response.status == 200) {
+                    setIsShowModalReview(true);
+                }
+            });
+    }
+
+    function handleSubmitRegist() {
+        axios.post(`/auth/register`, registerData)
+            .then(response => {
+                if (response.status == 422) {
+                    window.scrollTo(0, 0)
+                    setErrors(response.errors);
+                }
+                if (response.status == 200) {
+                    let email = registerData.email;
+                    setSubmitBtnDisabled(false);
+                    setIsShowModalReview(false);
+                    setRegisterData({
+                        user_type: FINDER,
+                    });
+
+                    router.push({
+                        pathname: '/auth/verify-otp',
+                        query: { 
+                            'email' : email,
+                        },
+                    })
+                }
+            });
     }
 
     return (
@@ -38,8 +80,9 @@ const Register = () => {
                     onChange={(value)=>{
                         handleSetRegisterData('full_name', value);
                     }}
+                    errMsg={errors.full_name}
+                    value={registerData?.full_name}
                 ></InputGroup>
-                <div className='err-msg'>Vui lòng điền thông tin bên trên</div>
             </div>
             <div className={cl.name_group}>
                 <div className='form-group'>
@@ -51,8 +94,9 @@ const Register = () => {
                         onChange={(value)=>{
                             handleSetRegisterData('email', value);
                         }}
+                        errMsg={errors?.email}
+                        value={registerData?.email}
                     ></InputGroup>
-                    <div className='err-msg'>Vui lòng điền thông tin bên trên</div>
                 </div>
                 <div className='form-group'>
                     <label className='label label-block'>Điện thoại <span>*</span></label>
@@ -63,8 +107,9 @@ const Register = () => {
                         onChange={(value)=>{
                             handleSetRegisterData('tel', value);
                         }}
+                        errMsg={errors?.tel}
+                        value={registerData?.tel}
                     ></InputGroup>
-                    <div className='err-msg'>Vui lòng điền thông tin bên trên</div>
                 </div>
             </div>
             <div className='form-group'>
@@ -73,24 +118,27 @@ const Register = () => {
                     <input
                         type='radio'
                         className='radio-md'
-                        checked
+                        checked={registerData?.user_type == FINDER}
                         id='finder'
-                        onClick={(e)=>{
-                            handleSetRegisterData('user_type', 1);
+                        onChange={()=>{
+                            handleSetRegisterData('user_type', FINDER);
                         }}
+                        name='user_type'
                     ></input>
-                    <label htmlFor='finder'>Tìm trọ</label>
+                    <label htmlFor='finder'>Tìm thuê</label>
                 </div>
                 <div className='label-group'>
                     <input
                         type='radio'
                         className='radio-md'
                         id='provider'
-                        onClick={(e)=>{
-                            handleSetRegisterData('user_type', 0);
+                        checked={registerData?.user_type == PROVIDER}
+                        onChange={()=>{
+                            handleSetRegisterData('user_type', PROVIDER);
                         }}
+                        name='user_type'
                     ></input>
-                    <label htmlFor='provider'>Cho thuê trọ</label>
+                    <label htmlFor='provider'>Cho thuê</label>
                 </div>
             </div>
             <div className='form-group'>
@@ -100,8 +148,9 @@ const Register = () => {
                     onChange={(value)=>{
                         handleSetRegisterData('password', value);
                     }}
+                    value={registerData?.password}
                 />
-                <div className='err-msg'>Vui lòng điền thông tin bên trên</div>
+                <div className='err-msg'>{errors?.password}</div>
             </div>
             <div className='form-group'>
                 <label className='label label-block'>Nhắc lại mật khẩu <span>*</span></label>
@@ -110,8 +159,9 @@ const Register = () => {
                     onChange={(value)=>{
                         handleSetRegisterData('re_password', value);
                     }}
+                    value={registerData?.re_password}
                 />
-                <div className='err-msg'>Vui lòng điền thông tin bên trên</div>
+                <div className='err-msg'>{errors?.re_password}</div>
             </div>
             <div className={cl.buttons}>
                 {/* <button type='button' className={cl.button}>
@@ -124,9 +174,24 @@ const Register = () => {
                     border="1px solid #00995b"
                     color="white"
                     icon={<i className="far fa-check"></i>}
+                    onClick={()=>{
+                        // setIsShowModalReview(true);
+                        handleSubmitCheckValidate();
+                    }}
                 />
             </div>
-            {/* <ModalReviewRegister></ModalReviewRegister> */}
+            <ModalReviewRegister
+                isShowModal = {isShowModalReview}
+                onClose={()=>{
+                    setIsShowModalReview(false);
+                }}
+                registData = {registerData}
+                onSubmit={()=>{
+                    setSubmitBtnDisabled(true);
+                    handleSubmitRegist();
+                }}
+                submitBtnDisabled={submitBtnDisabled}
+            ></ModalReviewRegister>
         </form>
     );
 }

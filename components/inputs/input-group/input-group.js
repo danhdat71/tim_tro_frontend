@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import cl from './input-group.module.css';
 import { formatDotEach3Num } from '@/helpers/priceHelper';
 
@@ -12,8 +12,13 @@ const InputGroup = (props) => {
         max = 999999,
         onChange = function(){},
         placeholder,
-        errMsg
+        errMsg,
+        value = "",
     } = props;
+
+    useEffect(function(){
+        setInputed(value);
+    }, [value]);
 
     function handleInputValue(e) {
         let value = e.target.value;
@@ -88,7 +93,7 @@ const InputGroup = (props) => {
                 </div>
             </div>
             <div className={cl.sublabel}>
-                <div className='err-msg'>{errMsg}</div>
+                <div className='err-msg'>{errMsg?.join("").replace(/\./g, ".\n")}</div>
                 {renderSubLabel()}
             </div>
         </>

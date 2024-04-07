@@ -1,8 +1,8 @@
 .alert_success {
     position: fixed;
     z-index: 9999999;
-    bottom: 15px;
-    right: 15px;
+    bottom: 50px;
+    right: -30%;
     display: inline-flex;
     align-items: center;
     border: 1px solid rgb(0, 180, 111);
@@ -13,6 +13,10 @@
     cursor: pointer;
     transition: .3s;
     max-width: 100%;
+}
+
+.alert_success.show {
+    right: 20px;
 }
 
 .icon {
