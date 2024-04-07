@@ -5,7 +5,7 @@ const InputPassword = (props) => {
 
     let {
         className,
-        onChange,
+        onChange = function(e){},
     } = props;
 
     let [isShow, setIsShow] = useState(false);
@@ -22,7 +22,9 @@ const InputPassword = (props) => {
             <input
                 className={`${className} ${cls.input}`}
                 type={isShow == true ? 'text' : 'password'}
-                onChange={onChange}
+                onChange={(e)=>{
+                    onChange(e.target.value);
+                }}
             ></input>
             <button
                 type='button'
