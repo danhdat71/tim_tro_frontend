@@ -11,7 +11,7 @@ const AlertError = (props) => {
 
     return (
         <div className={`${cl.alert_error} ${isShow ? cl.show : null}`}>
-            <div className={cl.icon}><i className="fal fa-check"></i></div>
+            <div className={cl.icon}><i className="fal fa-exclamation-circle"></i></div>
             <div>
                 <div className={cl.message}>{message}</div>
                 <div className={cl.sub}>{sub}</div>

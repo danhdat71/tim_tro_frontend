@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 axios.defaults.baseURL = process.env.API;
-axios.defaults.headers.common['Authorization'] = 'Bearer fjzgPfZ07Xm83HeBOUvPGYTAJPdxOPwFOciZElqRe28e4bbe';
+if (typeof window !== 'undefined') {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
+}
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 axios.interceptors.response.use(
@@ -9,10 +11,13 @@ axios.interceptors.response.use(
         return response.data;
     },
     error => {
+        console.log('handle error', error);
         if (error.response.status == 422) {
             return error.response.data;
         } else if (error.response.status == 400) {
             return error.response.data; 
+        } else if (error.response.status == 401) {
+            return error.response.data;
         }
     }
 );

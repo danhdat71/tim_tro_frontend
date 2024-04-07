@@ -1,14 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cl from './login.module.css';
 import TitleCenterBig from '@/components/titles/title-center-big/title-center-big';
 import InputPassword from '@/components/inputs/input-password/input-password';
 import ButtonIcon from '@/components/buttons/button-icon/button-icon';
 import Link from 'next/link';
+import axios from '../../../helpers/http-requests/axios';
+import AlertError from '@/components/alerts/alert-error/alert-error';
+import { useRouter } from 'next/navigation';
 
 const Index = () => {
 
     const [loginData, setLoginData] = useState({});
     const [errors, setErrors] = useState({});
+    const [alertError, setAlertError] = useState({
+        isShow: false,
+    });
+    const [isDisabledLogin, setIsDisabledLogin] = useState(false);
+    const timeoutAlertError = useRef();
+    let router = useRouter();
+
+    useEffect(function(){
+        timeoutAlertError.current = setTimeout(function(){
+            setAlertError({
+                isShow: false,
+            });
+        }, 3000);
+
+        return () =>{
+            clearTimeout(timeoutAlertError.current);
+        }
+    }, [alertError]);
+
+    useEffect(function(){
+        axios.get(`/auth/get-me`)
+            .then(response => {
+                if (response.status != 401) {
+                    router.push({
+                        pathname : '/',
+                    })
+                }
+            });
+    }, []);
 
     function handleSetLoginData(key, value) {
         let newLoginData = {...loginData};
@@ -17,7 +49,29 @@ const Index = () => {
     }
 
     function handleSubmitLogin() {
-        
+        setErrors({});
+        setIsDisabledLogin(true);
+        axios.post(`/auth/login`, loginData)
+            .then(response => {
+                if (response.status == 422) {
+                    window.scrollTo(0, 0)
+                    setErrors(response.errors);
+                }
+                if (response.status == 400) {
+                    setAlertError({
+                        isShow: true,
+                        message:response.message
+                    });
+                }
+                if (response.status == 200) {
+                    let accessToken = response.data.access_token;
+                    localStorage.setItem('access_token', accessToken);
+                    router.push({
+                        pathname: '/',
+                    })
+                }
+                setIsDisabledLogin(false);
+            });
     }
 
     return (
@@ -44,7 +98,7 @@ const Index = () => {
                     }}
                     value={loginData?.password}
                 />
-                <div className='err-msg'></div>
+                <div className='err-msg'>{errors?.password}</div>
             </div>
             <div className={`form-group ${cl.remember}`}>
                 <div className='label-group'>
@@ -68,12 +122,18 @@ const Index = () => {
                     onClick={()=>{
                         handleSubmitLogin();
                     }}
+                    disabled={isDisabledLogin}
                 />
             </div>
             <div className={cl.others}>
                 <Link href="/auth/reset-password">Quên mật khẩu</Link>
                 <Link href="/auth/register">Đăng ký tài khoản</Link>
             </div>
+            <AlertError
+                message={alertError?.message}
+                sub="Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu"
+                isShow={alertError.isShow}
+            ></AlertError>
         </div>
     );
 }
