@@ -11,6 +11,7 @@ import SubHeader from '../sub-header/sub-header';
 import axios from '../../../helpers/http-requests/axios';
 import { useRouter } from 'next/router';
 import { setUserData } from '@/redux/auth';
+import defaulAvatar from '@/assets/imgs/default_avatar.jpg';
 
 const ToggleHeader = () => {
 
@@ -19,6 +20,9 @@ const ToggleHeader = () => {
         return state.headerReducer.header;
     });
     const router = useRouter();
+    const authUserData = useAppSelector(function(state){
+        return state.authUserReducer.user.data;
+    });
 
     function handleEnableHeader() {
         return header.is_enable == true
@@ -52,6 +56,26 @@ const ToggleHeader = () => {
             });
     }
 
+    function handleRenderMenuUserType() {
+        if (authUserData?.user_type == 0) {
+            return (
+                <ProviderMenuItems
+                    onLogout={()=>{
+                        handleLogout();
+                    }}
+                ></ProviderMenuItems>
+            )
+        } else {
+            return (
+                <FinderMenuItems
+                    onLogout={()=>{
+                        handleLogout();
+                    }}
+                ></FinderMenuItems>
+            );
+        }
+    }
+
     return (
         <div
             className={handleEnableHeader()}
@@ -80,7 +104,11 @@ const ToggleHeader = () => {
                             href='/finder/mypage'
                             className={cl.person_avatar}
                         >
-                            <img loading='lazy' src='https://cafebiz.cafebizcdn.vn/162123310254002176/2023/10/25/z4813277701687-510933581a70b464516d3e146ac34edc-4735-1698218519720-16982185198431013731516.jpg' alt='avatar'></img>
+                            <img
+                                loading='lazy'
+                                src={authUserData?.avatar ? authUserData?.avatar : defaulAvatar.src}
+                                alt='avatar'
+                            ></img>
                         </Link>
                         <div className={cl.little_info}>
                             <Link
@@ -89,24 +117,16 @@ const ToggleHeader = () => {
                                 }}
                                 href='/finder/mypage'
                                 className={cl.name}
-                            >Nguyễn Thị Xuân</Link>
+                            >{authUserData?.full_name}</Link>
                             <div className={cl.person_link}>
-                                <span>
-                                    <span className={cl.person_domain}>timtro.com</span>
-                                    /nguyen_thi_xuan_0122
-                                </span>
+                                <span>{authUserData?.app_id}</span>
                                 <span className={cl.copy_clip}><i className="far fa-copy"></i></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className={cl.header_main}>
-                    <ProviderMenuItems
-                        onLogout={()=>{
-                            handleLogout();
-                        }}
-                    ></ProviderMenuItems>
-                    {/* <FinderMenuItems></FinderMenuItems> */}
+                    {handleRenderMenuUserType()}
                 </div>
                 <div>
                     <SubHeader></SubHeader>

@@ -4,7 +4,11 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { toggleMenuHeader } from '@/redux/features/header';
 
-const FinderMenuItems = () => {
+const FinderMenuItems = (props) => {
+
+    let {
+        onLogout
+    } = props;
 
     const dispatch = useDispatch();
 
@@ -85,10 +89,12 @@ const FinderMenuItems = () => {
                         </div>
                     </div>
                 </Link>
-                <Link
-                    href=""
+                <div
                     className={cl.menu_item_wrap}
-                    onClick={()=>{handleSetEnableHeader(false)}}
+                    onClick={()=>{
+                        onLogout();
+                        handleSetEnableHeader(false)
+                    }}
                 >
                     <div className={cl.menu_item}>
                         <div className={cl.icon}>
@@ -98,7 +104,7 @@ const FinderMenuItems = () => {
                             Đăng xuất
                         </div>
                     </div>
-                </Link>
+                </div>
             </div>
         </>
     );
