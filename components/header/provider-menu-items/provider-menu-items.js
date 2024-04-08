@@ -4,7 +4,11 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { toggleMenuHeader } from '@/redux/features/header';
 
-const ProviderMenuItems = () => {
+const ProviderMenuItems = (props) => {
+
+    let {
+        onLogout
+    } = props;
 
     const dispatch = useDispatch();
 
@@ -55,7 +59,10 @@ const ProviderMenuItems = () => {
                     </div>
                 </div>
             </Link>
-            <Link href="" className={cl.menu_item_wrap}>
+            <div
+                onClick={onLogout}
+                className={cl.menu_item_wrap}
+            >
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>
                         <i className="fal fa-sign-out"></i>
@@ -64,7 +71,7 @@ const ProviderMenuItems = () => {
                         Đăng xuất
                     </div>
                 </div>
-            </Link>
+            </div>
         </div>
     );
 }

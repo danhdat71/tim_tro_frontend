@@ -70,8 +70,6 @@ const ModalPriceRange = () => {
         }
     }
 
-    console.log('priceFilterBox', priceFilterBox);
-
     return (
         <Modal
             isShowModal={isEnableModalFilter()}

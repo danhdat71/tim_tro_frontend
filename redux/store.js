@@ -9,6 +9,7 @@ import filterBedroomReducer from './features/filter_box/bed_room_filter_box';
 import filterToiletRoomReducer from './features/filter_box/toilet_room_filter_box';
 import filterPetReducer from './features/filter_box/pet_filter_box';
 import searchFilterReducer from './features/filter_box/search_filter_box';
+import authUserReducer from './auth';
 import { useSelector } from "react-redux";
 
 export const store = configureStore({
@@ -23,6 +24,7 @@ export const store = configureStore({
         filterToiletRoomReducer: filterToiletRoomReducer,
         filterPetReducer: filterPetReducer,
         searchFilterReducer: searchFilterReducer,
+        authUserReducer: authUserReducer,
     }
 });
 

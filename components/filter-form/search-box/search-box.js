@@ -53,8 +53,6 @@ export default function SearchBox() {
         }    
     }
 
-    console.log('searchFilter', searchFilter);
-
     return (
         <div className={cl.search_box_filter}>
             <input

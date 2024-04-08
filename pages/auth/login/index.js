@@ -7,9 +7,11 @@ import Link from 'next/link';
 import axios from '../../../helpers/http-requests/axios';
 import AlertError from '@/components/alerts/alert-error/alert-error';
 import { useRouter } from 'next/navigation';
+import useAccountCheck from '@/hooks/useAccountCheck';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '@/redux/auth';
 
 const Index = () => {
-
     const [loginData, setLoginData] = useState({});
     const [errors, setErrors] = useState({});
     const [alertError, setAlertError] = useState({
@@ -18,6 +20,8 @@ const Index = () => {
     const [isDisabledLogin, setIsDisabledLogin] = useState(false);
     const timeoutAlertError = useRef();
     let router = useRouter();
+    const dispatch = useDispatch();
+    useAccountCheck();
 
     useEffect(function(){
         timeoutAlertError.current = setTimeout(function(){
@@ -31,21 +35,14 @@ const Index = () => {
         }
     }, [alertError]);
 
-    useEffect(function(){
-        axios.get(`/auth/get-me`)
-            .then(response => {
-                if (response.status != 401) {
-                    router.push({
-                        pathname : '/',
-                    })
-                }
-            });
-    }, []);
-
     function handleSetLoginData(key, value) {
         let newLoginData = {...loginData};
         newLoginData[key] = value;
         setLoginData(newLoginData);
+    }
+
+    function handleSetUserLogin(userData) {
+        dispatch(setUserData(userData));
     }
 
     function handleSubmitLogin() {
@@ -66,6 +63,7 @@ const Index = () => {
                 if (response.status == 200) {
                     let accessToken = response.data.access_token;
                     localStorage.setItem('access_token', accessToken);
+                    handleSetUserLogin(response.data);
                     router.push({
                         pathname: '/',
                     })

@@ -25,8 +25,6 @@ const ModalFilterAddress = () => {
         return state.filterAddressReducer.addressFilterBox;
     });
 
-    console.log('filterAddress', filterAddress);
-
     function handleDisableModalFilter(pushData)
     {
         dispatch(toggleModalFilter(pushData));

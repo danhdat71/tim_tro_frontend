@@ -86,8 +86,6 @@ const ModalBedroom = () => {
         });
     }
 
-    console.log('filerBedroom', filerBedroom);
-
     return (
         <Modal
             isShowModal={isEnableModalFilter()}

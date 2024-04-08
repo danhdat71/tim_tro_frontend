@@ -7,6 +7,7 @@ import Head from "next/head";
 import cl from './index.module.css';
 import TitleLeftBig from "@/components/titles/title-left-big/title-left-big";
 import KeywordBox from "@/components/boxs/keyword-box/keyword-box";
+import axios from '../helpers/http-requests/axios';
 
 const breadcrumbItems = [
   {label: 'Trang chủ', href:'/'},

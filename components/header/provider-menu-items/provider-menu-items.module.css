@@ -1,5 +1,6 @@
 .menu_item_wrap {
     text-decoration: none;
+    cursor: pointer;
 }
 
 .menu_item {

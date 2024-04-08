@@ -8,6 +8,7 @@ import InputGroup from '@/components/inputs/input-group/input-group';
 import axios from '../../../helpers/http-requests/axios';
 import { FINDER, PROVIDER } from '../../../config/userType';
 import { useRouter } from 'next/navigation'
+import useAccountCheck from '@/hooks/useAccountCheck';
 
 const Register = () => {
 
@@ -18,6 +19,7 @@ const Register = () => {
     let [errors, setErrors] = useState({});
     let [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
     let router = useRouter();
+    useAccountCheck();
 
     function handleSetRegisterData(key, value) {
         let newRegisterData = {...registerData};

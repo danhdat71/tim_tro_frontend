@@ -48,8 +48,6 @@ const ModalFilterAcreage = () => {
         return state.filterAcreageReducer.acreageFilterBox;
     });
 
-    console.log('acreageFilterBox', acreageFilterBox);
-
     const dispatch = useDispatch();
 
     const modalFilter = useAppSelector(function(state){

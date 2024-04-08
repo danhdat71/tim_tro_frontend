@@ -69,8 +69,6 @@ const ModalCategory = () => {
         })
     }
 
-    console.log('categoryFilter', categoryFilter);
-
     return (
         <Modal
             isShowModal={isEnableModalFilter()}

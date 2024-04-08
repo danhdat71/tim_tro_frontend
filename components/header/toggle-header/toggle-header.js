@@ -8,6 +8,9 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
 import { toggleMenuHeader } from '@/redux/features/header';
 import SubHeader from '../sub-header/sub-header';
+import axios from '../../../helpers/http-requests/axios';
+import { useRouter } from 'next/router';
+import { setUserData } from '@/redux/auth';
 
 const ToggleHeader = () => {
 
@@ -15,6 +18,7 @@ const ToggleHeader = () => {
     const header = useAppSelector(function(state){
         return state.headerReducer.header;
     });
+    const router = useRouter();
 
     function handleEnableHeader() {
         return header.is_enable == true
@@ -24,6 +28,28 @@ const ToggleHeader = () => {
 
     function handleSetEnableHeader(status) {
         dispatch(toggleMenuHeader(status));
+    }
+
+    function handleSetUserLogin(userData) {
+        dispatch(setUserData(userData));
+    }
+
+    function handleLogout() {
+        axios.post(`/auth/logout`, null, {
+            headers: {
+                Authorization : 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+            .then(response => {
+                if (response.status == 200) {
+                    handleSetEnableHeader(false);
+                    localStorage.removeItem('access_token');
+                    handleSetUserLogin({});
+                    router.push({
+                        pathname: '/auth/login',
+                    });
+                }
+            });
     }
 
     return (
@@ -75,7 +101,11 @@ const ToggleHeader = () => {
                     </div>
                 </div>
                 <div className={cl.header_main}>
-                    <ProviderMenuItems></ProviderMenuItems>
+                    <ProviderMenuItems
+                        onLogout={()=>{
+                            handleLogout();
+                        }}
+                    ></ProviderMenuItems>
                     {/* <FinderMenuItems></FinderMenuItems> */}
                 </div>
                 <div>

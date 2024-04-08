@@ -30,7 +30,7 @@ const Index = () => {
     function handleSubmitAvatar()
     {
         if (selectedAvatar) {
-            console.log('post', selectedAvatar.preview)
+
         }
     }
 

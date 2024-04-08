@@ -23,7 +23,7 @@ const ModalBirthday = (props) => {
                     className='calendar'
                     locale="vi"
                     onChange={(value)=>{
-                        console.log(dateToYmd(value));
+                        
                     }}
                 />
                 <div className='err-msg'>Có lỗi validate</div>

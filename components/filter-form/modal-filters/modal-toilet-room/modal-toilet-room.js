@@ -84,8 +84,6 @@ const ModalToiletRoom = () => {
         });
     }
 
-    console.log('toiletRoom', toiletRoom);
-
     return (
         <Modal
             isShowModal={isEnableModalFilter()}

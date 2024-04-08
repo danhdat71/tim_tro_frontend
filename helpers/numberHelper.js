@@ -5,7 +5,6 @@ function formatPhoneNumber(phoneNumber) {
     phoneNumber = phoneNumber.replace(/\D/g, '');
 
     if (phoneNumber.length < 9 || phoneNumber.length > 11) {
-        console.log("Invalid phone number length");
         return phoneNumber;
     }
 

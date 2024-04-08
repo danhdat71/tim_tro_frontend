@@ -2,7 +2,6 @@ import axios from 'axios';
 import { calculateZoomLevel } from '../map';
 
 async function getLatLngFromAddress(address) {
-    console.log(address);
     if (address == "") {
         address = "Việt Nam";
     }

@@ -43,7 +43,6 @@ const Index = () => {
                         min={20}
                         max={100}
                         onChange={(value)=>{
-                            console.log(value);
                         }}
                         helpLabel={suggestTitle()}
                     ></TextareaInputWithCount>
@@ -55,7 +54,6 @@ const Index = () => {
                         min='1'
                         max='11'
                         onChange={(inputed)=>{
-                            console.log('Giá cho thuê', inputed);
                         }}
                     ></InputGroup>
                 </div>
@@ -81,7 +79,6 @@ const Index = () => {
                         min='1'
                         max='20'
                         onChange={(inputed)=>{
-                            console.log('Giá cho thuê', inputed);
                         }}
                     ></InputGroup>
                 </div>
@@ -96,7 +93,6 @@ const Index = () => {
                         min='20'
                         max='200'
                         onChange={(value)=>{
-                            console.log(value);
                         }}
                         placeholder="Vị trí để dễ tìm thấy trọ. Ví dụ: 64/62/62 Nguyễn Khoái, Phường 2, Quận 4, TP. Hồ Chí Minh"
                     ></InputGroup>
@@ -112,7 +108,6 @@ const Index = () => {
                         min='1'
                         max='3'
                         onChange={(value)=>{
-                            console.log(value);
                         }}
                     ></InputGroup>
                 </div>
@@ -173,7 +168,6 @@ const Index = () => {
                     <label className='label label-block'>Ảnh minh họa <span>*</span></label>
                     <InputFiles
                         onChange={(files)=>{
-                            console.log('onChange', files);
                         }}
                     ></InputFiles>
                 </div>
