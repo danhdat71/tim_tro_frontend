@@ -60,7 +60,7 @@ const VerifyOtp = () => {
         setDisabledResendButton(true);
         setCountDown(30 - 1);
         axios.post(`/auth/resend-otp`, {
-            user_identifier : router.query.email
+            user_identifier : router.query.user_identifier
         })
         .then(response => {
             // if (response.status == 422) {

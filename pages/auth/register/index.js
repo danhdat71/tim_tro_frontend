@@ -59,7 +59,7 @@ const Register = () => {
                     router.push({
                         pathname: '/auth/verify-otp',
                         query: { 
-                            'email' : email,
+                            user_identifier : email,
                         },
                     })
                 }

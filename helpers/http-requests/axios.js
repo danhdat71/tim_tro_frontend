@@ -14,6 +14,8 @@ axios.interceptors.response.use(
             return error.response.data; 
         } else if (error.response.status == 401) {
             return error.response.data;
+        } else if (error.response.status == 404) {
+            return error.response.data;
         }
     }
 );
