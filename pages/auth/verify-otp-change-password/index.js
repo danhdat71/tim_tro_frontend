@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import OtpInput from 'react-otp-input';
-import cl from './verify-otp.module.css';
-import TitleCenterBig from '@/components/titles/title-center-big/title-center-big';
-import ButtonIcon from '@/components/buttons/button-icon/button-icon';
-import { useRouter } from 'next/router';
-import axios from '../../../helpers/http-requests/axios';
+import cl from './index.module.css';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import AlertError from '@/components/alerts/alert-error/alert-error';
+import ButtonIcon from '@/components/buttons/button-icon/button-icon';
+import OtpInput from 'react-otp-input';
+import TitleCenterBig from '@/components/titles/title-center-big/title-center-big';
+import { useRouter } from 'next/router';
+import axios from '../../../helpers/http-requests/axios';
 
-const VerifyOtp = () => {
-
+const Index = () => {
     const [otp, setOtp] = useState('');
     const [disabledResendButton, setDisabledResendButton] = useState(false);
     const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
@@ -74,7 +73,7 @@ const VerifyOtp = () => {
     }
 
     function handleVerifyOTP() {
-        axios.post(`/auth/verify-otp`, {
+        axios.post(`/auth/verify-otp-change-password`, {
             user_identifier : router.query.user_identifier,
             verify_otp: otp,
         })
@@ -86,17 +85,12 @@ const VerifyOtp = () => {
                 })
             }
             if (response.status == 200) {
-                setSuccess({
-                    message: 'Chúc mừng bạn đã đăng ký thành công !',
-                    sub: 'Đang di chuyển về trang chủ'
+                router.push({
+                    pathname: '/auth/change-password',
+                    query: { 
+                        'token' : response.data.token,
+                    },
                 });
-
-                let timeout = setTimeout(function(){
-                    clearTimeout(timeout);
-                    router.push({
-                        pathname: '/auth/login'
-                    })
-                }, 3000);
             }
         });
     }
@@ -157,4 +151,4 @@ const VerifyOtp = () => {
     );
 }
 
-export default VerifyOtp;
+export default Index;

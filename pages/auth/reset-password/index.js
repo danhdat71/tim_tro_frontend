@@ -43,7 +43,7 @@ const Index = () => {
                     setErrors(response.errors);
                 } else if (response.status == 200) {
                     router.push({
-                        pathname: '/auth/verify-otp',
+                        pathname: '/auth/verify-otp-change-password',
                         query: { 
                             'user_identifier' : userIdentifier,
                         },

@@ -1,0 +1,17 @@
+.verify {
+    min-height: calc(100vh - (465.72px + 79.03px));
+    padding-bottom: 30px;
+}
+
+.desc {
+    font-size: 15px;
+    color: rgb(65, 65, 65);
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 15px;
+}
