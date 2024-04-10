@@ -61,12 +61,22 @@ const Index = () => {
                     });
                 }
                 if (response.status == 200) {
-                    let accessToken = response.data.access_token;
-                    localStorage.setItem('access_token', accessToken);
-                    handleSetUserLogin(response.data);
-                    router.push({
-                        pathname: '/',
-                    })
+                    // Case user is not active
+                    if (response.data.status == 0) {
+                        router.push({
+                            pathname: '/auth/verify-otp',
+                            query: { 
+                                user_identifier : loginData.user_identifier,
+                            },
+                        })
+                    } else if (response.data.status == 1) {
+                        let accessToken = response.data.access_token;
+                        localStorage.setItem('access_token', accessToken);
+                        handleSetUserLogin(response.data);
+                        router.push({
+                            pathname: '/',
+                        });
+                    }                    
                 }
                 setIsDisabledLogin(false);
             });
