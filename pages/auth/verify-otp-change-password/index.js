@@ -58,17 +58,10 @@ const Index = () => {
     function handleResendOTP() {
         setDisabledResendButton(true);
         setCountDown(30 - 1);
-        axios.post(`/auth/resend-otp`, {
+        axios.post(`/auth/forgot-password`, {
             user_identifier : router.query.user_identifier
         })
         .then(response => {
-            // if (response.status == 422) {
-            //     window.scrollTo(0, 0)
-            //     setErrors(response.errors);
-            // }
-            // if (response.status == 200) {
-            //     setIsShowModalReview(true);
-            // }
         });
     }
 

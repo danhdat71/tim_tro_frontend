@@ -6,6 +6,8 @@ import ButtonIcon from '@/components/buttons/button-icon/button-icon';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import AlertError from '@/components/alerts/alert-error/alert-error';
+import { setUserData } from '@/redux/auth';
+import { useDispatch } from 'react-redux';
 
 const Index = () => {
 
@@ -17,6 +19,8 @@ const Index = () => {
         isShow: false,
     });
     let timeoutError = useRef();
+    const dispatch = useDispatch();
+    let [disableSubmit, setDisableSubmit] = useState(false);
 
     useEffect(function(){
         timeoutError.current = setTimeout(function(){
@@ -37,15 +41,25 @@ const Index = () => {
         setPasswordData(newPasswordData);
     }
 
+    function handleSetUserLogin(userData) {
+        dispatch(setUserData(userData));
+    }
+
     function handleSubmitChangePassword() {
         setErrors({});
+        setDisableSubmit(true);
         passwordData.token = router.query.token;
         axios.post('/auth/change-password', passwordData)
             .then(function(response) {
+                setDisableSubmit(false);
                 if (response.status == 422) {
                     setErrors(response.errors);
                 } else if (response.status == 200) {
-                    router.push('/auth/login')
+                    let accessToken = response.data.access_token;
+                    localStorage.setItem('access_token', accessToken);
+
+                    handleSetUserLogin(response.data);
+                    router.push('/');
                 } else if (response.status == 400) {
                     setErrorModal({
                         message: response.message,
@@ -91,7 +105,7 @@ const Index = () => {
                     onClick={()=>{
                         handleSubmitChangePassword();
                     }}
-                    disabled={false}
+                    disabled={disableSubmit}
                 />
             </div>
             <AlertError

@@ -7,20 +7,22 @@ import { useRouter } from 'next/router';
 import axios from '../../../helpers/http-requests/axios';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import AlertError from '@/components/alerts/alert-error/alert-error';
+import { setUserData } from '@/redux/auth';
+import { useDispatch } from 'react-redux';
 
 const VerifyOtp = () => {
 
     const [otp, setOtp] = useState('');
     const [disabledResendButton, setDisabledResendButton] = useState(false);
-    const [disabledVerifyButton, setDisabledVerifyButton] = useState(false);
+    const [disabledSubmitButton, setDisabledSubmitButton] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [countDown, setCountDown] = useState(30);
     const timeInterval = useRef();
     const timeoutError = useRef();
     const timeoutSuccess = useRef();
-    const timeoutRedirect = useRef();
     let router = useRouter();
+    const dispatch = useDispatch();
 
     useEffect(function(){
         timeInterval.current = setInterval(function(){
@@ -73,12 +75,18 @@ const VerifyOtp = () => {
         });
     }
 
+    function handleSetUserLogin(userData) {
+        dispatch(setUserData(userData));
+    }
+
     function handleVerifyOTP() {
+        setDisabledSubmitButton(true);
         axios.post(`/auth/verify-otp`, {
             user_identifier : router.query.user_identifier,
             verify_otp: otp,
         })
         .then(response => {
+            setDisabledSubmitButton(false);
             if (response.status == 400) {
                 setError({
                     message: response.message,
@@ -91,12 +99,17 @@ const VerifyOtp = () => {
                     sub: 'Đang di chuyển về trang chủ'
                 });
 
+                let accessToken = response.data.access_token;
+                localStorage.setItem('access_token', accessToken);
+
+                handleSetUserLogin(response.data);
+
                 let timeout = setTimeout(function(){
                     clearTimeout(timeout);
                     router.push({
-                        pathname: '/auth/login'
+                        pathname: '/'
                     })
-                }, 3000);
+                }, 2000);
             }
         });
     }
@@ -140,7 +153,7 @@ const VerifyOtp = () => {
                     onClick={()=>{
                         handleVerifyOTP();
                     }}
-                    disabled={disabledVerifyButton}
+                    disabled={disabledSubmitButton}
                 />
             </div>
             <AlertSuccess
