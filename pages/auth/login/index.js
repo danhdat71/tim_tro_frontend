@@ -22,7 +22,11 @@ const Index = () => {
     const timeoutAlertError = useRef();
     let router = useRouter();
     const dispatch = useDispatch();
-    useAccountCheck();
+    let authCheck = useAccountCheck();
+
+    if (authCheck) {
+        router.push('/');
+    }
 
     useEffect(function(){
         timeoutAlertError.current = setTimeout(function(){

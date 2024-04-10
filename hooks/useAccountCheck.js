@@ -1,9 +1,8 @@
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from '../helpers/http-requests/axios';
 
 const useAccountCheck = () => {
-    let router = useRouter();
+    let [isAuth, setIsAuth] = useState();
     useEffect(function(){
         axios.get(`/auth/get-me`, {
             headers: {
@@ -12,12 +11,14 @@ const useAccountCheck = () => {
         })
             .then(response => {
                 if (response?.message != 'Unauthenticated.') {
-                    router.push({
-                        pathname : '/',
-                    })
+                    setIsAuth(true);
+                } else {
+                    setIsAuth(false);
                 }
             });
     }, []);
+
+    return isAuth;
 }
 
 export default useAccountCheck;

@@ -107,7 +107,9 @@ const ToggleHeader = () => {
                         >
                             <img
                                 loading='lazy'
-                                src={authUserData?.avatar ? authUserData?.avatar : defaulAvatar.src}
+                                src={authUserData?.avatar 
+                                    ? `${process.env.BACKEND_URL}/${authUserData.avatar}`
+                                    : defaulAvatar.src}
                                 alt='avatar'
                             ></img>
                         </Link>
@@ -116,7 +118,7 @@ const ToggleHeader = () => {
                                 onClick={()=>{
                                     handleSetEnableHeader(false);
                                 }}
-                                href='/finder/mypage'
+                                href={authUserData?.user_type == PROVIDER ? '/provider/mypage' : '/finder/mypage'}
                                 className={cl.name}
                             >{authUserData?.full_name}</Link>
                             <div className={cl.person_link}>

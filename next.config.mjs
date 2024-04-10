@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: false,
   env: {
     API: process.env.API,
+    BACKEND_URL: process.env.BACKEND_URL,
     GOOGLE_MAP_KEY: process.env.GOOGLE_MAP_KEY,
     GOOGLE_MAP_LANGUAGE: process.env.GOOGLE_MAP_LANGUAGE,
     GOOGLE_MAP_API: process.env.GOOGLE_MAP_API,

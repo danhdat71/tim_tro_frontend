@@ -13,15 +13,17 @@ const ModalAvatar = (props) => {
         onSubmit,
         selectedAvatar,
         setSelectedAvatar,
+        submitBtnDisabled,
+        errors,
+        defaultAvatar = defaultAvatarIcon.src,
     } = props;
 
     
     let [oldAvatar, setOldAvatar] = useState();
 
     useEffect(function(){
-        let fetchedOldAvatar = 'https://cdn.dribbble.com/users/17793/screenshots/16101765/media/beca221aaebf1d3ea7684ce067bc16e5.png';
         setOldAvatar({
-            preview: fetchedOldAvatar,
+            preview: defaultAvatar,
         });
         document.getElementById('input-avatar').value = null;
     }, [isShowModal]);
@@ -79,7 +81,7 @@ const ModalAvatar = (props) => {
                 setSelectedAvatar(null);
             }}
             onSubmit={onSubmit}
-            submitBtnDisabled={selectedAvatar ? false : true}
+            submitBtnDisabled={submitBtnDisabled}
         >
             <ButtonIcon
                 className='w-100 mb-10px'
@@ -92,6 +94,8 @@ const ModalAvatar = (props) => {
             <div className={cl.wrap_avatar}>
                 {renderAvatar()}
             </div>
+
+            <div className='err-msg'>{errors?.avatar}</div>
 
             <input
                 className={cl.input_avatar}

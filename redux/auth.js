@@ -15,10 +15,16 @@ export const userData = createSlice({
             let payload = action.payload;
             newState.user.data = payload;
         },
+        updateUserDataAttr: function(state, action) {
+            let newState = {...state};
+            let payload = action.payload;
+            newState.user.data[payload.key] = payload.value;
+        }
     }
 })
 
 export const {
     setUserData,
+    updateUserDataAttr,
 } = userData.actions;
 export default userData.reducer;

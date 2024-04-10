@@ -4,6 +4,7 @@ import '../styles/components-style.css';
 import '../styles/form-element.css';
 import { ReduxProvider } from "@/redux/provider";
 import { useRouter } from "next/router";
+import NextNProgress from 'nextjs-progressbar';
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -27,6 +28,11 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ReduxProvider>
+      <NextNProgress
+        color="green"
+        height={2}
+        options={{ showSpinner: false }}
+      />
       {checkDisplay()}
     </ReduxProvider>
   );

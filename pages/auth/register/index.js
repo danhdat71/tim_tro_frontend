@@ -19,7 +19,11 @@ const Register = () => {
     let [errors, setErrors] = useState({});
     let [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
     let router = useRouter();
-    useAccountCheck();
+    let authCheck = useAccountCheck();
+
+    if (authCheck) {
+        router.push('/');
+    }
 
     function handleSetRegisterData(key, value) {
         let newRegisterData = {...registerData};
