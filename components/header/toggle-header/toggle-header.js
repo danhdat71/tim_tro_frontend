@@ -12,6 +12,7 @@ import axios from '../../../helpers/http-requests/axios';
 import { useRouter } from 'next/router';
 import { setUserData } from '@/redux/auth';
 import defaulAvatar from '@/assets/imgs/default_avatar.jpg';
+import { PROVIDER } from '@/config/userType';
 
 const ToggleHeader = () => {
 
@@ -101,7 +102,7 @@ const ToggleHeader = () => {
                             onClick={()=>{
                                 handleSetEnableHeader(false);
                             }}
-                            href='/finder/mypage'
+                            href={authUserData?.user_type == PROVIDER ? '/provider/mypage' : '/finder/mypage'}
                             className={cl.person_avatar}
                         >
                             <img

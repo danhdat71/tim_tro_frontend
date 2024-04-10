@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import useAccountCheck from '@/hooks/useAccountCheck';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '@/redux/auth';
+import { ACTIVE, INACTIVE } from '@/config/userStatus';
 
 const Index = () => {
     const [loginData, setLoginData] = useState({});
@@ -62,14 +63,14 @@ const Index = () => {
                 }
                 if (response.status == 200) {
                     // Case user is not active
-                    if (response.data.status == 0) {
+                    if (response.data.status == INACTIVE) {
                         router.push({
                             pathname: '/auth/verify-otp',
                             query: { 
                                 user_identifier : loginData.user_identifier,
                             },
                         })
-                    } else if (response.data.status == 1) {
+                    } else if (response.data.status == ACTIVE) {
                         let accessToken = response.data.access_token;
                         localStorage.setItem('access_token', accessToken);
                         handleSetUserLogin(response.data);
