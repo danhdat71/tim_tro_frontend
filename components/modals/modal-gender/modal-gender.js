@@ -1,11 +1,17 @@
 import React from 'react';
 import Modal from '../modal/modal';
+import { FEMALE, MALE, OTHER } from '@/config/userGender';
 
 const ModalGender = (props) => {
     let {
         isShowModal,
         onClose,
-    } = props
+        value,
+        onChange,
+        onSubmit,
+        errMsg,
+        submitBtnDisabled,
+    } = props;
 
     return (
         <Modal
@@ -14,6 +20,8 @@ const ModalGender = (props) => {
             subTitle="Để dễ dàng xưng hô"
             submitBtnText="Xác nhận"
             onClose={onClose}
+            onSubmit={onSubmit}
+            submitBtnDisabled={submitBtnDisabled}
         >
             <div className='form-group'>
                 <label className='label label-block'>Giới tính <span>*</span></label>
@@ -22,8 +30,10 @@ const ModalGender = (props) => {
                         className='radio-md'
                         type='radio'
                         name='gender'
-                        value={1}
+                        value={MALE}
                         id='male'
+                        onChange={onChange}
+                        checked={value == MALE}
                     ></input>
                     <label htmlFor='male'>Nam</label>
                 </div>
@@ -32,8 +42,10 @@ const ModalGender = (props) => {
                         className='radio-md'
                         type='radio'
                         name='gender'
-                        value={2}
+                        value={FEMALE}
                         id='female'
+                        onChange={onChange}
+                        checked={value == FEMALE}
                     ></input>
                     <label htmlFor='female'>Nữ</label>
                 </div>
@@ -42,12 +54,14 @@ const ModalGender = (props) => {
                         className='radio-md'
                         type='radio'
                         name='gender'
-                        value={3}
+                        value={OTHER}
                         id='other'
+                        onChange={onChange}
+                        checked={value == OTHER}
                     ></input>
                     <label htmlFor='other'>Khác</label>
                 </div>
-                <div className='err-msg'>Có lỗi validate</div>
+                <div className='err-msg'>{errMsg?.gender}</div>
             </div>
         </Modal>
     );

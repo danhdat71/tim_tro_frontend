@@ -9,6 +9,9 @@ const ModalAppId = (props) => {
         onClose,
         value,
         onChange,
+        onSubmit,
+        errMsg,
+        submitBtnDisabled,
     } = props;
 
     return (
@@ -18,14 +21,16 @@ const ModalAppId = (props) => {
             subTitle="Bạn có thể chia sẻ trang cá nhân cho mọi người tìm trọ"
             submitBtnText="Xác nhận"
             onClose={onClose}
+            onSubmit={onSubmit}
+            submitBtnDisabled={submitBtnDisabled}
         >
             <div className='form-group'>
                 <label className='label label-block'>App ID <span>*</span></label>
                 <InputGroup
                     type="text"
-                    min="10"
+                    min="5"
                     max="200"
-                    errMsg={['lỗi']}
+                    errMsg={errMsg?.app_id}
                     value={value}
                     onChange={onChange}
                 ></InputGroup>

@@ -48,9 +48,9 @@ const InputGroup = (props) => {
                 <div>Tối thiểu {min} ký tự, tối đa {max} ký tự</div>
             )
         } else {
-            let inputedLength = inputed.length;
+            let inputedLength = String(inputed).length;
             if (inputedLength > max || inputedLength < min) {
-                var span = <span className={cl.text_red}>{inputed.length}</span>;
+                var span = <span className={cl.text_red}>{String(inputed).length}</span>;
             } else {
                 var span = <span>{inputed.length}</span>;
             }
@@ -62,7 +62,7 @@ const InputGroup = (props) => {
     }
 
     function renderRemoveButton() {
-        if (inputed.length > 0) {
+        if (typeof(inputed) == 'string' && inputed.length > 0) {
             return (
                 <button
                     className={cl.button_remove}

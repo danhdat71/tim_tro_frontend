@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { updateUserDataAttr } from '@/redux/auth';
 import useAccountCheck from '@/hooks/useAccountCheck';
 import { useRouter } from 'next/router';
+import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 
 const Index = () => {
     let [isShowAvatarModal, setIsShowAvatarModal] = useState(false);
@@ -31,16 +32,21 @@ const Index = () => {
     let [isShowBirthdayModal, setIsShowBirthdayModal] = useState(false);
     let [isShowDescModal, setIsShowDescModal] = useState(false);
     let [isShowChangePasswordModal, setIsShowChangePasswordModal] = useState(false);
+    let [isShowAlertSuccess, setIsShowAlertSuccess] = useState(false);
     let [selectedAvatar, setSelectedAvatar] = useState();
     let [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
+    let [dataInfoItem, setDataInfoItem] = useState('');
     let [errors, setErrors] = useState({});
     let formDataRef = useRef();
+    let timeoutRef = useRef();
     const dispatch = useDispatch();
     let router = useRouter();
     const authCheck = useAccountCheck();
 
+    console.log('dataInfoItem', dataInfoItem);
+
     if (authCheck!= undefined && authCheck == false) {
-        router.push('/auth/login')
+        router.push('/auth/login');
     }
 
     const userMypageData = useAppSelector(function(state){
@@ -67,6 +73,17 @@ const Index = () => {
             });
     }, []);
 
+    useEffect(function(){
+        timeoutRef.current = setTimeout(function(){
+            setIsShowAlertSuccess(false);
+            clearTimeout(timeoutRef.current);
+        }, 3000);
+
+        return () => {
+            clearTimeout(timeoutRef.current);
+        }
+    }, [isShowAlertSuccess]);
+
     function handleSubmitAvatar(avatarFile) {
         setSubmitBtnDisabled(true);
         setErrors({});
@@ -83,12 +100,35 @@ const Index = () => {
                 if (response.status == 200) {
                     handleUpdateAuthUserData('avatar', response.data.avatar);
                     setIsShowAvatarModal(false);
+                    setIsShowAlertSuccess(true);
                 } else if (response.status == 422) {
                     setErrors(response.errors);
                 }
             });
     }
     
+    function handleSubmitInfoItem(paramName, value, callBackCloseModal) {
+        setSubmitBtnDisabled(true);
+        setErrors({});
+        formDataRef.current = new FormData();
+        formDataRef.current.append(paramName, value);
+        axios.post(`/provider/update-item-info`, formDataRef.current, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
+            .then(response => {
+                setSubmitBtnDisabled(false);
+                formDataRef.current = null;
+                if (response.status == 200) {
+                    handleUpdateAuthUserData(paramName, response.data[paramName]);
+                    callBackCloseModal(false);
+                    setIsShowAlertSuccess(true);
+                } else if (response.status == 422) {
+                    setErrors(response.errors);
+                }
+            });
+    }
 
     return (
         <div className={cl.mypage}>
@@ -114,6 +154,7 @@ const Index = () => {
                 className={cl.info_item_box}
                 onClick={()=>{
                     setIsShowAppIdModal(true);
+                    setDataInfoItem(userMypageData?.app_id);
                 }}
             >
                 <label className='label label-block'>App ID</label>
@@ -126,6 +167,7 @@ const Index = () => {
                 className={cl.info_item_box}
                 onClick={()=>{
                     setIsShowFullnameModal(true);
+                    setDataInfoItem(userMypageData?.full_name);
                 }}
             >
                 <label className='label label-block'>Họ tên</label>
@@ -142,6 +184,7 @@ const Index = () => {
                 className={cl.info_item_box}
                 onClick={()=>{
                     setIsShowTelModal(true);
+                    setDataInfoItem(userMypageData?.tel);
                 }}
             >
                 <label className='label label-block'>Số điện thoại</label>
@@ -154,6 +197,7 @@ const Index = () => {
                 className={cl.info_item_box}
                 onClick={()=>{
                     setIsShowGenderModal(true);
+                    setDataInfoItem(userMypageData?.gender);
                 }}
             >
                 <label className='label label-block'>Giới tính</label>
@@ -166,6 +210,7 @@ const Index = () => {
                 className={cl.info_item_box}
                 onClick={()=>{
                     setIsShowBirthdayModal(true);
+                    setDataInfoItem(userMypageData?.birthday);
                 }}
             >
                 <label className='label label-block'>Ngày sinh</label>
@@ -178,6 +223,7 @@ const Index = () => {
                 className={cl.info_item_box}
                 onClick={()=>{
                     setIsShowDescModal(true);
+                    setDataInfoItem(userMypageData?.description);
                 }}
             >
                 <label className='label label-block'>Giới thiệu</label>
@@ -240,34 +286,63 @@ const Index = () => {
             />
             <ModalAppId
                 isShowModal={isShowAppIdModal}
+                submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowAppIdModal(false);
                 }}
-                value={userMypageData?.app_id}
                 onChange={(value)=>{
-                    console.log(value)
+                    setDataInfoItem(value);
                 }}
                 onSubmit={()=>{
-                    
+                    handleSubmitInfoItem('app_id', dataInfoItem, setIsShowAppIdModal);
                 }}
+                errMsg={errors}
+                value={dataInfoItem}
             />
             <ModalFullName
                 isShowModal={isShowFullnameModal}
+                submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowFullnameModal(false);
                 }}
+                onChange={(value)=>{
+                    setDataInfoItem(value);
+                }}
+                onSubmit={()=>{
+                    handleSubmitInfoItem('full_name', dataInfoItem, setIsShowFullnameModal);
+                }}
+                errMsg={errors}
+                value={dataInfoItem}
             />
             <ModalTel
                 isShowModal={isShowTelModal}
+                submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowTelModal(false);
                 }}
+                onChange={(value)=>{
+                    setDataInfoItem(value);
+                }}
+                onSubmit={()=>{
+                    handleSubmitInfoItem('tel', dataInfoItem, setIsShowTelModal);
+                }}
+                errMsg={errors}
+                value={dataInfoItem}
             />
             <ModalGender
                 isShowModal={isShowGenderModal}
+                submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowGenderModal(false);
                 }}
+                onChange={(e)=>{
+                    setDataInfoItem(e.target.value);
+                }}
+                onSubmit={()=>{
+                    handleSubmitInfoItem('gender', dataInfoItem, setIsShowGenderModal);
+                }}
+                errMsg={errors}
+                value={dataInfoItem ? dataInfoItem : userMypageData?.gender}
             />
             <ModalBirthday
                 isShowModal={isShowBirthdayModal}
@@ -287,6 +362,10 @@ const Index = () => {
                     setIsShowChangePasswordModal(false);
                 }}
             />
+            <AlertSuccess
+                message="Cập nhật thông tin thành công !"
+                isShow={isShowAlertSuccess}
+            ></AlertSuccess>
         </div>
     );
 }

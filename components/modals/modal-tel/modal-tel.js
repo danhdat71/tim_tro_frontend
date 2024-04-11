@@ -1,10 +1,16 @@
 import React from 'react';
 import Modal from '../modal/modal';
+import InputGroup from '@/components/inputs/input-group/input-group';
 
 const ModalTel = (props) => {
     let {
         isShowModal,
         onClose,
+        value,
+        onChange,
+        onSubmit,
+        errMsg,
+        submitBtnDisabled,
     } = props
 
     return (
@@ -14,11 +20,19 @@ const ModalTel = (props) => {
             subTitle="Người khác có thể liên hệ bạn thông qua số cung cấp"
             submitBtnText="Xác nhận"
             onClose={onClose}
+            onSubmit={onSubmit}
+            submitBtnDisabled={submitBtnDisabled}
         >
             <div className='form-group'>
                 <label className='label label-block'>Số điện thoại liên hệ <span>*</span></label>
-                <input className='input w-100'></input>
-                <div className='err-msg'>Có lỗi validate</div>
+                <InputGroup
+                    type="text"
+                    min="10"
+                    max="50"
+                    errMsg={errMsg?.tel}
+                    value={value}
+                    onChange={onChange}
+                ></InputGroup>
             </div>
         </Modal>
     );

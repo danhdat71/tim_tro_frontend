@@ -3,15 +3,14 @@ const FEMALE = 1;
 const OTHER = 2;
 
 function getStringValue(role) {
-    switch (role) {
-        case MALE:
-            return "Nam";
-        case FEMALE:
-            return "Nữ";
-        case OTHER:
-            return "Khác";
-        default:
-            return "Chưa cung cấp";
+    if (role == MALE) {
+        return "Nam";
+    } else if (role == FEMALE) {
+        return "Nữ";
+    } else if (role == OTHER) {
+        return "Khác";
+    } else {
+        return "Chưa cung cấp";
     }
 }
 
