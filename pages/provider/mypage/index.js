@@ -88,6 +88,7 @@ const Index = () => {
                 }
             });
     }
+    
 
     return (
         <div className={cl.mypage}>
@@ -241,6 +242,13 @@ const Index = () => {
                 isShowModal={isShowAppIdModal}
                 onClose={()=>{
                     setIsShowAppIdModal(false);
+                }}
+                value={userMypageData?.app_id}
+                onChange={(value)=>{
+                    console.log(value)
+                }}
+                onSubmit={()=>{
+                    
                 }}
             />
             <ModalFullName
