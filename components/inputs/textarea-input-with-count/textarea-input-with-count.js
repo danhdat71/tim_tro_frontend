@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cl from './textarea-input-with-count.module.css';
 
 const TextareaInputWithCount = (props) => {
@@ -12,11 +12,16 @@ const TextareaInputWithCount = (props) => {
         max = 999999,
         onChange = function(){},
         helpLabel,
-        errMsg = ""
+        errMsg = "",
+        value = "",
     } = props;
 
     let [inputed, setInputed] = useState('');
     let [isFocus, setIsFocus] = useState(false);
+
+    useEffect(function(){
+        setInputed(value);
+    }, [value]);
 
     function renderSubLabel()
     {
@@ -25,11 +30,11 @@ const TextareaInputWithCount = (props) => {
                 <div>Tối thiểu {min} ký tự, tối đa {max} ký tự</div>
             )
         } else {
-            let inputedLength = inputed.length;
+            let inputedLength = String(inputed).length;
             if (inputedLength < min || inputedLength > max) {
-                var span = <span className={cl.text_red}>{inputed.length}</span>;
+                var span = <span className={cl.text_red}>{String(inputed).length}</span>;
             } else {
-                var span = <span>{inputed.length}</span>;
+                var span = <span>{String(inputed).length}</span>;
             }
 
             return (

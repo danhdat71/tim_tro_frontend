@@ -7,6 +7,11 @@ const ModalBirthday = (props) => {
     let {
         isShowModal,
         onClose,
+        value,
+        onChange,
+        onSubmit,
+        errMsg,
+        submitBtnDisabled,
     } = props
 
     return (
@@ -16,17 +21,21 @@ const ModalBirthday = (props) => {
             subTitle="Bạn có thể chia sẻ trang cá nhân cho mọi người tìm trọ"
             submitBtnText="Xác nhận"
             onClose={onClose}
+            onSubmit={onSubmit}
+            submitBtnDisabled={submitBtnDisabled}
         >
             <div className='form-group'>
                 <label className='label label-block'>Ngày sinh <span>*</span></label>
                 <Calendar
                     className='calendar'
                     locale="vi"
+                    value={value}
                     onChange={(value)=>{
-                        
+                        value = dateToYmd(value);
+                        onChange(value)
                     }}
                 />
-                <div className='err-msg'>Có lỗi validate</div>
+                <div className='err-msg'>{errMsg?.birthday}</div>
             </div>
         </Modal>
     );

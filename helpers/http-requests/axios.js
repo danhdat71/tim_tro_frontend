@@ -8,6 +8,7 @@ axios.interceptors.response.use(
         return response.data;
     },
     error => {
+        console.log('error', error);
         if (error.response.status == 422) {
             return error.response.data;
         } else if (error.response.status == 400) {

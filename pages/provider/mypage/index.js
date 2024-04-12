@@ -22,6 +22,7 @@ import { updateUserDataAttr } from '@/redux/auth';
 import useAccountCheck from '@/hooks/useAccountCheck';
 import { useRouter } from 'next/router';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
+import { isValidDateYmd } from '@/helpers/dateHelper';
 
 const Index = () => {
     let [isShowAvatarModal, setIsShowAvatarModal] = useState(false);
@@ -36,14 +37,13 @@ const Index = () => {
     let [selectedAvatar, setSelectedAvatar] = useState();
     let [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
     let [dataInfoItem, setDataInfoItem] = useState('');
+    let [dataPassword, setDataInfoPassword] = useState({});
     let [errors, setErrors] = useState({});
     let formDataRef = useRef();
     let timeoutRef = useRef();
     const dispatch = useDispatch();
     let router = useRouter();
     const authCheck = useAccountCheck();
-
-    console.log('dataInfoItem', dataInfoItem);
 
     if (authCheck!= undefined && authCheck == false) {
         router.push('/auth/login');
@@ -69,6 +69,8 @@ const Index = () => {
             .then(response => {
                 if (response.status == 200) {
                     handleUpdateAuthUserData('avatar', response.data.avatar);
+                } else if (response?.message == 'Unauthenticated.') {
+                    router.push('/auth/login');
                 }
             });
     }, []);
@@ -103,6 +105,8 @@ const Index = () => {
                     setIsShowAlertSuccess(true);
                 } else if (response.status == 422) {
                     setErrors(response.errors);
+                } else if (response?.message == 'Unauthenticated.') {
+                    router.push('/auth/login');
                 }
             });
     }
@@ -126,6 +130,37 @@ const Index = () => {
                     setIsShowAlertSuccess(true);
                 } else if (response.status == 422) {
                     setErrors(response.errors);
+                } else if (response?.message == 'Unauthenticated.') {
+                    router.push('/auth/login');
+                }
+            });
+    }
+
+    function handleSubmitPassword(dataPassword, callBackCloseModal) {
+        setSubmitBtnDisabled(true);
+        setErrors({});
+        formDataRef.current = new FormData();
+        formDataRef.current.append('old_password', dataPassword?.old_password ? dataPassword.old_password : '');
+        formDataRef.current.append('password', dataPassword?.password ? dataPassword.password : '');
+        formDataRef.current.append('re_password', dataPassword?.re_password ? dataPassword.re_password : '');
+        formDataRef.current.append('logout_other', dataPassword?.logout_other ? dataPassword.logout_other : false);
+
+        axios.post(`/provider/update-item-info`, formDataRef.current, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
+            .then(response => {
+                setSubmitBtnDisabled(false);
+                formDataRef.current = null;
+                if (response.status == 200) {
+                    callBackCloseModal(false);
+                    setIsShowAlertSuccess(true);
+                    setDataInfoPassword({});
+                } else if (response.status == 422) {
+                    setErrors(response.errors);
+                } else if (response?.message == 'Unauthenticated.') {
+                    router.push('/auth/login');
                 }
             });
     }
@@ -289,6 +324,7 @@ const Index = () => {
                 submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowAppIdModal(false);
+                    setErrors({});
                 }}
                 onChange={(value)=>{
                     setDataInfoItem(value);
@@ -304,6 +340,7 @@ const Index = () => {
                 submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowFullnameModal(false);
+                    setErrors({});
                 }}
                 onChange={(value)=>{
                     setDataInfoItem(value);
@@ -319,6 +356,7 @@ const Index = () => {
                 submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowTelModal(false);
+                    setErrors({});
                 }}
                 onChange={(value)=>{
                     setDataInfoItem(value);
@@ -334,6 +372,7 @@ const Index = () => {
                 submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowGenderModal(false);
+                    setErrors({});
                 }}
                 onChange={(e)=>{
                     setDataInfoItem(e.target.value);
@@ -346,21 +385,61 @@ const Index = () => {
             />
             <ModalBirthday
                 isShowModal={isShowBirthdayModal}
+                submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowBirthdayModal(false);
+                    setErrors({});
                 }}
+                onChange={(value)=>{
+                    setDataInfoItem(value);
+                }}
+                onSubmit={()=>{
+                    handleSubmitInfoItem('birthday', dataInfoItem, setIsShowBirthdayModal);
+                }}
+                errMsg={errors}
+                value={dataInfoItem && isValidDateYmd(dataInfoItem)
+                    ? dataInfoItem
+                    : userMypageData?.birthday
+                }
             />
             <ModalAboutDesc
                 isShowModal={isShowDescModal}
+                submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowDescModal(false);
+                    setErrors({});
                 }}
+                onChange={(value)=>{
+                    setDataInfoItem(value);
+                }}
+                onSubmit={()=>{
+                    handleSubmitInfoItem('description', dataInfoItem, setIsShowDescModal);
+                }}
+                errMsg={errors}
+                value={dataInfoItem ? dataInfoItem : ''}
             />
             <ModalChangePassword
                 isShowModal={isShowChangePasswordModal}
+                submitBtnDisabled={submitBtnDisabled}
                 onClose={()=>{
                     setIsShowChangePasswordModal(false);
+                    setDataInfoPassword({});
+                    setErrors({});
                 }}
+                onChange={(value)=>{
+                    console.log(value)
+                    let newDataPassword = {...dataPassword};
+                    newDataPassword['old_password'] = value['old_password'];
+                    newDataPassword['password'] = value['password'];
+                    newDataPassword['re_password'] = value['re_password'];
+                    newDataPassword['logout_other'] = value['logout_other'];
+                    setDataInfoPassword(newDataPassword);
+                }}
+                onSubmit={()=>{
+                    handleSubmitPassword(dataPassword, setIsShowChangePasswordModal);
+                }}
+                errMsg={errors}
+                value={dataPassword}
             />
             <AlertSuccess
                 message="Cập nhật thông tin thành công !"
