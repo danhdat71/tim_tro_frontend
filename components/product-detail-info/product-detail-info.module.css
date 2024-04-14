@@ -75,3 +75,30 @@
     border-radius: 15px;
     font-size: 15px;
 }
+
+.map {
+    width: 100%;
+    height: 400px;
+}
+
+.marker {
+    position: relative;
+    transition: .3s;
+}
+
+.marker_icon {
+    font-size: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -100%);
+    color: rgb(234, 0, 0);
+}
+
+.col_item {
+    padding-bottom: 5px;
+}
+
+.col_item:last-child {
+    padding-bottom: 0;
+}

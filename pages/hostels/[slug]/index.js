@@ -19,14 +19,14 @@ import BestAreaBox from '@/components/boxs/best-area-box/best-area-box';
 import ButtonCall from '@/components/buttons/button-call/button-call';
 import OtherAreaBox from '@/components/boxs/other-area-box/other-area-box';
 
-export async function getServerSideProps(context) {
-    let slug = context.query.slug;
-    let data = await getDetailProduct(process.env.API + `product/${slug}`);
+// export async function getServerSideProps(context) {
+//     let slug = context.query.slug;
+//     let data = await getDetailProduct(process.env.API + `product/${slug}`);
 
-    return {
-        props: { data },
-    }
-}
+//     return {
+//         props: { data },
+//     }
+// }
 
 const breadCrumbItems = [
     {
@@ -63,7 +63,7 @@ const otherPriceSameArea = [
     {label:'Phường 7', price: '17tr', result: 100, href: '/'},
 ];
 
-const Index = ({ data }) => {
+const Index = () => {
 
     let [showModalBooking, setShowModalBooking] = useState(false);
     let [showModalReport, setShowModalReport] = useState(false);

@@ -73,6 +73,7 @@ const TextareaInputWithCount = (props) => {
                         className={cl.button}
                         onClick={()=>{
                             setInputed(value.value);
+                            onChange(value.value);
                         }}
                     >{value.label}</button>
                 )

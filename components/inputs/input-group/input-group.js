@@ -11,6 +11,7 @@ const InputGroup = (props) => {
         min = 0,
         max = 999999,
         onChange = function(){},
+        onBlur = function(){},
         placeholder,
         errMsg,
         value = "",
@@ -83,6 +84,9 @@ const InputGroup = (props) => {
                     value={inputed}
                     onChange={(e)=>{
                         handleInputValue(e);
+                    }}
+                    onBlur={(e)=>{
+                        onBlur(e.target.value);
                     }}
                     placeholder={placeholder}
                 ></input>

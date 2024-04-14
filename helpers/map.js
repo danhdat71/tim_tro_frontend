@@ -2,8 +2,8 @@ function calculateZoomLevel(viewport) {
     const GLOBE_WIDTH = 256; // Width of the world in pixels at zoom level 0
     const mapWidth = window.innerWidth;
     const mapHeight = window.innerHeight;
-    const ne = viewport.northeast;
-    const sw = viewport.southwest;
+    const ne = viewport?.northeast ? viewport.northeast : 0;
+    const sw = viewport?.southwest ? viewport.southwest : 0;
 
     const latFraction = (ne.lat - sw.lat) / 360;
     const lngDiff = ne.lng - sw.lng;

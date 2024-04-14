@@ -427,7 +427,6 @@ const Index = () => {
                     setErrors({});
                 }}
                 onChange={(value)=>{
-                    console.log(value)
                     let newDataPassword = {...dataPassword};
                     newDataPassword['old_password'] = value['old_password'];
                     newDataPassword['password'] = value['password'];

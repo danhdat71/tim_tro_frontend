@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import cl from './input-map.module.css';
 import GoogleMapReact from 'google-map-react';
 import { getLatLngFromAddress } from '@/helpers/http-requests/map';
-import axios from 'axios';
-import { calculateZoomLevel } from '@/helpers/map';
-
 
 const config = {
     key: process.env.GOOGLE_MAP_KEY,
@@ -13,7 +10,10 @@ const config = {
 }
 
 const InputMap = (props) => {
-    let { address } = props;
+    let { 
+        address,
+        onChange = function(){}
+    } = props;
     let [center, setCenter] = useState({
         lat: 0,
         lng: 0,
@@ -21,15 +21,31 @@ const InputMap = (props) => {
     });
 
     useEffect(function(){
-        const fetchAddress = async () => {
-            let result = await getLatLngFromAddress(address);
-            handleSetCenter({
-                lat: result?.lat,
-                lng: result?.lng,
-                zoom: result?.zoom,
-            });
+        onChange(center);
+    }, [center]);
+
+    useEffect(function(){
+        if (address != '') {
+            const fetchAddress = async () => {
+                let result = await getLatLngFromAddress(address);
+                handleSetCenter({
+                    lat: result?.lat,
+                    lng: result?.lng,
+                    zoom: result?.zoom,
+                });
+            }
+            fetchAddress();
+        } else {
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position){
+                    let newCenter = {...center};
+                    newCenter.lat = position.coords.latitude;
+                    newCenter.lng = position.coords.longitude;
+                    setCenter(newCenter);
+                });
+            }
         }
-        fetchAddress();
+
     }, [address]);
 
     function handleSetCenter(value) {
@@ -37,7 +53,6 @@ const InputMap = (props) => {
         newCenter.lat = value.lat;
         newCenter.lng = value.lng;
         newCenter.zoom = value.zoom;
-
         setCenter(newCenter);
     }
 
@@ -89,4 +104,4 @@ const InputMap = (props) => {
     );
 }
 
-export default InputMap;
+export default memo(InputMap);

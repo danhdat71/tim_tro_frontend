@@ -11,7 +11,11 @@ import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import useWindowSize from '@/hooks/useWindowDimensions';
 
-const SliderWithThumb = () => {
+const SliderWithThumb = (props) => {
+    const {
+        images,
+        imageThumbs
+    } = props;
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const windowSize = useWindowSize();
 
@@ -22,6 +26,48 @@ const SliderWithThumb = () => {
             Fancybox.destroy();
         };
     }, []);
+
+    function renderImages() {
+        return images?.map(function(val, index) {
+            return (
+                <SwiperSlide
+                    key={index}
+                >
+                    <div className={`${cl.slider_item}`}>
+                        <img
+                            data-fancybox="gallery"
+                            loading="lazy"
+                            src={val.url}
+                        />
+                        <div className={cl.slider_bg}>
+                            <img
+                                loading="lazy"
+                                src={val.thumb_url}
+                            />
+                        </div>
+                    </div>
+                </SwiperSlide>
+            );
+        });
+    }
+
+    function renderThumbImage() {
+        return imageThumbs?.map(function(val, index) {
+            return (
+                <SwiperSlide
+                    key={index}
+                    className={`${index == 0 ? 'swiper-slide-thumb-active' : ''}`}
+                >
+                    <div className={`${cl.thumb_slider_item}`}>
+                        <img
+                            loading="lazy"
+                            src={val.url}
+                        />
+                    </div>
+                </SwiperSlide>
+            );
+        });
+    }
 
     return (
         <div className={cl.wrap_slider_with_thumb}>
@@ -38,30 +84,7 @@ const SliderWithThumb = () => {
                     modules={[FreeMode, Navigation, Thumbs]}
                     lazy={true}
                 >
-                    <SwiperSlide>
-                        <div className={cl.slider_item}>
-                            <img data-fancybox="gallery" loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202215-a993_wm.jpeg" />
-                            <div className={cl.slider_bg}>
-                                <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202215-a993_wm.jpeg" />
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.slider_item}>
-                            <img data-fancybox="gallery" loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/03/18/20240318214358-6c48_wm.jpg" />
-                            <div className={cl.slider_bg}>
-                                <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/03/18/20240318214358-6c48_wm.jpg" />
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.slider_item}>
-                            <img data-fancybox="gallery" loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            <div className={cl.slider_bg}>
-                                <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                            </div>
-                        </div>
-                    </SwiperSlide>
+                    {renderImages()}
                 </Swiper>
             </div>
             <div className={cl.thumb_slider}>
@@ -75,21 +98,7 @@ const SliderWithThumb = () => {
                     lazy={true}
                     className='thumb-slider-fade'
                 >
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202215-a993_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/03/18/20240318214358-6c48_wm.jpg" />
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={cl.thumb_slider_item}>
-                            <img loading="lazy" src="https://file4.batdongsan.com.vn/resize/1275x717/2024/02/24/20240224202214-4bf3_wm.jpeg" />
-                        </div>
-                    </SwiperSlide>
+                    {renderThumbImage()}
                 </Swiper>
             </div>
         </div>

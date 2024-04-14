@@ -2,15 +2,32 @@ import React from 'react';
 import cl from './modal-preview-hostel.module.css';
 import SliderWithThumb from '@/components/slider-with-thumb/slider-with-thumb';
 import ProductDetailInfo from '@/components/product-detail-info/product-detail-info';
+import { convertPriceStringToVnMoneyKey, formatNumber } from '@/helpers/priceHelper';
 
-const ModalPreviewHostel = () => {
+const ModalPreviewHostel = (props) => {
+    let {createData} = props;
+
+    function getImageLinks(list) {
+        return list?.map(function(value, index){
+            return {
+                url: value.preview,
+                thumb_url: value.preview,
+            };
+        });
+    }
+
     return (
         <div>
-            <SliderWithThumb></SliderWithThumb>
+            <SliderWithThumb
+                imageThumbs={getImageLinks(createData?.product_images)}
+                images={getImageLinks(createData?.product_images)}
+            ></SliderWithThumb>
             <div className={cl.hostel_detail}>
-                <h2 className={cl.product_name}>Cho thuê phòng trọ hẻm an ninh - xe tải tận cửa - Nguyễn Văn Đậu - Bình Thạnh</h2>
-                <div className={cl.price}>1,5 triệu / tháng</div>
-                <ProductDetailInfo></ProductDetailInfo>
+                <h2 className={cl.product_name}>{createData?.title}</h2>
+                <div className={cl.price}>{formatNumber(String(createData?.price))} / tháng</div>
+                <ProductDetailInfo
+                    data={createData}
+                ></ProductDetailInfo>
             </div>
         </div>
     );

@@ -7,6 +7,7 @@ const InputFiles = (props) => {
         onChange = function(){},
         isShowHelper = true,
         isShowLabelProfile = true,
+        errors,
     } = props;
 
     let [files, setFiles] = useState([]);
@@ -118,6 +119,7 @@ const InputFiles = (props) => {
                 <div className={cl.input_box_text_1}>Click vào đây để chọn ảnh</div>
                 <div className={cl.input_box_text_2}>Hoặc kéo thả file vào vị trí này</div>
             </div>
+            <div className='err-msg'>{errors}</div>
             <div className={cl.wrap_preview}>
                 {renderPreviewFiles()}
             </div>

@@ -36,4 +36,5 @@ function formatDotEach3Num(number) {
 export {
     convertPriceStringToVnMoneyKey,
     formatDotEach3Num,
+    formatNumber,
 };

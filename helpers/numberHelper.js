@@ -11,6 +11,11 @@ function formatPhoneNumber(phoneNumber) {
     return phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
 }
 
+function removeDots(numberString) {
+    return numberString.split('.').join('');
+}
+
 export {
     formatPhoneNumber,
+    removeDots,
 };
