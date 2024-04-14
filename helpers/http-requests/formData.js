@@ -1,13 +1,19 @@
-function objectToFormData(object) {
+function objectToFormData(obj) {
     const formData = new FormData();
 
-    for (const key in object) {
-        if (object.hasOwnProperty(key)) {
-            formData.append(key, object[key]);
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (Array.isArray(obj[key])) {
+                obj[key].forEach((item, index) => {
+                    formData.append(`${key}[${index}]`, item);
+                });
+            } else {
+                formData.append(key, obj[key]);
+            }
         }
     }
 
     return formData;
 }
 
-export {objectToFormData}
+export { objectToFormData }

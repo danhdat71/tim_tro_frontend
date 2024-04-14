@@ -22,6 +22,7 @@ import { useAppSelector } from '@/redux/store';
 import axios from '../../../helpers/http-requests/axios';
 import { objectToFormData } from '@/helpers/http-requests/formData';
 import { NO_SHARED_HOUSE, SHARED_HOUSE } from '@/config/productShareHouse';
+import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 
 const breadcrumbs = [
     {label:'Trang chủ', href:'/'},
@@ -37,24 +38,39 @@ const Index = () => {
         bed_rooms: 1,
         toilet_rooms: 0,
         used_type: 1,
-        is_shared_house: 1,
-        time_rule: 1,
+        is_shared_house: 0,
+        time_rule: 0,
         is_allow_pet: 1,
     });
     let [isDisableSubmit, setIsDisableSubmit] = useState(false);
+    let [isShowAlertSuccess, setIsShowAlertSuccess] = useState(false);
     let [errors, setErrors] = useState({});
     let [tmpDetailAddress, setTmpDetailAddress] = useState('');
     let authCheck = useAccountCheck();
     let router = useRouter();
     let formDataRef = useRef();
+    let timeoutAlertSuccessRef = useRef();
+    let timeoutRedirect = useRef();
 
-    useEffect(function(){
+    useEffect( function() {
         return () => {
             formDataRef.current = null;
         }
-    }, [formDataRef.current]);
+    }, [createData]);
 
-    
+    useEffect(function(){
+        handleSetCreateData('tel', authUserData?.tel);
+    }, [authUserData]);
+
+    useEffect(function(){
+        timeoutAlertSuccessRef.current = setTimeout(function(){
+            setIsShowAlertSuccess(false);
+        }, 3000);
+
+        return () => {
+            clearTimeout(timeoutAlertSuccessRef.current);
+        }
+    }, [isShowAlertSuccess]);
 
     if (authCheck!= undefined && authCheck == false) {
         router.push('/auth/login');
@@ -94,17 +110,41 @@ const Index = () => {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
         })
-            .then(response => {
-                setIsDisableSubmit(false);
-                if (response.status == 200) {
-                    handleShowPreview(true);
-                } else if (response.status == 422) {
-                    window.scrollTo(0, 0)
-                    setErrors(response.errors);
-                } else if (response?.message == 'Unauthenticated.') {
-                    router.push('/auth/login');
-                }
-            });
+        .then(response => {
+            setIsDisableSubmit(false);
+            if (response.status == 200) {
+                handleShowPreview(true);
+            } else if (response.status == 422) {
+                window.scrollTo(0, 0)
+                setErrors(response.errors);
+            } else if (response?.message == 'Unauthenticated.') {
+                router.push('/auth/login');
+            }
+        });
+    }
+
+    function handleSubmitData() {
+        formDataRef.current = objectToFormData(createData);
+        setErrors({});
+        setIsDisableSubmit(true);
+        axios.post(`/provider/product/store`, formDataRef.current, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
+        .then(response => {
+            setIsDisableSubmit(false);
+            if (response.status == 200) {
+                handleShowPreview(false);
+                setIsShowAlertSuccess(true);
+                timeoutRedirect.current = setTimeout(function(){
+                    clearTimeout(timeoutRedirect.current);
+                    router.push('/provider/hostel-manager');
+                }, 3000);
+            } else if (response?.message == 'Unauthenticated.') {
+                router.push('/auth/login');
+            }
+        });
     }
 
     console.log('createData', createData);
@@ -168,6 +208,7 @@ const Index = () => {
                             handleSetCreateData('tel', value);
                         }}
                         errMsg={errors?.tel}
+                        value={authUserData.tel}
                     ></InputGroup>
                 </div>
                 <div className='form-group'>
@@ -195,6 +236,7 @@ const Index = () => {
                         }}
                         placeholder="Vị trí để dễ tìm thấy trọ. Ví dụ: 64/62/62 Nguyễn Khoái, Phường 2, Quận 4, TP. Hồ Chí Minh"
                         errMsg={errors?.detail_address}
+                        value={createData?.detail_address}
                     ></InputGroup>
                 </div>
                 <div className='form-group'>
@@ -277,7 +319,7 @@ const Index = () => {
                         <label className='label label-block'>Chung chủ <span>*</span></label>
                         <select
                             className='select w-100'
-                            onChange={()=>{
+                            onChange={(e)=>{
                                 handleSetCreateData('is_shared_house', parseInt(e.target.value));
                             }}
                         >
@@ -354,11 +396,20 @@ const Index = () => {
                 onClose={()=>{
                     handleShowPreview(false);
                 }}
+                onSubmit={()=>{
+                    handleSubmitData();
+                }}
+                submitBtnDisabled={isDisableSubmit}
             >
                 <ModalPreviewHostel
                     createData={createData}
                 ></ModalPreviewHostel>
             </Modal>
+            <AlertSuccess
+                message="Đăng tin thành công !"
+                sub="Đang di chuyển về trang danh sách"
+                isShow={isShowAlertSuccess}
+            ></AlertSuccess>
         </div>
     );
 }
