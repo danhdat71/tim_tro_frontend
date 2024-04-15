@@ -76,3 +76,46 @@
     background-color: rgb(35, 35, 35);
     color: white;
 }
+
+.paginate-md .handle-item {
+    padding: 0;
+    border: none;
+}
+
+.paginate-md .handle-item a {
+    border: 1px solid rgb(35, 35, 35);
+    color: rgb(35, 35, 35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    height: 100%;
+    border-right: 0;
+    transition: .1s;
+}
+
+.paginate-md .handle-item a:hover {
+    background-color: rgb(35, 35, 35);
+    color: white;
+}
+
+.paginate-md .handle-item:last-child a {
+    border-right: 1px solid rgb(35, 35, 35)!important;
+}
+
+.paginate-md .handle-item.dot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(35, 35, 35);
+    border-right: 0;
+}
+
+.paginate-md .handle-item.active {
+    background-color: rgb(35, 35, 35);
+    
+}
+
+.paginate-md .handle-item.active a {
+    color: white;
+}

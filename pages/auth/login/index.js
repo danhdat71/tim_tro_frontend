@@ -77,6 +77,7 @@ const Index = () => {
                     } else if (response.data.status == ACTIVE) {
                         let accessToken = response.data.access_token;
                         localStorage.setItem('access_token', accessToken);
+                        document.cookie = `access_token=${accessToken}; path=/`;
                         handleSetUserLogin(response.data);
                         router.push({
                             pathname: '/',

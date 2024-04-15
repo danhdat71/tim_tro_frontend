@@ -15,7 +15,12 @@ function removeDots(numberString) {
     return numberString.split('.').join('');
 }
 
+function isNumeric(value) {
+    return !isNaN(value);
+}
+
 export {
     formatPhoneNumber,
     removeDots,
+    isNumeric,
 };
