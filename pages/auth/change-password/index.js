@@ -57,7 +57,7 @@ const Index = () => {
                 } else if (response.status == 200) {
                     let accessToken = response.data.access_token;
                     localStorage.setItem('access_token', accessToken);
-
+                    document.cookie = `access_token=${accessToken}; path=/`;
                     handleSetUserLogin(response.data);
                     router.push('/');
                 } else if (response.status == 400) {

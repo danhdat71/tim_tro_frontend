@@ -10,6 +10,8 @@ import { PaginationItem } from '@mui/material';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { isNumeric } from '@/helpers/numberHelper';
+import EmptyList from '@/components/empty-list/empty-list';
+import { DRAFT, REALITY } from '@/config/productStatus';
 
 const breadCrumbs = [
     {label: 'Trang chủ', href: '/'},
@@ -26,7 +28,7 @@ export async function getServerSideProps(context) {
     
     let {
         status = 1,
-        page
+        page = 1,
     } = context.query;
 
     let fetchData = await fetch(`http://localhost/api/provider/product/list?page=${page}&status=${status}`, {
@@ -60,34 +62,50 @@ const Index = ({data}) => {
     }
 
     function handleRenderPaginate() {
+        if (data?.list?.data?.length > 0) {
+            return data?.list?.links?.map(function(val, index) {
+                if (isNumeric(val.label)) {
+                    return (
+                        <div
+                            key={index}
+                            className={`handle-item ${val.label == router.query.page || router.query.page == null ? 'active' : ''}`}
+                        ><Link href={`/provider/hostel-manager?status=${router.query.status ? router.query.status : REALITY}&page=${val.label}`}>{val.label}</Link></div>
+                    );
+                } else if (val.label == '...') {
+                    return (
+                        <div
+                            key={index}
+                            className='handle-item dot'
+                        >...</div>
+                    );
+                }
+            });
+        }
         
-        return data?.list?.links?.map(function(val, index) {
-            if (isNumeric(val.label)) {
-                return (
-                    <div
-                        className={`handle-item ${val.label == router.query.page ? 'active' : ''}`}
-                    ><Link href={`/provider/hostel-manager?status=${router.query.status ? router.query.status : 1}&page=${val.label}`}>{val.label}</Link></div>
-                );
-            } else if (val.label == '...') {
-                return (
-                    <div
-                        className='handle-item dot'
-                    >...</div>
-                );
-            }
-        });
     }
 
     function handleRenderProduct() {
         let dataLike = [12, 17];
-        return data?.list?.data?.map(function(value, index) {
-            return (
-                <ProductOwner
-                    image={`${process.env.BACKEND_URL}/${value.product_images[0].url}`}
-                    isLike={dataLike.includes(value.id) ? 'Đã like' : 'chưa like'}
-                />
-            )
-        });
+
+        if (data?.list?.data?.length > 0) {
+            return data?.list?.data?.map(function(value, index) {
+                return (
+                    <ProductOwner
+                        key={index}
+                        image={`${process.env.BACKEND_URL}/${value.product_images[0].url}`}
+                        title={value.title}
+                        price={value.price}
+                        isLike={dataLike.includes(value.id) ? 'Đã like' : 'chưa like'}
+                    />
+                )
+            });
+        } else {
+            if (router.query.status == DRAFT) {
+                return <EmptyList title="Chưa có bản nháp nào"></EmptyList>
+            } else {
+                return <EmptyList title="Chưa có bài đăng nào"></EmptyList>
+            }
+        }
     }
 
     console.log('data', data);
@@ -96,17 +114,17 @@ const Index = ({data}) => {
         <div className={cl.my_hostel}>
             <Breadcrumb items={breadCrumbs}></Breadcrumb>
             <TitleLeftBig title="Quản lý tin đã đăng"></TitleLeftBig>
-            <div>
+            <div className={cl.tabs}>
                 <Link href='/provider/hostel-manager?status=0&page=1'>
-                    <button>
+                    <button className={`${router.query.status == DRAFT ? cl.active : '' }`}>
                         <span>Bản nháp</span>
-                        <span>(1)</span>
+                        <span>({data?.draft_count})</span>
                     </button>
                 </Link>
                 <Link href='/provider/hostel-manager?status=1&page=1'>
-                    <button>
+                    <button className={`${router.query.status == REALITY || router.query.status == null ? cl.active : '' }`}>
                         <span>Đã đăng</span>
-                        <span>(1)</span>
+                        <span>({data?.total_count})</span>
                     </button>
                 </Link>
             </div>

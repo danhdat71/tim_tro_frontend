@@ -11,3 +11,56 @@
 .wrap_products {
     padding-bottom: 40px;
 }
+
+.tabs {
+    display: inline-flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.tabs button {
+    width: 170px;
+    height: 35px;
+    cursor: pointer;
+    border: 1px solid rgb(0, 154, 77);
+    border-right: none;
+    background-color: transparent;
+    transition: .1s;
+}
+
+.tabs a:first-child button {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.tabs a:last-child button {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.tabs a:last-child button {
+    border-right: 1px solid rgb(0, 154, 77);
+}
+
+.tabs button.active {
+    background-color: rgb(0, 154, 77);
+    color: white;
+}
+
+.tabs button span {
+    padding-right: 5px;
+}
+
+@media screen and (max-width: 425px) {
+    .tabs {
+        display: flex;
+        justify-content: center;
+    }
+    .tabs a {
+        width: 50%;
+    }
+
+    .tabs a button {
+        width: 100%;
+    }
+}

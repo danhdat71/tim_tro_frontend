@@ -3,7 +3,9 @@ import emptyListIcon from '../../assets/imgs/empty_list.png';
 import cl from './empty-list.module.css';
 
 const EmptyList = (props) => {
-    let {title} = props;
+    let {
+        title = "Rỗng"
+    } = props;
     return (
         <div className={cl.empty}>
             <div className={cl.image}>

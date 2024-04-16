@@ -44,7 +44,7 @@ const Header = () => {
         if (authUserData.status == undefined) {
             return (
                 <>
-                    <Link href='/auth/login' className={cl.menu_button}>
+                    <Link href='/auth/login' className={`${cl.menu_button} ${cl.login}`}>
                         <span>Đăng nhập</span>
                     </Link>
                     <Link href='/auth/register' className={`${cl.menu_button} ${cl.register}`}>
@@ -81,11 +81,11 @@ const Header = () => {
                     <Link href='/'><img src={logoImg.src} alt='logo'></img></Link>
                 </div>
                 <div className={cl.fast_menu}>
-                    <div className={`${cl.fast_menu_item} ${cl.active}`}><Link href=''>Tìm phòng trọ</Link></div>
-                    <div className={cl.fast_menu_item}><Link href=''>Tìm văn phòng</Link></div>
-                    <div className={cl.fast_menu_item}><Link href=''>Tìm nhà nguyên căn</Link></div>
-                    <div className={cl.fast_menu_item}><Link href=''>Tìm ở ghép</Link></div>
-                    <div className={cl.fast_menu_item}><Link href=''>Bảng giá trọ</Link></div>
+                    <div className={`${cl.fast_menu_item} ${cl.active}`}><Link href=''>Phòng trọ</Link></div>
+                    <div className={cl.fast_menu_item}><Link href=''>Văn phòng</Link></div>
+                    <div className={cl.fast_menu_item}><Link href=''>Nhà nguyên căn</Link></div>
+                    <div className={cl.fast_menu_item}><Link href=''>Ở ghép</Link></div>
+                    {/* <div className={cl.fast_menu_item}><Link href=''>Bảng giá trọ</Link></div> */}
                     <div className={cl.fast_menu_item}><Link href=''>Tin tức</Link></div>
                 </div>
             </div>

@@ -112,3 +112,28 @@
         display: none;
     }
 }
+
+@media screen and (max-width: 375px) {
+    .menu_button {
+        margin-right: 15px;
+        font-size: 14px;
+    }
+    .menu_button i {
+        font-size: 25px;
+    }
+    .register {
+        display: none;
+    }
+    .login {
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .wrap_header .left img {
+        width: 130px;
+    }
+    .left .brand_logo {
+        padding-right: 0;
+    }
+}

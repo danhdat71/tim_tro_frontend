@@ -332,7 +332,7 @@ const Index = () => {
                         <label className='label label-block'>Giờ giấc <span>*</span></label>
                         <select
                             className='select w-100'
-                            onChange={()=>{
+                            onChange={(e)=>{
                                 handleSetCreateData('time_rule', parseInt(e.target.value));
                             }}
                         >

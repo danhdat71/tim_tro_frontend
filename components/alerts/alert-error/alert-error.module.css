@@ -2,7 +2,8 @@
     position: fixed;
     z-index: 9999999;
     bottom: 50px;
-    right: -30%;
+    right: 15px;
+    transform: translateX(120%);
     align-items: center;
     border: 1px solid rgb(180, 6, 0);
     background-color: rgb(255, 241, 241);
@@ -16,7 +17,7 @@
 }
 
 .alert_error.show {
-    right: 20px;
+    transform: translateX(0%);
 }
 
 .icon {

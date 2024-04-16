@@ -101,7 +101,7 @@ const VerifyOtp = () => {
 
                 let accessToken = response.data.access_token;
                 localStorage.setItem('access_token', accessToken);
-
+                document.cookie = `access_token=${accessToken}; path=/`;
                 handleSetUserLogin(response.data);
 
                 let timeout = setTimeout(function(){

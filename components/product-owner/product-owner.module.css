@@ -43,7 +43,7 @@
         flex-direction: column;
     }
     .left_card {
-        width: 30%;
+        width: 100%;
     }
     .right_card {
         width: 100%;

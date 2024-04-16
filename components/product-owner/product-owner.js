@@ -1,11 +1,14 @@
 import React from 'react';
 import cl from './product-owner.module.css';
 import Link from 'next/link';
+import { formatNumber } from '@/helpers/priceHelper';
 
 const ProductOwner = (props) => {
 
     let {
         image,
+        title,
+        price
     } = props;
 
     return (
@@ -23,9 +26,9 @@ const ProductOwner = (props) => {
             </div>
             <div className={cl.right_card}>
                 <Link href='/detail' className={cl.product_item_link}>
-                    <div className={cl.product_name}>Phòng trọ Sao Mai, Tân Bình. Phòng sạch đẹp, full nội thất, có ban công. Giá tốt, ở ngay</div>
+                    <div className={cl.product_name}>{title}</div>
                 </Link>
-                <div className={cl.price}>1.5 triệu / tháng</div>
+                <div className={cl.price}>{formatNumber(price)} / tháng</div>
                 <div className={cl.info_item}>
                     <span>Lượt xem: </span>
                     <b>10</b>
