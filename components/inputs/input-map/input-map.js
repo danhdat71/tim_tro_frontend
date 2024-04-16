@@ -12,7 +12,7 @@ const config = {
 const InputMap = (props) => {
     let { 
         address,
-        onChange = function(){}
+        onChange = function(){},
     } = props;
     let [center, setCenter] = useState({
         lat: 0,

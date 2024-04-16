@@ -8,23 +8,27 @@ const InputFiles = (props) => {
         isShowHelper = true,
         isShowLabelProfile = true,
         errors,
+        initImages = [],
     } = props;
 
-    let [files, setFiles] = useState([]);
+    let [files, setFiles] = useState({
+        selectedImages: initImages,
+        deletedOldImages: []
+    });
     const fileInputRef = useRef(null);
 
     useEffect( function() {
         return () => {
-            const removedFiles = files.filter(function(file){
-                return !files.includes(file);
+            const removedFiles = files.selectedImages.filter(function(file){
+                return !files.selectedImages.includes(file);
             });
             removedFiles.forEach(file => URL.revokeObjectURL(file.preview));
         };
-    }, [files]);
+    }, [files.selectedImages]);
 
-    function handleSetFiles(files)
+    function handleSetFiles(inputFiles)
     {
-        let newFiles = Array.from(files, function(file) {
+        let newFiles = Array.from(inputFiles, function(file) {
             file.preview = URL.createObjectURL(file);
             return file;
         }).filter(function(file) {
@@ -36,44 +40,77 @@ const InputFiles = (props) => {
             );
         });
         setFiles(function(prevFiles) {
-            let newFilesPush = [...prevFiles, ...newFiles];
-            onChange(newFilesPush);
-            return newFilesPush
+            let newPrevFiles = {...prevFiles};
+            let newList = [...prevFiles.selectedImages, ...newFiles];
+            newPrevFiles.selectedImages = newList;
+            onChange(newPrevFiles);
+            return newPrevFiles;
         })
         fileInputRef.current.value = null;
-        
     }
 
-    function handleRemoveSelectedFile(index) {
-        let updatedFiles = [...files];
-        updatedFiles.splice(index, 1);
+    function handleRemoveSelectedFile(index, id = null) {
+        let updatedFiles = {...files};
+        updatedFiles.selectedImages.splice(index, 1);
+        // When id != null it is an old image url, push to list to delete
+        if (id != null) {
+            updatedFiles.deletedOldImages.push(id);
+        }
         setFiles(updatedFiles);
         onChange(updatedFiles);
     }
 
     function renderPreviewFiles() {
-        return files.map(function(value, index) {
-            return (
-                <div key={index} className={cl.preview_item}>
-                    <div className={cl.preview_item_backdrop}>
+        return files.selectedImages?.map(function(value, index) {
+            // case old image url
+            if (value.url != null) {
+                return (
+                    <div key={index} className={cl.preview_item}>
+                        <div className={cl.preview_item_backdrop}>
+                            <img loading="lazy" src={`${process.env.BACKEND_URL}/${value.url}`} />
+                        </div>
+                        <img loading="lazy" src={`${process.env.BACKEND_URL}/${value.url}`} />
+                        <div
+                            className={cl.btn_remove}
+                            onClick={()=>{
+                                handleRemoveSelectedFile(index, value.id);
+                            }}
+                        >
+                            <i className="far fa-times"></i>
+                        </div>
+                        {
+                            index == 0 && isShowLabelProfile
+                            ? <div className={cl.avatar_tag}>Ảnh đại diện</div>
+                            : null
+                        }
+                    </div>
+                );
+            }
+            // case new selected file
+            else {
+                return (
+                    <div key={index} className={cl.preview_item}>
+                        <div className={cl.preview_item_backdrop}>
+                            <img loading="lazy" src={value.preview} />
+                        </div>
                         <img loading="lazy" src={value.preview} />
+                        <div
+                            className={cl.btn_remove}
+                            onClick={()=>{
+                                handleRemoveSelectedFile(index);
+                            }}
+                        >
+                            <i className="far fa-times"></i>
+                        </div>
+                        {
+                            index == 0 && isShowLabelProfile
+                            ? <div className={cl.avatar_tag}>Ảnh đại diện</div>
+                            : null
+                        }
                     </div>
-                    <img loading="lazy" src={value.preview} />
-                    <div
-                        className={cl.btn_remove}
-                        onClick={()=>{
-                            handleRemoveSelectedFile(index);
-                        }}
-                    >
-                        <i className="far fa-times"></i>
-                    </div>
-                    {
-                        index == 0 && isShowLabelProfile
-                        ? <div className={cl.avatar_tag}>Ảnh đại diện</div>
-                        : null
-                    }
-                </div>
-            );
+                );
+            }
+            
         });
     }
 

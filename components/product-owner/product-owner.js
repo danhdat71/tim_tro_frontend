@@ -10,6 +10,7 @@ const ProductOwner = (props) => {
         image,
         title,
         price,
+        slug,
         onClickRemove
     } = props;
 
@@ -36,10 +37,12 @@ const ProductOwner = (props) => {
                     <b>10</b>
                 </div>
                 <div className={cl.button_bar}>
-                    <button className={`${cl.button} ${cl.button_yellow}`}>
-                        <span className={cl.button_icon}><i className="far fa-vote-yea"></i></span>
-                        <span>Chỉnh sửa</span>
-                    </button>
+                    <Link href={`/provider/hostel-edit/${slug}`}>
+                        <button className={`${cl.button} ${cl.button_yellow}`}>
+                            <span className={cl.button_icon}><i className="far fa-vote-yea"></i></span>
+                            <span>Chỉnh sửa</span>
+                        </button>
+                    </Link>
                     <button className={`${cl.button} ${cl.button_cancel}`} onClick={()=>{onClickRemove(id)}}>
                         <span className={cl.button_icon}><i className="far fa-trash"></i></span>
                         <span>Gỡ bỏ</span>

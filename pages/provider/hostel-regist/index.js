@@ -360,7 +360,7 @@ const Index = () => {
                     <label className='label label-block'>Ảnh minh họa <span>*</span></label>
                     <InputFiles
                         onChange={(files)=>{
-                            handleSetCreateData('product_images', files);
+                            handleSetCreateData('product_images', files.selectedImages);
                         }}
                         errors={errors?.product_images}
                     ></InputFiles>

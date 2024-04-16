@@ -119,3 +119,9 @@
 .paginate-md .handle-item.active a {
     color: white;
 }
+
+@media screen and (max-width: 425px) {
+    .paginate-md .handle-item a {
+        font-size: 13px;
+    }
+}

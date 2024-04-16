@@ -120,6 +120,7 @@ const Index = ({data}) => {
                         image={`${process.env.BACKEND_URL}/${value.product_images[0].url}`}
                         title={value.title}
                         price={value.price}
+                        slug={value.slug}
                         isLike={dataLike.includes(value.id) ? 'Đã like' : 'chưa like'}
                         onClickRemove={(id)=>{
                             setIsShowConfirmPopUp(id);

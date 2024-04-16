@@ -6,7 +6,10 @@ import axios from '../../../helpers/http-requests/axios';
 const InputAddress = (props) => {
 
     let {
-        onChange
+        onChange,
+        valueProvince = 0,
+        valueDistrict = 0,
+        valueWard = 0,
     } = props;
 
     let [provinces, setProvinces] = useState();
@@ -25,6 +28,30 @@ const InputAddress = (props) => {
                 setProvinces(res.data);
             }
         });
+
+        //Case update
+        if (valueProvince != 0 && valueDistrict != 0 && valueWard != 0) {
+            axios.get(`/location/get-districts?province_id=${valueProvince.value}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                }
+            })
+            .then(function(res){
+                if (res.status == 200) {
+                    setDistricts(res.data);
+                }
+            });
+            axios.get(`/location/get-wards?district_id=${valueDistrict.value}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                }
+            })
+            .then(function(res){
+                if (res.status == 200) {
+                    setWards(res.data);
+                }
+            });
+        }
     }, []);
 
     useEffect(function(){
@@ -79,7 +106,7 @@ const InputAddress = (props) => {
                         onChange={(selectedOption)=>{
                             handleSetSelectedData('province_id', selectedOption);
                         }}
-                        value={selectedData?.province_id}
+                        value={selectedData?.province_id ? selectedData?.province_id : valueProvince}
                         options={provinces}
                         isDisabled={false}
                         placeholder="Tỉnh/Thành phố"
@@ -92,7 +119,7 @@ const InputAddress = (props) => {
                         onChange={(selectedOption)=>{
                             handleSetSelectedData('district_id', selectedOption);
                         }}
-                        value={selectedData?.district_id}
+                        value={selectedData?.district_id ? selectedData?.district_id : valueDistrict}
                         options={districts}
                         isDisabled={districts ? false : true}
                         placeholder="Quận/Huyện"
@@ -107,7 +134,7 @@ const InputAddress = (props) => {
                         onChange={(selectedOption)=>{
                             handleSetSelectedData('ward_id', selectedOption);
                         }}
-                        value={selectedData?.ward_id}
+                        value={selectedData?.ward_id ? selectedData?.ward_id : valueWard}
                         options={wards}
                         isDisabled={wards ? false : true}
                         placeholder="Phường/Xã/Thị Trấn"
