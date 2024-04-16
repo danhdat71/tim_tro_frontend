@@ -2,7 +2,8 @@
     position: fixed;
     z-index: 9999999;
     bottom: 50px;
-    right: -30%;
+    right: 15px;
+    transform: translateX(120%);
     display: inline-flex;
     align-items: center;
     border: 1px solid rgb(0, 180, 111);
@@ -16,7 +17,7 @@
 }
 
 .alert_success.show {
-    right: 20px;
+    transform: translateX(0%);
 }
 
 .icon {

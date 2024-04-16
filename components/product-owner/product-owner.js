@@ -6,9 +6,11 @@ import { formatNumber } from '@/helpers/priceHelper';
 const ProductOwner = (props) => {
 
     let {
+        id,
         image,
         title,
-        price
+        price,
+        onClickRemove
     } = props;
 
     return (
@@ -38,7 +40,7 @@ const ProductOwner = (props) => {
                         <span className={cl.button_icon}><i className="far fa-vote-yea"></i></span>
                         <span>Chỉnh sửa</span>
                     </button>
-                    <button className={`${cl.button} ${cl.button_cancel}`}>
+                    <button className={`${cl.button} ${cl.button_cancel}`} onClick={()=>{onClickRemove(id)}}>
                         <span className={cl.button_icon}><i className="far fa-trash"></i></span>
                         <span>Gỡ bỏ</span>
                     </button>
