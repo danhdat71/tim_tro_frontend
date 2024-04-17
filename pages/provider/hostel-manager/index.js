@@ -12,6 +12,7 @@ import { DRAFT, REALITY } from '@/config/productStatus';
 import AlertConfirm from '@/components/alerts/alert-comfirm/alert-confirm';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import AlertError from '@/components/alerts/alert-error/alert-error';
+import emptyImage from '@/assets/imgs/empty_image.png';
 
 const breadCrumbs = [
     {label: 'Trang chủ', href: '/'},
@@ -117,7 +118,7 @@ const Index = ({data}) => {
                     <ProductOwner
                         key={index}
                         id={value.id}
-                        image={`${process.env.BACKEND_URL}/${value.product_images[0].url}`}
+                        image={`${value.product_images[0]?.url ? process.env.BACKEND_URL + '/' + value.product_images[0]?.url : emptyImage.src}`}
                         title={value.title}
                         price={value.price}
                         slug={value.slug}

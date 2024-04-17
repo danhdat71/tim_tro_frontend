@@ -11,6 +11,7 @@ import useAccountCheck from '@/hooks/useAccountCheck';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '@/redux/auth';
 import { ACTIVE, INACTIVE } from '@/config/userStatus';
+import { setCookie } from '@/helpers/http-requests/cookie';
 
 const Index = () => {
     const [loginData, setLoginData] = useState({});
@@ -77,7 +78,7 @@ const Index = () => {
                     } else if (response.data.status == ACTIVE) {
                         let accessToken = response.data.access_token;
                         localStorage.setItem('access_token', accessToken);
-                        document.cookie = `access_token=${accessToken}; path=/`;
+                        setCookie('access_token', accessToken);
                         handleSetUserLogin(response.data);
                         router.push({
                             pathname: '/',

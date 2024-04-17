@@ -62,8 +62,8 @@ const InputAddress = (props) => {
         let newSelectedData = {...selectedData};
         if (key == 'province_id') {
             newSelectedData.province_id = value;
-            newSelectedData.district_id = null;
-            newSelectedData.ward_id = null;
+            newSelectedData.district_id = {};
+            newSelectedData.ward_id = {};
             setSelectedData(newSelectedData);
             axios.get(`/location/get-districts?province_id=${value.value}`, {
                 headers: {
@@ -78,7 +78,7 @@ const InputAddress = (props) => {
             });
         } else if (key == 'district_id') {
             newSelectedData.district_id = value;
-            newSelectedData.ward_id = null;
+            newSelectedData.ward_id = {};
             setSelectedData(newSelectedData);
             axios.get(`/location/get-wards?district_id=${value.value}`, {
                 headers: {

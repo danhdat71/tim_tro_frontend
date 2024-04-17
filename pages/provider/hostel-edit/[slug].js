@@ -17,6 +17,9 @@ import { suggestDescription, suggestTitle } from '@/config/suggestion';
 import { NO_SHARED_HOUSE, SHARED_HOUSE } from '@/config/productShareHouse';
 import Modal from '@/components/modals/modal/modal';
 import { formatDotEach3Num } from '@/helpers/priceHelper';
+import { objectToFormData } from '@/helpers/http-requests/formData';
+import axios from '@/helpers/http-requests/axios';
+import { removeDots } from '@/helpers/numberHelper';
 
 export async function getServerSideProps(context) {
     const accessToken = context.req.headers.cookie
@@ -57,13 +60,26 @@ const Slug = ({data}) => {
     });
     let [showPreview, setShowPreview] = useState(false);
     let [createData, setCreateData] = useState({
-        bed_rooms: 1,
-        toilet_rooms: 0,
-        used_type: 1,
-        is_shared_house: 0,
-        time_rule: 0,
-        is_allow_pet: 1,
-        detail_address: data.detail_address
+        type: 'update',
+        product_id: data.id,
+        title: data.title,
+        price: data.price,
+        description: data.description,
+        tel: data.tel,
+        province_id: data.province_id,
+        district_id: data.district_id,
+        ward_id: data.ward_id,
+        detail_address: data.detail_address,
+        lat: data.lat,
+        long: data.long,
+        acreage: data.acreage,
+        bed_rooms: data.bed_rooms,
+        toilet_rooms: data.toilet_rooms,
+        used_type: data.used_type,
+        is_shared_house: data.is_shared_house,
+        time_rule: data.time_rule,
+        is_allow_pet: data.is_allow_pet,
+        preview_images: data.product_images,
     });
     let [isDisableSubmit, setIsDisableSubmit] = useState(false);
     let [isShowAlertSuccess, setIsShowAlertSuccess] = useState(false);
@@ -76,7 +92,7 @@ const Slug = ({data}) => {
     let timeoutRedirect = useRef();
     let breadcrumbs = useRef([
         {label:'Trang chủ', href:'/'},
-        {label:'Sửa tin', href:'/provider/hostel-regist'},
+        {label:'Quản lý tin đăng', href:'/provider/hostel-manager'},
         {label:data.title, href:`/provider/hostel-edit/${data.slug}`}
     ]);
 
@@ -114,6 +130,22 @@ const Slug = ({data}) => {
         setCreateData(newCreateData);
     }
 
+    function handleSetFilesCreateData(delOldImages, newFiles) {
+        console.log(data);
+        let newCreateData = {...createData};
+        newCreateData.del_product_images = delOldImages.toString();
+        newCreateData.preview_images = newFiles;
+        let tmpProductImages = [];
+        newFiles.forEach(file => {
+            if (file.id == null) {
+                tmpProductImages.push(file);
+            }
+        });
+        newCreateData.product_images = tmpProductImages;
+        setCreateData(newCreateData);
+        console.log('newCreateData', newCreateData);
+    }
+
     function handleSetLocale(value) {
         let newCreateData = {...createData};
         newCreateData.province_id = value?.province_id?.value ? value?.province_id?.value : '';
@@ -130,10 +162,11 @@ const Slug = ({data}) => {
     }
 
     function handleSubmitPreviewData() {
+        // Set image previews
         formDataRef.current = objectToFormData(createData);
         setErrors({});
         setIsDisableSubmit(true);
-        axios.post(`/provider/product/store?check=true`, formDataRef.current, {
+        axios.post(`/provider/product/update?check=true`, formDataRef.current, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
@@ -153,9 +186,10 @@ const Slug = ({data}) => {
 
     function handleSubmitData() {
         formDataRef.current = objectToFormData(createData);
+        console.log('formData', objectToFormData(createData));
         setErrors({});
         setIsDisableSubmit(true);
-        axios.post(`/provider/product/store`, formDataRef.current, {
+        axios.post(`/provider/product/update`, formDataRef.current, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
@@ -176,7 +210,7 @@ const Slug = ({data}) => {
     }
 
     // console.log('data', data);
-    // console.log('createData', createData);
+    console.log('createData', createData);
 
     return (
         <div>
@@ -402,9 +436,7 @@ const Slug = ({data}) => {
                     <label className='label label-block'>Ảnh minh họa <span>*</span></label>
                     <InputFiles
                         onChange={(files)=>{
-                            //handleSetCreateData('product_images', files);
-
-                            console.log('files', files);
+                            handleSetFilesCreateData(files.deletedOldImages, files.selectedImages);
                         }}
                         errors={errors?.product_images}
                         initImages={data.product_images}
@@ -432,11 +464,11 @@ const Slug = ({data}) => {
             </div>
             <Modal
                 isShowModal={showPreview}
-                title="Xem lại tin đăng"
-                subTitle="Sau khi đăng tải, bài đăng của bạn sẽ tiếp cận đến mọi người sớm nhất"
+                title="Xem lại tin cập nhật"
+                subTitle="Sau khi cập, bài đăng của bạn sẽ tiếp cận đến mọi người sớm nhất"
                 top={'5%'}
                 mobileTop={'10%'}
-                submitBtnText="Đăng ngay"
+                submitBtnText="Cập nhật"
                 submitBtnIcon={<i className="far fa-check"></i>}
                 onClose={()=>{
                     handleShowPreview(false);

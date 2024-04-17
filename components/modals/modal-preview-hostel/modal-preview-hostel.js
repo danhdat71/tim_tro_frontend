@@ -5,22 +5,31 @@ import ProductDetailInfo from '@/components/product-detail-info/product-detail-i
 import { convertPriceStringToVnMoneyKey, formatNumber } from '@/helpers/priceHelper';
 
 const ModalPreviewHostel = (props) => {
-    let {createData} = props;
+    let {
+        createData
+    } = props;
 
     function getImageLinks(list) {
         return list?.map(function(value, index){
-            return {
-                url: value.preview,
-                thumb_url: value.preview,
-            };
+            if (value.id == null) {
+                return {
+                    url: value.preview,
+                    thumb_url: value.preview,
+                };
+            } else {
+                return {
+                    url: `${process.env.BACKEND_URL}/${value.url}`,
+                    thumb_url: `${process.env.BACKEND_URL}/${value.url}`
+                }
+            }
         });
     }
 
     return (
         <div>
             <SliderWithThumb
-                imageThumbs={getImageLinks(createData?.product_images)}
-                images={getImageLinks(createData?.product_images)}
+                imageThumbs={getImageLinks(createData?.type == 'update' ? createData.preview_images : createData?.product_images)}
+                images={getImageLinks(createData?.type == 'update' ? createData.preview_images : createData?.product_images)}
             ></SliderWithThumb>
             <div className={cl.hostel_detail}>
                 <h2 className={cl.product_name}>{createData?.title}</h2>

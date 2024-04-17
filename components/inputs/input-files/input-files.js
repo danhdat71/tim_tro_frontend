@@ -119,7 +119,7 @@ const InputFiles = (props) => {
             return <div className={cl.helper}>
                 <div className={cl.helper_item}>
                     <span className={cl.icon}><i className="fas fa-circle"></i></span>
-                    <span>Bạn có thể chọn nhiều ảnh (tối đa 10 ảnh) cùng lúc</span>
+                    <span>Bạn có thể chọn nhiều ảnh (tối đa 6 ảnh)</span>
                 </div>
                 <div className={cl.helper_item}>
                     <span className={cl.icon}><i className="fas fa-circle"></i></span>

@@ -9,6 +9,7 @@ import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import AlertError from '@/components/alerts/alert-error/alert-error';
 import { setUserData } from '@/redux/auth';
 import { useDispatch } from 'react-redux';
+import { setCookie } from '@/helpers/http-requests/cookie';
 
 const VerifyOtp = () => {
 
@@ -101,7 +102,7 @@ const VerifyOtp = () => {
 
                 let accessToken = response.data.access_token;
                 localStorage.setItem('access_token', accessToken);
-                document.cookie = `access_token=${accessToken}; path=/`;
+                setCookie('access_token', accessToken);
                 handleSetUserLogin(response.data);
 
                 let timeout = setTimeout(function(){
