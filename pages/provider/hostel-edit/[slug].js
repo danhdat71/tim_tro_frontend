@@ -453,11 +453,15 @@ const Slug = ({data}) => {
                 </div>
                 <div className={cl.buttons}>
                     <ButtonIcon
-                        text="Lưu nháp"
-                        icon={<i className="fas fa-file"></i>}
+                        text="Quay lại"
+                        isIconLeft={true}
+                        icon={<i className="fal fa-arrow-left"></i>}
                         backgroundColor="transparent"
                         color="#181818"
                         border="1px solid gray"
+                        onClick={()=>{
+                            router.back();
+                        }}
                     ></ButtonIcon>
                     <ButtonIcon
                         text="Tiếp tục"
