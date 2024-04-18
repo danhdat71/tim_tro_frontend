@@ -23,6 +23,7 @@ import axios from '../../../helpers/http-requests/axios';
 import { objectToFormData } from '@/helpers/http-requests/formData';
 import { NO_SHARED_HOUSE, SHARED_HOUSE } from '@/config/productShareHouse';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
+import useScrollToCenterRef from '@/hooks/useScrollToRef';
 
 const breadcrumbs = [
     {label:'Trang chủ', href:'/'},
@@ -51,6 +52,9 @@ const Index = () => {
     let formDataRef = useRef();
     let timeoutAlertSuccessRef = useRef();
     let timeoutRedirect = useRef();
+    let targetErrorScrollTo = useRef(null);
+
+    useScrollToCenterRef(targetErrorScrollTo);
 
     useEffect( function() {
         return () => {
@@ -115,8 +119,8 @@ const Index = () => {
             if (response.status == 200) {
                 handleShowPreview(true);
             } else if (response.status == 422) {
-                window.scrollTo(0, 0)
                 setErrors(response.errors);
+                targetErrorScrollTo.current = document.getElementById( Object.keys(response.errors)[0] );
             } else if (response?.message == 'Unauthenticated.') {
                 router.push('/auth/login');
             }
@@ -155,7 +159,7 @@ const Index = () => {
             <TitleCenterBig title="Đăng tin cho thuê trọ"></TitleCenterBig>
             <div>
                 <div className='form-group'>
-                    <label className='label label-block'>Tiêu đề <span>*</span></label>
+                    <label className='label label-block' id='title'>Tiêu đề <span>*</span></label>
                     <TextareaInputWithCount
                         className="textarea w-100"
                         placeholder="Cho thuê phòng trọ ABC còn trống giá rẻ"
@@ -170,7 +174,7 @@ const Index = () => {
                     <div className='err-msg'>{errors?.title}</div>
                 </div>
                 <div className='form-group'>
-                    <label className='label label-block'>Giá cho thuê <span>*</span></label>
+                    <label className='label label-block' id='price'>Giá cho thuê <span>*</span></label>
                     <InputGroup
                         type='price'
                         min='1'
@@ -183,7 +187,7 @@ const Index = () => {
                     ></InputGroup>
                 </div>
                 <div className='form-group'>
-                    <label className='label label-block'>Mô tả trọ <span>*</span></label>
+                    <label className='label label-block' id='description'>Mô tả trọ <span>*</span></label>
                     <TextareaInputWithCount
                         className="textarea w-100"
                         min={20}
@@ -199,7 +203,7 @@ const Index = () => {
                     <div className='err-msg'>{errors?.description}</div>
                 </div>
                 <div className={`form-group ${cl.input_tel}`}>
-                    <label className='label label-block'>Số điện thoại liên hệ <span>*</span></label>
+                    <label className='label label-block' id='tel'>Số điện thoại liên hệ <span>*</span></label>
                     <InputGroup
                         type='number'
                         min='1'
@@ -213,6 +217,9 @@ const Index = () => {
                 </div>
                 <div className='form-group'>
                     <label className='label label-block'>Địa chỉ <span>*</span></label>
+                    <div id='province_id'></div>
+                    <div id='district_id'></div>
+                    <div id='ward_id'></div>
                     <InputAddress
                         onChange={(value)=>{
                             handleSetLocale(value);
@@ -223,7 +230,7 @@ const Index = () => {
                     <div className='err-msg'>{errors?.ward_id}</div>
                 </div>
                 <div className='form-group'>
-                    <label className='label label-block'>Địa chỉ chi tiết <span>*</span></label>
+                    <label className='label label-block' id='detail_address'>Địa chỉ chi tiết <span>*</span></label>
                     <InputGroup
                         type='text'
                         min='20'
@@ -241,6 +248,8 @@ const Index = () => {
                 </div>
                 <div className='form-group'>
                     <label className='label label-block'>Bản đồ <span>*</span></label>
+                    <div id='lat'></div>
+                    <div id='long'></div>
                     <InputMap
                         address={tmpDetailAddress}
                         onChange={(value) => {
@@ -251,7 +260,7 @@ const Index = () => {
                     <div className='err-msg'>{errors?.long}</div>
                 </div>
                 <div className='form-group'>
-                    <label className='label label-block'>Diện tích (mét vuông) <span>*</span></label>
+                    <label className='label label-block' id='acreage'>Diện tích (mét vuông) <span>*</span></label>
                     <InputGroup
                         type='number'
                         min='1'
@@ -264,7 +273,7 @@ const Index = () => {
                 </div>
                 <div className={cl.rooms}>
                     <div className='form-group'>
-                        <label className='label label-block'>Số phòng ngủ <span>*</span></label>
+                        <label className='label label-block' id='bed_rooms'>Số phòng ngủ <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
@@ -280,7 +289,7 @@ const Index = () => {
                         <div className='err-msg'>{errors?.bed_rooms}</div>
                     </div>
                     <div className='form-group'>
-                        <label className='label label-block'>Số phòng vệ sinh <span>*</span></label>
+                        <label className='label label-block' id='toilet_rooms'>Số phòng vệ sinh <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
@@ -299,7 +308,7 @@ const Index = () => {
                 </div>
                 <div className={cl.other_info}>
                     <div className='form-group'>
-                        <label className='label label-block'>Loại sử dụng <span>*</span></label>
+                        <label className='label label-block' id='used_type'>Loại sử dụng <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
@@ -326,10 +335,10 @@ const Index = () => {
                             <option value={NO_SHARED_HOUSE}>Không chung chủ</option>
                             <option value={SHARED_HOUSE}>Chung chủ</option>
                         </select>
-                        <div className='err-msg'>{errors?.is_shared_house}</div>
+                        <div className='err-msg' id='is_shared_house'>{errors?.is_shared_house}</div>
                     </div>
                     <div className='form-group'>
-                        <label className='label label-block'>Giờ giấc <span>*</span></label>
+                        <label className='label label-block' id='time_rule'>Giờ giấc <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
@@ -342,7 +351,7 @@ const Index = () => {
                         <div className='err-msg'>{errors?.time_rule}</div>
                     </div>
                     <div className='form-group'>
-                        <label className='label label-block'>Thú nuôi <span>*</span></label>
+                        <label className='label label-block' id='is_allow_pet'>Thú nuôi <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
@@ -357,7 +366,7 @@ const Index = () => {
                     </div>
                 </div>
                 <div>
-                    <label className='label label-block'>Ảnh minh họa <span>*</span></label>
+                    <label className='label label-block' id='product_images'>Ảnh minh họa <span>*</span></label>
                     <InputFiles
                         onChange={(files)=>{
                             handleSetCreateData('product_images', files.selectedImages);

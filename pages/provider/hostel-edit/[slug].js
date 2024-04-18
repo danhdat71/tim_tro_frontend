@@ -20,6 +20,7 @@ import { formatDotEach3Num } from '@/helpers/priceHelper';
 import { objectToFormData } from '@/helpers/http-requests/formData';
 import axios from '@/helpers/http-requests/axios';
 import { removeDots } from '@/helpers/numberHelper';
+import useScrollToCenterRef from '@/hooks/useScrollToRef';
 
 export async function getServerSideProps(context) {
     const accessToken = context.req.headers.cookie
@@ -95,6 +96,9 @@ const Slug = ({data}) => {
         {label:'Quản lý tin đăng', href:'/provider/hostel-manager'},
         {label:data.title, href:`/provider/hostel-edit/${data.slug}`}
     ]);
+    let targetErrorScrollTo = useRef(null);
+
+    useScrollToCenterRef(targetErrorScrollTo);
 
     useEffect( function() {
         return () => {
@@ -176,8 +180,8 @@ const Slug = ({data}) => {
             if (response.status == 200) {
                 handleShowPreview(true);
             } else if (response.status == 422) {
-                window.scrollTo(0, 0)
                 setErrors(response.errors);
+                targetErrorScrollTo.current = document.getElementById( Object.keys(response.errors)[0] )
             } else if (response?.message == 'Unauthenticated.') {
                 router.push('/auth/login');
             }
@@ -218,7 +222,7 @@ const Slug = ({data}) => {
             <TitleCenterBig title="Sửa tin cho thuê trọ"></TitleCenterBig>
             <div>
                 <div className='form-group'>
-                    <label className='label label-block'>Tiêu đề <span>*</span></label>
+                    <label className='label label-block' id='title'>Tiêu đề <span>*</span></label>
                     <TextareaInputWithCount
                         className="textarea w-100"
                         placeholder="Cho thuê phòng trọ ABC còn trống giá rẻ"
@@ -234,7 +238,7 @@ const Slug = ({data}) => {
                     <div className='err-msg'>{errors?.title}</div>
                 </div>
                 <div className='form-group'>
-                    <label className='label label-block'>Giá cho thuê <span>*</span></label>
+                    <label className='label label-block' id='price'>Giá cho thuê <span>*</span></label>
                     <InputGroup
                         type='price'
                         min='1'
@@ -248,7 +252,7 @@ const Slug = ({data}) => {
                     ></InputGroup>
                 </div>
                 <div className='form-group'>
-                    <label className='label label-block'>Mô tả trọ <span>*</span></label>
+                    <label className='label label-block' id='description'>Mô tả trọ <span>*</span></label>
                     <TextareaInputWithCount
                         className="textarea w-100"
                         min={20}
@@ -265,7 +269,7 @@ const Slug = ({data}) => {
                     <div className='err-msg'>{errors?.description}</div>
                 </div>
                 <div className={`form-group ${cl.input_tel}`}>
-                    <label className='label label-block'>Số điện thoại liên hệ <span>*</span></label>
+                    <label className='label label-block' id='tel'>Số điện thoại liên hệ <span>*</span></label>
                     <InputGroup
                         type='number'
                         min='1'
@@ -279,6 +283,9 @@ const Slug = ({data}) => {
                 </div>
                 <div className='form-group'>
                     <label className='label label-block'>Địa chỉ <span>*</span></label>
+                    <div id='province_id'></div>
+                    <div id='district_id'></div>
+                    <div id='ward_id'></div>
                     <InputAddress
                         onChange={(value)=>{
                             handleSetLocale(value);
@@ -292,7 +299,7 @@ const Slug = ({data}) => {
                     <div className='err-msg'>{errors?.ward_id}</div>
                 </div>
                 <div className='form-group'>
-                    <label className='label label-block'>Địa chỉ chi tiết <span>*</span></label>
+                    <label className='label label-block' id='detail_address'>Địa chỉ chi tiết <span>*</span></label>
                     <InputGroup
                         type='text'
                         min='20'
@@ -310,6 +317,8 @@ const Slug = ({data}) => {
                 </div>
                 <div className='form-group'>
                     <label className='label label-block'>Bản đồ <span>*</span></label>
+                    <div id='lat'></div>
+                    <div id='long'></div>
                     <InputMap
                         address={tmpDetailAddress}
                         onChange={(value) => {
@@ -320,7 +329,7 @@ const Slug = ({data}) => {
                     <div className='err-msg'>{errors?.long}</div>
                 </div>
                 <div className='form-group'>
-                    <label className='label label-block'>Diện tích (mét vuông) <span>*</span></label>
+                    <label className='label label-block' id='acreage'>Diện tích (mét vuông) <span>*</span></label>
                     <InputGroup
                         type='number'
                         min='1'
@@ -334,13 +343,13 @@ const Slug = ({data}) => {
                 </div>
                 <div className={cl.rooms}>
                     <div className='form-group'>
-                        <label className='label label-block'>Số phòng ngủ <span>*</span></label>
+                        <label className='label label-block' id='bed_rooms'>Số phòng ngủ <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
                                 handleSetCreateData('bed_rooms', parseInt(e.target.value));
                             }}
-                            value={data.bed_rooms}
+                            value={createData.bed_rooms}
                         >
                             <option value={1}>1 phòng ngủ</option>
                             <option value={2}>2 phòng ngủ</option>
@@ -351,13 +360,13 @@ const Slug = ({data}) => {
                         <div className='err-msg'>{errors?.bed_rooms}</div>
                     </div>
                     <div className='form-group'>
-                        <label className='label label-block'>Số phòng vệ sinh <span>*</span></label>
+                        <label className='label label-block' id='toilet_rooms'>Số phòng vệ sinh <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
                                 handleSetCreateData('toilet_rooms', parseInt(e.target.value));
                             }}
-                            value={data.toilet_rooms}
+                            value={createData.toilet_rooms}
                         >
                             <option value={0}>Vệ sinh chung</option>
                             <option value={1}>1 phòng vệ sinh</option>
@@ -371,13 +380,13 @@ const Slug = ({data}) => {
                 </div>
                 <div className={cl.other_info}>
                     <div className='form-group'>
-                        <label className='label label-block'>Loại sử dụng <span>*</span></label>
+                        <label className='label label-block' id='used_type'>Loại sử dụng <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
                                 handleSetCreateData('used_type', parseInt(e.target.value));
                             }}
-                            value={data.used_type}
+                            value={createData.used_type}
                         >
                             <option value={1}>Phòng trọ</option>
                             <option value={2}>Nhà nguyên căn</option>
@@ -389,13 +398,13 @@ const Slug = ({data}) => {
                         <div className='err-msg'>{errors?.used_type}</div>
                     </div>
                     <div className='form-group'>
-                        <label className='label label-block'>Chung chủ <span>*</span></label>
+                        <label className='label label-block' id='is_shared_house'>Chung chủ <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
                                 handleSetCreateData('is_shared_house', parseInt(e.target.value));
                             }}
-                            value={data.is_shared_house}
+                            value={createData.is_shared_house}
                         >
                             <option value={NO_SHARED_HOUSE}>Không chung chủ</option>
                             <option value={SHARED_HOUSE}>Chung chủ</option>
@@ -403,13 +412,13 @@ const Slug = ({data}) => {
                         <div className='err-msg'>{errors?.is_shared_house}</div>
                     </div>
                     <div className='form-group'>
-                        <label className='label label-block'>Giờ giấc <span>*</span></label>
+                        <label className='label label-block' id='time_rule'>Giờ giấc <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
                                 handleSetCreateData('time_rule', parseInt(e.target.value));
                             }}
-                            value={data.time_rule}
+                            value={createData.time_rule}
                         >
                             <option value={0}>Tự do</option>
                             <option value={1}>Theo quy định</option>
@@ -417,13 +426,13 @@ const Slug = ({data}) => {
                         <div className='err-msg'>{errors?.time_rule}</div>
                     </div>
                     <div className='form-group'>
-                        <label className='label label-block'>Thú nuôi <span>*</span></label>
+                        <label className='label label-block' id='is_allow_pet'>Thú nuôi <span>*</span></label>
                         <select
                             className='select w-100'
                             onChange={(e)=>{
                                 handleSetCreateData('is_allow_pet', parseInt(e.target.value));
                             }}
-                            value={data.is_allow_pet}
+                            value={createData.is_allow_pet}
                         >
                             <option value={1}>Không cho phép</option>
                             <option value={2}>Cho phép & Cam kết</option>
@@ -433,7 +442,7 @@ const Slug = ({data}) => {
                     </div>
                 </div>
                 <div>
-                    <label className='label label-block'>Ảnh minh họa <span>*</span></label>
+                    <label className='label label-block' id='product_images'>Ảnh minh họa <span>*</span></label>
                     <InputFiles
                         onChange={(files)=>{
                             handleSetFilesCreateData(files.deletedOldImages, files.selectedImages);
