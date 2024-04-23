@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cl from './keyword-box.module.css';
 import Link from 'next/link';
 
@@ -10,7 +10,13 @@ const KeywordBox = (props) => {
 
     function renderItem() {
         return items?.map(function(val, index) {
-            return <div className={cl.item} key={index}><Link href={val.href}>{val.label}</Link></div>
+            if (index < 10) {
+                return (
+                    <Link href='/' className={cl.item} key={index}>
+                        <div>Tìm trọ {val.label}</div>
+                    </Link>
+                )
+            }
         });
     }
 
@@ -24,4 +30,4 @@ const KeywordBox = (props) => {
     );
 }
 
-export default KeywordBox;
+export default memo(KeywordBox);

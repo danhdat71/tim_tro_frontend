@@ -32,6 +32,7 @@
     display: flex;
     align-items: center;
     user-select: none;
+    text-decoration: none;
 }
 
 .item:hover span:first-child{

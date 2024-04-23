@@ -17,11 +17,11 @@ function formatNumber(num) {
         const millionPart = Math.floor(num / 1000000);
         const remainder = Math.round((num % 1000000) / 100000);
         if (remainder === 10) {
-            return millionPart + "tr";
+            return millionPart + "triệu";
         } else if (remainder === 0) {
-            return millionPart + "tr";
+            return millionPart + "triệu";
         } else {
-            return millionPart + "tr" + remainder;
+            return millionPart + "triệu" + remainder;
         }
     } else {
         return (num / 1000) + "k";

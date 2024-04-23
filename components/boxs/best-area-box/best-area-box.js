@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import cl from './best-area-box.module.css';
+import Link from 'next/link';
 
 const BestAreaBox = (props) => {
 
@@ -11,10 +12,12 @@ const BestAreaBox = (props) => {
     function renderItems() {
         return items?.map(function(value, index) {
             return (
-                <div key={index} className={cl.item}>
-                    <span>{value.label}</span>
-                    <span>{value?.total}</span>
-                </div>
+                <Link href='' className={cl.item}>
+                    <div key={index}>
+                        <span>{value.label}</span>
+                        <span>{value?.products_count}</span>
+                    </div>
+                </Link>
             );
         })
     }
