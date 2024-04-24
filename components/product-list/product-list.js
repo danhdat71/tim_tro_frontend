@@ -5,6 +5,7 @@ import ListOrderBar from '../list-order-bar/list-order-bar';
 import { isNumeric } from '@/helpers/numberHelper';
 import { useRouter } from 'next/router';
 import { handleChangeRouterParam } from '@/helpers/routerHelper';
+import EmptyList from '../empty-list/empty-list';
 
 const ProductList = (props) => {
 
@@ -15,23 +16,27 @@ const ProductList = (props) => {
     const router = useRouter();
 
     function renderProductItems() {
-        return data.data.map(function (val, index) {
-            return (
-                <Product
-                    key={index}
-                    image={`${process.env.BACKEND_URL}/${val.product_images[0].thumb_url}`}
-                    imageNum={val.product_images.length}
-                    title={val.title}
-                    acreage={val.acreage}
-                    wardName={val.ward.name}
-                    districtName={val.district.name}
-                    provinceName={val.province.name}
-                    price={val.price}
-                    toiletRooms={val.toilet_rooms}
-                    bedRooms={val.bed_rooms}
-                />
-            );
-        });
+        if (data.data.length > 0) {
+            return data.data.map(function (val, index) {
+                return (
+                    <Product
+                        key={index}
+                        image={`${process.env.BACKEND_URL}/${val.product_images[0].thumb_url}`}
+                        imageNum={val.product_images.length}
+                        title={val.title}
+                        acreage={val.acreage}
+                        wardName={val.ward.name}
+                        districtName={val.district.name}
+                        provinceName={val.province.name}
+                        price={val.price}
+                        toiletRooms={val.toilet_rooms}
+                        bedRooms={val.bed_rooms}
+                    />
+                );
+            });
+        } else {
+            return <EmptyList title="Không tìm thấy bài viết nào"></EmptyList>
+        }
     }
 
     function handleRenderPaginate() {

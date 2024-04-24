@@ -6,15 +6,20 @@ const KeywordBox = (props) => {
     let {
         title,
         items,
+        onClick,
     } = props;
 
     function renderItem() {
         return items?.map(function(val, index) {
             if (index < 10) {
                 return (
-                    <Link href='/' className={cl.item} key={index}>
-                        <div>Tìm trọ {val.label}</div>
-                    </Link>
+                    <div
+                        className={cl.item}
+                        key={index}
+                        onClick={()=>{
+                            onClick(val.id);
+                        }}
+                    >Tìm trọ {val.label}</div>
                 )
             }
         });

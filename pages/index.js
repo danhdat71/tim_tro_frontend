@@ -30,6 +30,7 @@ export async function getServerSideProps(context) {
     page = 1,
     order_by = 'posted_at|desc',
     province_id = '',
+    district_id = '',
   } = context.query;
 
   // Get provinces with count products
@@ -55,7 +56,7 @@ export async function getServerSideProps(context) {
   data.provincesDistrictCount = provincesDistrictCount.data;
 
   // Get products
-  let products = await fetch(`http://localhost/api/products?page=${page}&order_by=${order_by}&province_id=${province_id}`, {
+  let products = await fetch(`http://localhost/api/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -109,18 +110,30 @@ export default function Home({ data }) {
         <KeywordBox
           title={`Tìm trọ ${data.provincesDistrictCount[0]?.label}`}
           items={data?.provincesDistrictCount[0]?.districts}
+          onClick={(value)=>{
+            handleChangeRouterParam(router, 'district_id', value)
+          }}
         />
         <KeywordBox
           title={`Tìm trọ ${data.provincesDistrictCount[1]?.label}`}
           items={data?.provincesDistrictCount[1]?.districts}
+          onClick={(value)=>{
+            handleChangeRouterParam(router, 'district_id', value)
+          }}
         />
         <KeywordBox
           title={`Tìm trọ ${data.provincesDistrictCount[2]?.label}`}
           items={data?.provincesDistrictCount[2]?.districts}
+          onClick={(value)=>{
+            handleChangeRouterParam(router, 'district_id', value)
+          }}
         />
         <KeywordBox
           title={`Tìm trọ ${data.provincesDistrictCount[3]?.label}`}
           items={data?.provincesDistrictCount[3]?.districts}
+          onClick={(value)=>{
+            handleChangeRouterParam(router, 'district_id', value)
+          }}
         />
       </div>
     </>
