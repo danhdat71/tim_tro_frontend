@@ -6,7 +6,7 @@
     cursor: pointer;
     user-select: none;
     color: rgb(78, 78, 78);
-    max-width: 170px;
+    max-width: 370px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

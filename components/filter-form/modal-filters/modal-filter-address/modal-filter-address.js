@@ -3,90 +3,40 @@
 import React, { memo, useEffect, useState } from 'react';
 import cl from './modal-filter-address.module.css';
 import Select from 'react-select';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '@/redux/store';
-import { toggleModalFilter } from '@/redux/features/modal_filter';
-import { resetSelectedValue, setSelectedValue, setTmpSelectedDistrict, setTmpSelectedProvince, setTmpSelectedTown } from '@/redux/features/filter_box/address_filter_box';
 import Modal from '@/components/modals/modal/modal';
 import axios from '@/helpers/http-requests/axios';
+import { useRouter } from 'next/router';
 
 const ModalFilterAddress = (props) => {
 
     let {
-        onSubmit
+        onSubmit,
+        onClose,
+        isShowModal = false,
     } = props;
 
-    const dispatch = useDispatch();
-    const modalFilter = useAppSelector(function(state){
-        return state.modalFilterReducer.modalFilter;
-    });
+    const router = useRouter();
 
+    // List
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
 
-    const filterAddress = useAppSelector(function(state){
-        return state.filterAddressReducer.addressFilterBox;
+    // Seleteced
+    const [selected, setSelected] = useState({
+        province: {
+            label: router?.query?.province_label || 'Tỉnh/Thành',
+            value: router?.query?.province_id || '',
+        },
+        district: {
+            label: router?.query?.district_label || 'Quận/Huyện',
+            value: router?.query?.district_id || '',
+        },
+        ward: {
+            label: router?.query?.ward_label || 'Phường/Xã/Thị Trấn',
+            value: router?.query?.ward_label || '',
+        }
     });
-
-    function handleDisableModalFilter(pushData)
-    {
-        dispatch(toggleModalFilter(pushData));
-    }
-
-    function isEnableModalFilter()
-    {
-        return modalFilter.is_enable == true && modalFilter.box_type == 'address'
-            ? true
-            : false;
-    }
-
-    function handleSetTmpProvince(payload) {
-        dispatch(setTmpSelectedProvince(payload));
-        // Get districts
-        axios.get(`${process.env.API}/location/get-districts?province_id=${payload.value}`)
-            .then(function(res) {
-                if (res.status == 200) {
-                    setDistricts(res.data);
-                    handleSetTmpDistrict(res.data[0]);
-                }
-            });
-    }
-
-    function handleSetTmpDistrict(payload) {
-        dispatch(setTmpSelectedDistrict(payload));
-        // Get wards
-        axios.get(`${process.env.API}/location/get-wards?district_id=${payload.value}`)
-            .then(function(res) {
-                if (res.status == 200) {
-                    setWards(res.data);
-                    handleSetTmpTown(res.data[0]);
-                }
-            });
-    }
-
-    function handleSetTmpTown(payload) {
-        dispatch(setTmpSelectedTown(payload));
-    }
-
-    function handleSetSelectedValue(payload) {
-        dispatch(setSelectedValue(payload));
-    }
-
-    function handleResetSelectedValue() {
-        dispatch(resetSelectedValue());
-    }
-
-    function isDisableSubmitBtn() {
-        return filterAddress.obj_select_town.value != null ||
-        (
-            filterAddress.obj_select_province.value == null &&
-            filterAddress.obj_select_district.value == null &&
-            filterAddress.obj_select_town.value == null
-        )
-            ? false
-            : true
-    }
 
     useEffect(function(){
         axios.get(`${process.env.API}/location/get-provinces`)
@@ -97,65 +47,107 @@ const ModalFilterAddress = (props) => {
             });
     }, []);
 
+    function handleSelectedProvince(payload) {
+        // Set seleted provinces
+        let newSeletect = {...selected};
+        newSeletect.province = payload;
+        newSeletect.district = {'label' : 'Quận/Huyện'};
+        newSeletect.ward = {'label' : 'Phường/Xã/Thị Trấn'};
+        setSelected(newSeletect);
+        // Get districts
+        axios.get(`${process.env.API}/location/get-districts?province_id=${payload.value}`)
+            .then(function(res) {
+                if (res.status == 200) {
+                    setDistricts(res.data);
+                }
+            });
+    }
+
+    function handleSelectedDistrict(payload) {
+        // Set seleted provinces
+        let newSeletect = {...selected};
+        newSeletect.district = payload;
+        newSeletect.ward = {'label' : 'Phường/Xã/Thị Trấn'};
+        setSelected(newSeletect);
+        // Get wards
+        axios.get(`${process.env.API}/location/get-wards?district_id=${payload.value}`)
+            .then(function(res) {
+                if (res.status == 200) {
+                    setWards(res.data);
+                }
+            });
+    }
+
+    function handleSelectedWard(payload) {
+        // Set seleted provinces
+        let newSeletect = {...selected};
+        newSeletect.ward = payload;
+        setSelected(newSeletect);
+    }
+
     return (
         <Modal
-            isShowModal={isEnableModalFilter()}
-            onClose={()=>{
-                handleDisableModalFilter({
-                    is_enable: false,
-                });
-            }}
+            isShowModal={isShowModal}
+            onClose={onClose}
             title="Lọc địa điểm"
             onRefresh={()=>{
                 setDistricts([]);
                 setWards([]);
-                handleResetSelectedValue();
+                setSelected({
+                    province: {
+                        label: 'Tỉnh/Thành',
+                        value: '',
+                    },
+                    district: {
+                        label: 'Quận/Huyện',
+                        value: '',
+                    },
+                    ward: {
+                        label: 'Phường/Xã/Thị Trấn',
+                        value: '',
+                    }
+                });
             }}
             submitBtnText="Lọc kết quả"
             submitBtnIcon={<i className="fal fa-search"></i>}
-            submitBtnDisabled={isDisableSubmitBtn()}
+            submitBtnDisabled={false}
             onSubmit={()=>{
-                handleSetSelectedValue({
-                    default_label: filterAddress.obj_select_province.label || 'Địa điểm',
-                });
-                handleDisableModalFilter({
-                    is_enable: false,
-                });
-                onSubmit(filterAddress);
+                onClose();
+                onSubmit(selected);
             }}
         >
             <div className={cl.filter_address}>
                 <div className={cl.group_search}>
                     <label className='label label-block'>Tỉnh/Thành</label>
                     <Select
-                        value={filterAddress.obj_select_province}
                         onChange={(selectedOption)=>{
-                            handleSetTmpProvince(selectedOption);
+                            handleSelectedProvince(selectedOption);
                         }}
                         options={provinces}
                         maxMenuHeight={190}
+                        value={selected.province}
                     />
                 </div>
                 <div className={cl.group_search}>
                     <label className='label label-block'>Quận/Huyện</label>
                     <Select
-                        value={filterAddress.obj_select_district}
                         onChange={(selectedOption)=>{
-                            handleSetTmpDistrict(selectedOption);
+                            handleSelectedDistrict(selectedOption);
                         }}
                         options={districts}
                         maxMenuHeight={190}
+                        value={selected.district}
                     />
                 </div>
                 <div className={cl.group_search}>
                     <label className='label label-block'>Xã/Phường/Thị Trấn</label>
                     <Select
-                        value={filterAddress.obj_select_town}
                         onChange={(selectedOption)=>{
-                            handleSetTmpTown(selectedOption);
+                            handleSelectedWard(selectedOption);
                         }}
                         options={wards}
                         maxMenuHeight={190}
+                        value={selected.ward}
                     />
                 </div>
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import SearchBox from './search-box/search-box'
 import SelectorBox from './selecter-box/selector-box'
 import cl from './filter-form.module.css';
@@ -11,119 +11,80 @@ import ModalCategory from './modal-filters/modal-category/modal-category';
 import ModalBedroom from './modal-filters/modal-bedroom/modal-bedroom';
 import ModalToiletRoom from './modal-filters/modal-toilet-room/modal-toilet-room';
 import ModalPet from './modal-filters/modal-pet/modal-pet';
-import { useAppSelector } from '@/redux/store';
-import { convertPriceStringToVnMoneyKey, getPriceToStringMoney } from '@/helpers/priceHelper';
-import { resetAllAddress, resetSelectedValue } from '@/redux/features/filter_box/address_filter_box';
 import { useDispatch } from 'react-redux';
-import { resetAllAcreage } from '@/redux/features/filter_box/acreage_filter_box';
-import { resetAllPriceRange } from '@/redux/features/filter_box/price_range_box';
-import { resetAllCategory } from '@/redux/features/filter_box/category_filter_box';
-import { resetAllBedroom } from '@/redux/features/filter_box/bed_room_filter_box';
-import { resetAllToiletRoom } from '@/redux/features/filter_box/toilet_room_filter_box';
-import { resetAllPet } from '@/redux/features/filter_box/pet_filter_box';
-import { resetAllSearchFilter } from '@/redux/features/filter_box/search_filter_box';
-import { convertAcreageStringToMetter } from '@/helpers/aceageFilter';
 import { handleChangeRouterParam } from '@/helpers/routerHelper';
 import { useRouter } from 'next/router';
 
 export default function filterForm()
 {
-    const dispatch = useDispatch();
     const router = useRouter();
 
-    const addressFilter = useAppSelector(function(state){
-        return state.filterAddressReducer.addressFilterBox;
-    });
-    const acreageFilter = useAppSelector(function(state){
-        return state.filterAcreageReducer.acreageFilterBox;
-    });
-    const priceFilter = useAppSelector(function(state){
-        return state.filterPriceReducer.priceFilterBox;
-    });
-    const categoryFilter = useAppSelector(function(state){
-        return state.filterCategoryReducer.categoryFilterBox;
-    });
-    const bedroomFilter = useAppSelector(function(state){
-        return state.filterBedroomReducer.bedRoomFilterBox;
-    });
-    const toiletRoomFilter = useAppSelector(function(state){
-        return state.filterToiletRoomReducer.toiletRoomFilterBox;
-    });
-    const petFilter = useAppSelector(function(state){
-        return state.filterPetReducer.petFilterBox;
-    });
+    //Modal address
+    const [isShowModalAddress, setIsShowModalAddress] = useState(false);
 
-    function getAddressLabel() {
-        if (addressFilter.selected.value != null) {
-            return addressFilter.selected.label;
+    // Handle render buttons
+    function renderButtonAddress() {
+        let addressStr = "Địa điểm";
+        let isActive = false;
+        let routerQuery = router.query;
+
+        if (routerQuery?.province_label && routerQuery?.province_id) {
+            addressStr = routerQuery?.province_label;
+            isActive = true;
         }
 
-        return 'Địa điểm';
-    }
-
-    function getAcreaceLabel()
-    {
-        if (acreageFilter.selected_value != null) {
-            return convertAcreageStringToMetter(acreageFilter.selected_value);
+        if (routerQuery?.district_label) {
+            addressStr = addressStr + ", " + routerQuery?.district_label;
         }
 
-        return 'Diện tích';
-    }
-
-    function getPriceRangeLabel()
-    {
-        if (priceFilter.selected_value != null) {
-            return convertPriceStringToVnMoneyKey(priceFilter.selected_value);
+        if (routerQuery?.ward_label) {
+            addressStr = addressStr + ", " + routerQuery?.ward_label;
         }
 
-        return 'Khoảng giá';
+        return (
+            <SelectorBox
+                title={addressStr}
+                boxType="address"
+                active={isActive}
+                onClick={()=>{
+                    setIsShowModalAddress(true);
+                }}
+            />
+        );
     }
 
-    function getCategoryLabel()
-    {
-        if (categoryFilter.selected_label != null) {
-            return categoryFilter.selected_label;
+    // Handle redirect
+    function handleSeletedAddress(value) {
+        let routerQuery = router.query;
+
+        if (value?.province?.value) {
+            routerQuery.province_id = value?.province?.value;
+            routerQuery.province_label = value?.province?.label;
+        } else {
+            delete routerQuery.province_id;
+            delete routerQuery.province_label;
         }
 
-        return 'Phân loại';
-    }
-
-    function getBedroomLabel()
-    {
-        if (bedroomFilter.selected_label != null) {
-            return bedroomFilter.selected_label;
+        if (value?.district?.value) {
+            routerQuery.district_id = value?.district?.value;
+            routerQuery.district_label = value?.district?.label;
+        } else {
+            delete routerQuery.district_id;
+            delete routerQuery.district_label;
         }
 
-        return 'Số phòng ngủ';
-    }
-
-    function getToiletRoomLabel()
-    {
-        if (toiletRoomFilter.selected_label != null) {
-            return toiletRoomFilter.selected_label;
+        if (value?.ward?.value) {
+            routerQuery.ward_id = value?.ward?.value;
+            routerQuery.ward_label = value?.ward?.label;
+        } else {
+            delete routerQuery.ward_id;
+            delete routerQuery.ward_label;
         }
 
-        return 'Số phòng WC';
-    }
-
-    function getPetLabel()
-    {
-        if (petFilter.selected_label != null) {
-            return petFilter.selected_label;
-        }
-
-        return 'Thú nuôi';
-    }
-
-    function handleResetFilter() {
-        dispatch(resetAllAddress());
-        dispatch(resetAllAcreage());
-        dispatch(resetAllPriceRange());
-        dispatch(resetAllCategory());
-        dispatch(resetAllBedroom());
-        dispatch(resetAllToiletRoom());
-        dispatch(resetAllPet());
-        dispatch(resetAllSearchFilter());
+        router.push({
+            pathname: '/',
+            query: routerQuery
+        });
     }
 
     return (
@@ -134,46 +95,11 @@ export default function filterForm()
                 }}
             ></SearchBox>
             <div className={cl.select_box_list}>
-                <SelectorBox
-                    title={getAddressLabel()}
-                    boxType="address"
-                    active={addressFilter.selected.value != null ? true : false}
-                />
-                <SelectorBox
-                    title={getAcreaceLabel()}
-                    boxType="acreage"
-                    active={acreageFilter.selected_value != null ? true : false}
-                />
-                <SelectorBox
-                    title={getPriceRangeLabel()}
-                    boxType="price_range"
-                    active={priceFilter.selected_value != null ? true : false}
-                />
-                <SelectorBox
-                    title={getCategoryLabel()}
-                    boxType="category"
-                    active={categoryFilter.selected_value != null ? true : false}
-                />
-                <SelectorBox
-                    title={getBedroomLabel()}
-                    boxType="bed_room"
-                    active={bedroomFilter.selected_value != null ? true : false}
-                />
-                <SelectorBox
-                    title={getToiletRoomLabel()}
-                    boxType="toilet_room"
-                    active={toiletRoomFilter.selected_value != null ? true : false}
-                />
-                <SelectorBox
-                    title={getPetLabel()}
-                    boxType="pet"
-                    active={petFilter.selected_value != null ? true : false}
-                />
+                {renderButtonAddress()}
                 <button
                     type='button'
                     className={cl.recovery_filter_btn}
                     onClick={()=>{
-                        handleResetFilter();
                     }}
                 >
                     <span><i className="fal fa-undo"></i></span>
@@ -182,8 +108,12 @@ export default function filterForm()
             </div>
             <ModalFilterAddress
                 onSubmit={(value)=>{
-                    handleChangeRouterParam(router, 'ward_id', value?.obj_select_town?.value);
+                    handleSeletedAddress(value);                    
                 }}
+                onClose={()=>{
+                    setIsShowModalAddress(false);
+                }}
+                isShowModal={isShowModalAddress}
             ></ModalFilterAddress>
             <ModalFilterAcreage
                 onSubmit={(value)=>{

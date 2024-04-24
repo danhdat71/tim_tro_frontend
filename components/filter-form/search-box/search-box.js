@@ -1,53 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import cl from './search-box.module.css';
-import { SuperPlaceholder } from '@/helpers/placeHolderEffect';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '@/redux/store';
-import { changeValue, submitValue } from '@/redux/features/filter_box/search_filter_box';
-
-const searchPlaceholders = [
-    'Phòng trọ giá rẻ',
-    'Phòng trọ cao cấp',
-    'Phòng trọ sinh viên',
-    'Phòng trọ quận 1',
-]
+import { useRouter } from 'next/router';
 
 export default function SearchBox(props) {
     let {
         onSubmit
     } = props;
-    const dispatch = useDispatch();
-
-    const searchFilter = useAppSelector(function(state){
-        return state.searchFilterReducer.searchFilterBox;
-    });
-
-    useEffect(function(){
-        var sp = new SuperPlaceholder({
-            placeholders: searchPlaceholders,
-            preText: "VD: ",
-            stay: 1000,
-            speed: 50,
-            element: '#dynamic-placeholder'
-        });
-        sp.init();
-    }, []);
-
-    function handleRemoveSearch(payload) {
-        dispatch(changeValue(payload));
-    }
-
-    function handleInputValue(payload) {
-        dispatch(changeValue(payload));
-    }
+    
+    const router = useRouter();
+    const [inputed, setInputed] = useState(router?.query?.keyword);
 
     function renderRemoveInputedButton () {
-        if (searchFilter.value != '') {
+        if (inputed != '') {
             return (
                 <buton
                     className={cl.button_remove}
                     onClick={()=>{
-                        handleRemoveSearch('');
+                        setInputed('');
                     }}
                 >
                     <i className="far fa-times-circle"></i>
@@ -59,11 +28,10 @@ export default function SearchBox(props) {
     return (
         <div className={cl.search_box_filter}>
             <input
-                id='dynamic-placeholder'
                 className={cl.input_search}
-                value={searchFilter.value}
+                value={inputed}
                 onInput={(e)=>{
-                    handleInputValue(e.target.value);
+                    setInputed(e.target.value);
                 }}
             />
             <div className={cl.button_list}>
@@ -71,8 +39,7 @@ export default function SearchBox(props) {
                 <buton
                     className={cl.button_search}
                     onClick={()=>{
-                        dispatch(submitValue());
-                        onSubmit(searchFilter.value);
+                        onSubmit(inputed); 
                     }}
                 >
                     <i className="fal fa-search"></i>
