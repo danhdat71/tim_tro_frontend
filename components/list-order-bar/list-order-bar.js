@@ -20,11 +20,10 @@ const ListOrderBar = (props) => {
                     <select
                         onChange={onChange}
                     >
-                        <option>Mới nhất</option>
-                        <option>Giá thấp trước</option>
-                        <option>Diện tích rộng</option>
-                        <option>Giá cao trước</option>
-                        <option>Diện tích hẹp</option>
+                        <option value="posted_at|desc">Mới nhất</option>
+                        <option value="price|asc">Giá thấp trước</option>
+                        <option value="acreage|desc">Diện tích rộng</option>
+                        <option value="price|desc">Giá cao trước</option>
                     </select>
                 </div>
             </div>

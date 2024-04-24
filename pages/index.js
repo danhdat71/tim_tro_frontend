@@ -6,6 +6,8 @@ import cl from './index.module.css';
 import TitleLeftBig from "@/components/titles/title-left-big/title-left-big";
 import KeywordBox from "@/components/boxs/keyword-box/keyword-box";
 import { getAccessTokenByContext } from "@/helpers/http-requests/cookie";
+import { useRouter } from "next/router";
+import { handleChangeRouterParam } from "@/helpers/routerHelper";
 
 const breadcrumbItems = [
   { label: 'Trang chủ', href: '/' },
@@ -24,6 +26,11 @@ const prices = [
 export async function getServerSideProps(context) {
   let data = {};
   let accessToken = getAccessTokenByContext(context);
+  let {
+    page = 1,
+    order_by = 'posted_at|desc',
+    province_id = '',
+  } = context.query;
 
   // Get provinces with count products
   let provincesCount = await fetch(`http://localhost/api/provinces?limit=10`, {
@@ -48,7 +55,7 @@ export async function getServerSideProps(context) {
   data.provincesDistrictCount = provincesDistrictCount.data;
 
   // Get products
-  let products = await fetch(`http://localhost/api/products`, {
+  let products = await fetch(`http://localhost/api/products?page=${page}&order_by=${order_by}&province_id=${province_id}`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -69,6 +76,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ data }) {
+  const router = useRouter();
   return (
     <>
       <FilterForm></FilterForm>
@@ -83,10 +91,16 @@ export default function Home({ data }) {
         <BestAreaBox
           items={data?.provincesCount}
           title="Các khu vực nổi bật"
+          onClick={(value)=>{
+            handleChangeRouterParam(router, 'province_id', value)
+          }}
         ></BestAreaBox>
       </div>
       <div className={cl.best_area}>
-        <BestAreaBox items={prices} title="Tìm theo giá"></BestAreaBox>
+        <BestAreaBox
+          items={prices}
+          title="Tìm theo giá"
+        ></BestAreaBox>
       </div>
       <div className='wrap-layout-main'>
         <ProductList data={data.products}></ProductList>

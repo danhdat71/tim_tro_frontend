@@ -1,23 +1,27 @@
 import React, { memo } from 'react';
 import cl from './best-area-box.module.css';
-import Link from 'next/link';
 
 const BestAreaBox = (props) => {
 
     let {
         title,
         items,
+        onClick,
     } = props;
 
     function renderItems() {
         return items?.map(function(value, index) {
             return (
-                <Link href='' className={cl.item}>
-                    <div key={index}>
-                        <span>{value.label}</span>
-                        <span>{value?.products_count}</span>
-                    </div>
-                </Link>
+                <div
+                    key={index}
+                    className={cl.item}
+                    onClick={()=>{
+                        onClick(value.id);
+                    }}
+                >
+                    <span>{value.label}</span>
+                    <span>{value?.products_count}</span>
+                </div>
             );
         })
     }
