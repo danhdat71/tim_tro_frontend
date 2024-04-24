@@ -42,7 +42,11 @@ const configAcreages = [
     },
 ];
 
-const ModalFilterAcreage = () => {
+const ModalFilterAcreage = (props) => {
+
+    let {
+        onSubmit,
+    } = props;
 
     const acreageFilterBox = useAppSelector(function(state){
         return state.filterAcreageReducer.acreageFilterBox;
@@ -146,6 +150,7 @@ const ModalFilterAcreage = () => {
                     is_enable: false,
                 });
                 dispatch(submitValue());
+                onSubmit(acreageFilterBox);
             }}
         >
             <div className={cl.acreage}>

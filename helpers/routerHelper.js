@@ -17,6 +17,11 @@ function handleChangeRouterParam(router, key, value) {
         delete routerQuery?.district_id;
     }
 
+    // Handle remove key if value is empty
+    if (value == '' || value == null || value == undefined) {
+        delete routerQuery[key];
+    }
+
     // Action push
     router.push({
         pathname: '/',

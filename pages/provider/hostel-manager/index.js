@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
         page = 1,
     } = context.query;
 
-    let fetchData = await fetch(`http://localhost/api/provider/product/list?page=${page}&status=${status}`, {
+    let fetchData = await fetch(`${process.env.API}/provider/product/list?page=${page}&status=${status}`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',

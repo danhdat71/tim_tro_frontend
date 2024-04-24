@@ -12,7 +12,10 @@ const searchPlaceholders = [
     'Phòng trọ quận 1',
 ]
 
-export default function SearchBox() {
+export default function SearchBox(props) {
+    let {
+        onSubmit
+    } = props;
     const dispatch = useDispatch();
 
     const searchFilter = useAppSelector(function(state){
@@ -20,14 +23,14 @@ export default function SearchBox() {
     });
 
     useEffect(function(){
-        // var sp = new SuperPlaceholder({
-        //     placeholders: searchPlaceholders,
-        //     preText: "VD: ",
-        //     stay: 1000,
-        //     speed: 50,
-        //     element: '#dynamic-placeholder'
-        // });
-        // sp.init();
+        var sp = new SuperPlaceholder({
+            placeholders: searchPlaceholders,
+            preText: "VD: ",
+            stay: 1000,
+            speed: 50,
+            element: '#dynamic-placeholder'
+        });
+        sp.init();
     }, []);
 
     function handleRemoveSearch(payload) {
@@ -69,6 +72,7 @@ export default function SearchBox() {
                     className={cl.button_search}
                     onClick={()=>{
                         dispatch(submitValue());
+                        onSubmit(searchFilter.value);
                     }}
                 >
                     <i className="fal fa-search"></i>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import cl from './modal-filter-address.module.css';
 import Select from 'react-select';
 import { useDispatch } from 'react-redux';
@@ -8,18 +8,22 @@ import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
 import { resetSelectedValue, setSelectedValue, setTmpSelectedDistrict, setTmpSelectedProvince, setTmpSelectedTown } from '@/redux/features/filter_box/address_filter_box';
 import Modal from '@/components/modals/modal/modal';
+import axios from '@/helpers/http-requests/axios';
 
-const options = [
-    { value: 'hcm', label: 'Hồ Chí Minh' },
-    { value: 'kg', label: 'Kiên Giang' },
-    { value: 'hn', label: 'Hà Nội' },
-];
+const ModalFilterAddress = (props) => {
 
-const ModalFilterAddress = () => {
+    let {
+        onSubmit
+    } = props;
+
     const dispatch = useDispatch();
     const modalFilter = useAppSelector(function(state){
         return state.modalFilterReducer.modalFilter;
     });
+
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
 
     const filterAddress = useAppSelector(function(state){
         return state.filterAddressReducer.addressFilterBox;
@@ -39,10 +43,26 @@ const ModalFilterAddress = () => {
 
     function handleSetTmpProvince(payload) {
         dispatch(setTmpSelectedProvince(payload));
+        // Get districts
+        axios.get(`${process.env.API}/location/get-districts?province_id=${payload.value}`)
+            .then(function(res) {
+                if (res.status == 200) {
+                    setDistricts(res.data);
+                    handleSetTmpDistrict(res.data[0]);
+                }
+            });
     }
 
     function handleSetTmpDistrict(payload) {
         dispatch(setTmpSelectedDistrict(payload));
+        // Get wards
+        axios.get(`${process.env.API}/location/get-wards?district_id=${payload.value}`)
+            .then(function(res) {
+                if (res.status == 200) {
+                    setWards(res.data);
+                    handleSetTmpTown(res.data[0]);
+                }
+            });
     }
 
     function handleSetTmpTown(payload) {
@@ -68,6 +88,15 @@ const ModalFilterAddress = () => {
             : true
     }
 
+    useEffect(function(){
+        axios.get(`${process.env.API}/location/get-provinces`)
+            .then(function(res) {
+                if (res.status == 200) {
+                    setProvinces(res.data);
+                }
+            });
+    }, []);
+
     return (
         <Modal
             isShowModal={isEnableModalFilter()}
@@ -78,19 +107,21 @@ const ModalFilterAddress = () => {
             }}
             title="Lọc địa điểm"
             onRefresh={()=>{
+                setDistricts([]);
+                setWards([]);
                 handleResetSelectedValue();
             }}
             submitBtnText="Lọc kết quả"
             submitBtnIcon={<i className="fal fa-search"></i>}
             submitBtnDisabled={isDisableSubmitBtn()}
             onSubmit={()=>{
-                
                 handleSetSelectedValue({
                     default_label: filterAddress.obj_select_province.label || 'Địa điểm',
                 });
                 handleDisableModalFilter({
                     is_enable: false,
                 });
+                onSubmit(filterAddress);
             }}
         >
             <div className={cl.filter_address}>
@@ -101,7 +132,8 @@ const ModalFilterAddress = () => {
                         onChange={(selectedOption)=>{
                             handleSetTmpProvince(selectedOption);
                         }}
-                        options={options}
+                        options={provinces}
+                        maxMenuHeight={190}
                     />
                 </div>
                 <div className={cl.group_search}>
@@ -111,7 +143,8 @@ const ModalFilterAddress = () => {
                         onChange={(selectedOption)=>{
                             handleSetTmpDistrict(selectedOption);
                         }}
-                        options={options}
+                        options={districts}
+                        maxMenuHeight={190}
                     />
                 </div>
                 <div className={cl.group_search}>
@@ -121,7 +154,8 @@ const ModalFilterAddress = () => {
                         onChange={(selectedOption)=>{
                             handleSetTmpTown(selectedOption);
                         }}
-                        options={options}
+                        options={wards}
+                        maxMenuHeight={190}
                     />
                 </div>
             </div>

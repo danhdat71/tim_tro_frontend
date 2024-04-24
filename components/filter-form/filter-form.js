@@ -23,10 +23,13 @@ import { resetAllToiletRoom } from '@/redux/features/filter_box/toilet_room_filt
 import { resetAllPet } from '@/redux/features/filter_box/pet_filter_box';
 import { resetAllSearchFilter } from '@/redux/features/filter_box/search_filter_box';
 import { convertAcreageStringToMetter } from '@/helpers/aceageFilter';
+import { handleChangeRouterParam } from '@/helpers/routerHelper';
+import { useRouter } from 'next/router';
 
 export default function filterForm()
 {
     const dispatch = useDispatch();
+    const router = useRouter();
 
     const addressFilter = useAppSelector(function(state){
         return state.filterAddressReducer.addressFilterBox;
@@ -125,7 +128,11 @@ export default function filterForm()
 
     return (
         <form className={cl.filter_form}>
-            <SearchBox></SearchBox>
+            <SearchBox
+                onSubmit={(value)=>{
+                    handleChangeRouterParam(router, 'keyword', value);
+                }}
+            ></SearchBox>
             <div className={cl.select_box_list}>
                 <SelectorBox
                     title={getAddressLabel()}
@@ -173,8 +180,16 @@ export default function filterForm()
                     <span>Đặt lại</span>
                 </button>
             </div>
-            <ModalFilterAddress></ModalFilterAddress>
-            <ModalFilterAcreage></ModalFilterAcreage>
+            <ModalFilterAddress
+                onSubmit={(value)=>{
+                    handleChangeRouterParam(router, 'ward_id', value?.obj_select_town?.value);
+                }}
+            ></ModalFilterAddress>
+            <ModalFilterAcreage
+                onSubmit={(value)=>{
+                    handleChangeRouterParam(router, 'acreage', value.value.toString());
+                }}
+            ></ModalFilterAcreage>
             <ModalPriceRange></ModalPriceRange>
             <ModalCategory></ModalCategory>
             <ModalBedroom></ModalBedroom>

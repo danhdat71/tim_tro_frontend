@@ -8,6 +8,8 @@ import KeywordBox from "@/components/boxs/keyword-box/keyword-box";
 import { getAccessTokenByContext } from "@/helpers/http-requests/cookie";
 import { useRouter } from "next/router";
 import { handleChangeRouterParam } from "@/helpers/routerHelper";
+import { useDispatch } from "react-redux";
+import { resetAllAddress } from "@/redux/features/filter_box/address_filter_box";
 
 const breadcrumbItems = [
   { label: 'Trang chủ', href: '/' },
@@ -31,6 +33,8 @@ export async function getServerSideProps(context) {
     order_by = 'posted_at|desc',
     province_id = '',
     district_id = '',
+    ward_id = '',
+    keyword = '',
   } = context.query;
 
   // Get provinces with count products
@@ -56,7 +60,7 @@ export async function getServerSideProps(context) {
   data.provincesDistrictCount = provincesDistrictCount.data;
 
   // Get products
-  let products = await fetch(`http://localhost/api/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}`, {
+  let products = await fetch(`http://localhost/api/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}&ward_id=${ward_id}&keyword=${keyword}`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -78,6 +82,8 @@ export async function getServerSideProps(context) {
 
 export default function Home({ data }) {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   return (
     <>
       <FilterForm></FilterForm>
@@ -93,7 +99,8 @@ export default function Home({ data }) {
           items={data?.provincesCount}
           title="Các khu vực nổi bật"
           onClick={(value)=>{
-            handleChangeRouterParam(router, 'province_id', value)
+            dispatch(resetAllAddress());
+            handleChangeRouterParam(router, 'province_id', value);
           }}
         ></BestAreaBox>
       </div>
@@ -111,6 +118,7 @@ export default function Home({ data }) {
           title={`Tìm trọ ${data.provincesDistrictCount[0]?.label}`}
           items={data?.provincesDistrictCount[0]?.districts}
           onClick={(value)=>{
+            dispatch(resetAllAddress());
             handleChangeRouterParam(router, 'district_id', value)
           }}
         />
@@ -118,6 +126,7 @@ export default function Home({ data }) {
           title={`Tìm trọ ${data.provincesDistrictCount[1]?.label}`}
           items={data?.provincesDistrictCount[1]?.districts}
           onClick={(value)=>{
+            dispatch(resetAllAddress());
             handleChangeRouterParam(router, 'district_id', value)
           }}
         />
@@ -125,6 +134,7 @@ export default function Home({ data }) {
           title={`Tìm trọ ${data.provincesDistrictCount[2]?.label}`}
           items={data?.provincesDistrictCount[2]?.districts}
           onClick={(value)=>{
+            dispatch(resetAllAddress());
             handleChangeRouterParam(router, 'district_id', value)
           }}
         />
@@ -132,6 +142,7 @@ export default function Home({ data }) {
           title={`Tìm trọ ${data.provincesDistrictCount[3]?.label}`}
           items={data?.provincesDistrictCount[3]?.districts}
           onClick={(value)=>{
+            dispatch(resetAllAddress());
             handleChangeRouterParam(router, 'district_id', value)
           }}
         />
