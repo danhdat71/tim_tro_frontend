@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import { setUserData } from '@/redux/auth';
 import defaulAvatar from '@/assets/imgs/default_avatar.jpg';
 import { PROVIDER } from '@/config/userType';
+import { deleteCookie } from '@/helpers/http-requests/cookie';
 
 const ToggleHeader = () => {
 
@@ -49,6 +50,7 @@ const ToggleHeader = () => {
                 if (response.status == 200) {
                     handleSetEnableHeader(false);
                     localStorage.removeItem('access_token');
+                    deleteCookie('access_token');
                     handleSetUserLogin({});
                     router.push({
                         pathname: '/auth/login',

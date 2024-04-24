@@ -21,15 +21,11 @@ import { objectToFormData } from '@/helpers/http-requests/formData';
 import axios from '@/helpers/http-requests/axios';
 import { removeDots } from '@/helpers/numberHelper';
 import useScrollToCenterRef from '@/hooks/useScrollToRef';
+import { getAccessTokenByContext } from '@/helpers/http-requests/cookie';
 
 export async function getServerSideProps(context) {
-    const accessToken = context.req.headers.cookie
-        ? context.req.headers.cookie
-            .split('; ')
-            .find((row) => row.startsWith('access_token='))
-            .split('=')[1]
-        : null;
-    
+    let accessToken = getAccessTokenByContext(context);
+
     let {
         slug = '',
     } = context.query;

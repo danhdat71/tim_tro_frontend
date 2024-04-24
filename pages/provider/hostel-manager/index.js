@@ -13,6 +13,7 @@ import AlertConfirm from '@/components/alerts/alert-comfirm/alert-confirm';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import AlertError from '@/components/alerts/alert-error/alert-error';
 import emptyImage from '@/assets/imgs/empty_image.png';
+import { getAccessTokenByContext } from '@/helpers/http-requests/cookie';
 
 const breadCrumbs = [
     {label: 'Trang chủ', href: '/'},
@@ -20,12 +21,8 @@ const breadCrumbs = [
 ];
 
 export async function getServerSideProps(context) {
-    const accessToken = context.req.headers.cookie
-        ? context.req.headers.cookie
-            .split('; ')
-            .find((row) => row.startsWith('access_token='))
-            .split('=')[1]
-        : null;
+
+    let accessToken = getAccessTokenByContext(context);
     
     let {
         status = 1,

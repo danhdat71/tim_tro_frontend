@@ -35,6 +35,7 @@ const Register = () => {
         setErrors({});
         axios.post(`/auth/register?check=true`, registerData)
             .then(response => {
+                setSubmitBtnDisabled(false);
                 if (response.status == 422) {
                     window.scrollTo(0, 0)
                     setErrors(response.errors);
@@ -175,13 +176,14 @@ const Register = () => {
                     <span><i className="fal fa-check"></i></span>
                 </button> */}
                 <ButtonIcon
+                    disabled={submitBtnDisabled}
                     text="Xác nhận"
                     backgroundColor="#00995b"
                     border="1px solid #00995b"
                     color="white"
                     icon={<i className="far fa-check"></i>}
                     onClick={()=>{
-                        // setIsShowModalReview(true);
+                        setSubmitBtnDisabled(true);
                         handleSubmitCheckValidate();
                     }}
                 />

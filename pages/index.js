@@ -5,6 +5,7 @@ import ProductList from "@/components/product-list/product-list";
 import cl from './index.module.css';
 import TitleLeftBig from "@/components/titles/title-left-big/title-left-big";
 import KeywordBox from "@/components/boxs/keyword-box/keyword-box";
+import { getAccessTokenByContext } from "@/helpers/http-requests/cookie";
 
 const breadcrumbItems = [
   { label: 'Trang chủ', href: '/' },
@@ -22,12 +23,7 @@ const prices = [
 
 export async function getServerSideProps(context) {
   let data = {};
-  const accessToken = context.req.headers.cookie
-    ? context.req.headers.cookie
-      .split('; ')
-      .find((row) => row.startsWith('access_token='))
-      .split('=')[1]
-    : null;
+  let accessToken = getAccessTokenByContext(context);
 
   // Get provinces with count products
   let provincesCount = await fetch(`http://localhost/api/provinces?limit=10`, {
