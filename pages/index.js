@@ -37,10 +37,13 @@ export async function getServerSideProps(context) {
     keyword = '',
     acreage = '',
     prices = '',
+    used_type = '',
+    bed_rooms = '',
+    is_allow_pet = '',
   } = context.query;
 
   // Get provinces with count products
-  let provincesCount = await fetch(`http://localhost/api/provinces?limit=10`, {
+  let provincesCount = await fetch(`${process.env.API}/provinces?limit=10`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -51,7 +54,7 @@ export async function getServerSideProps(context) {
   data.provincesCount = provincesCount.data;
 
   // Get provionces with districts count products
-  let provincesDistrictCount = await fetch(`http://localhost/api/provinces-with-districts`, {
+  let provincesDistrictCount = await fetch(`${process.env.API}/provinces-with-districts`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -62,7 +65,7 @@ export async function getServerSideProps(context) {
   data.provincesDistrictCount = provincesDistrictCount.data;
 
   // Get products
-  let products = await fetch(`http://localhost/api/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}&ward_id=${ward_id}&keyword=${keyword}&acreage=${acreage}&price_range=${prices}`, {
+  let products = await fetch(`${process.env.API}/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}&ward_id=${ward_id}&keyword=${keyword}&acreage=${acreage}&price_range=${prices}&used_type=${used_type}&bed_rooms=${bed_rooms}&is_allow_pet=${is_allow_pet}`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',

@@ -14,9 +14,27 @@ function getStringValue(status) {
     }
 }
 
+function getOptions() {
+    return [
+        {
+            label: getStringValue(NOT_ALLOW),
+            value: NOT_ALLOW
+        },
+        {
+            label: getStringValue(RULE_ALLOW),
+            value: RULE_ALLOW
+        },
+        {
+            label: getStringValue(ALLOW),
+            value: ALLOW
+        },
+    ];
+}
+
 export {
     NOT_ALLOW,
     RULE_ALLOW,
     ALLOW,
     getStringValue,
+    getOptions,
 };

@@ -1,68 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cl from './modal-category.module.css';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '@/redux/store';
-import { toggleModalFilter } from '@/redux/features/modal_filter';
-import { resetValue, selectValue, submitValue } from '@/redux/features/filter_box/category_filter_box';
 import Modal from '@/components/modals/modal/modal';
+import { getOptions } from '@/config/productUsedType';
+import { useRouter } from 'next/router';
 
-const options = [
-    { value: '1', label: 'Nhà nguyên căn' },
-    { value: '2', label: 'Phòng trọ' },
-    { value: '3', label: 'Sleepbox' },
-    { value: '4', label: 'Chung cư' },
-];
+const ModalCategory = (props) => {
 
-const ModalCategory = () => {
+    let {
+        onSubmit,
+        onClose,
+        isShowModal,
+    } = props;
+    let [selected, setSelected] = useState([]);
+    let router = useRouter();
 
-    let [selecteds, setSelecteds] = useState([]);
+    useEffect(function(){
+        // handle set selected
+        let usedType = router?.query?.used_type?.split(',');
+        let resultSelected = usedType?.map(function(val){
+            return {
+                value: val,
+            }
+        });
+        if (resultSelected) {
+            setSelected(resultSelected);
+        }
+    }, [router.query]);
 
-    const dispatch = useDispatch();
+    function handleSetSelected(select) {
+        let newSelected = [...selected];
+        let index = newSelected.findIndex((item)=>{
+            return item.value == select.value;
+        });
 
-    const modalFilter = useAppSelector(function(state){
-        return state.modalFilterReducer.modalFilter;
-    });
+        if (index === -1) {
+            newSelected.push(select);
+        } else {
+            newSelected.splice(index, 1);
+        }
 
-    const categoryFilter = useAppSelector(function(state){
-        return state.filterCategoryReducer.categoryFilterBox;
-    });
-
-    function handleDisableModalFilter(pushData)
-    {
-        dispatch(toggleModalFilter(pushData));
-    }
-
-    function isEnableModalFilter()
-    {
-        return modalFilter.is_enable == true && modalFilter.box_type == 'category'
-            ? true
-            : false;
-    }
-
-    function handleSelect(value)
-    {
-        dispatch(selectValue(value));
+        setSelected(newSelected);
     }
 
     function renderButtons()
     {
-        return options.map(function(value, index) {
+        return getOptions().map(function(value, index) {
             return (
                 <button
                     type='button'
                     key={index}
                     className={
-                        categoryFilter.value.findIndex((item) => {
+                        selected?.findIndex((item) => {
                             return item.value == value.value;
                         }) != -1
                             ? `input-button active` 
                             : `input-button`
                     }
                     onClick={()=>{
-                        handleSelect({
-                            label: value.label,
-                            value: value.value
-                        });
+                        handleSetSelected(value);
                     }}
                 >{value.label}</button>
             );
@@ -71,23 +66,17 @@ const ModalCategory = () => {
 
     return (
         <Modal
-            isShowModal={isEnableModalFilter()}
+            isShowModal={isShowModal}
             title="Phân loại nhà"
             submitBtnText="Lọc kết quả"
             submitBtnIcon={<i className="fal fa-search"></i>}
-            onClose={()=>{
-                handleDisableModalFilter({
-                    is_enable: false,
-                })
-            }}
+            onClose={onClose}
             onRefresh={()=>{
-                dispatch(resetValue());
+                setSelected([]);
             }}
             onSubmit={()=>{
-                dispatch(submitValue());
-                handleDisableModalFilter({
-                    is_enable: false,
-                });
+                onSubmit(selected);
+                onClose();
             }}
         >
             <div className={cl.filter_category}>

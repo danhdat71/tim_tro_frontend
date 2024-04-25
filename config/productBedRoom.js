@@ -20,6 +20,31 @@ function getStringValue(status) {
     }
 }
 
+function getOptions() {
+    return [
+        {
+            label: getStringValue(ONE),
+            value: ONE
+        },
+        {
+            label: getStringValue(TWO),
+            value: TWO
+        },
+        {
+            label: getStringValue(THREE),
+            value: THREE
+        },
+        {
+            label: getStringValue(FOUR),
+            value: FOUR
+        },
+        {
+            label: getStringValue(FINE),
+            value: FINE
+        },
+    ];
+}
+
 export {
     ONE,
     TWO,
@@ -27,4 +52,5 @@ export {
     FOUR,
     FINE,
     getStringValue,
+    getOptions,
 };

@@ -23,6 +23,48 @@ function getStringValue(status) {
     }
 }
 
+function getStringValues(arrStatus) {
+    let result = "";
+    result = arrStatus.map(function(val, index) {
+        let str = getStringValue(val);
+        if (index < arrStatus.length - 1) {
+            str += ", "
+        }
+        return str;
+    });
+
+    return result;
+}
+
+function getOptions() {
+    return [
+        {
+            label: getStringValue(HOSTEL),
+            value: HOSTEL
+        },
+        {
+            label: getStringValue(FULL_HOUSE),
+            value: FULL_HOUSE
+        },
+        {
+            label: getStringValue(SLEEP_BOX),
+            value: SLEEP_BOX
+        },
+        {
+            label: getStringValue(APARTMENT),
+            value: APARTMENT
+        },
+        {
+            label: getStringValue(OFFICE),
+            value: OFFICE
+        },
+        {
+            label: getStringValue(OTHER),
+            value: OTHER
+        }
+    ];
+}
+
 export {
     HOSTEL,
     FULL_HOUSE,
@@ -31,4 +73,6 @@ export {
     OFFICE,
     OTHER,
     getStringValue,
+    getOptions,
+    getStringValues,
 };
