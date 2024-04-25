@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import cl from './modal-filter-acreage.module.css';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '@/redux/store';
-import { toggleModalFilter } from '@/redux/features/modal_filter';
-import { changeMaxValue, changeMinValue, changeValue, resetValue, submitValue } from '@/redux/features/filter_box/acreage_filter_box';
 import { PrettoSlider } from '@/config/mui';
 import Modal from '@/components/modals/modal/modal';
 
@@ -46,29 +42,11 @@ const ModalFilterAcreage = (props) => {
 
     let {
         onSubmit,
+        onClose,
+        isShowModal,
     } = props;
 
-    const acreageFilterBox = useAppSelector(function(state){
-        return state.filterAcreageReducer.acreageFilterBox;
-    });
-
-    const dispatch = useDispatch();
-
-    const modalFilter = useAppSelector(function(state){
-        return state.modalFilterReducer.modalFilter;
-    });
-
-    function handleDisableModalFilter(pushData)
-    {
-        dispatch(toggleModalFilter(pushData));
-    }
-
-    function isEnableModalFilter()
-    {
-        return modalFilter.is_enable == true && modalFilter.box_type == 'acreage'
-            ? true
-            : false;
-    }
+    let [seleted, setSelected] = useState([0, 100]);
 
     function renderRadio()
     {
@@ -78,7 +56,7 @@ const ModalFilterAcreage = (props) => {
                     className='label-group'
                     key={index}
                     onClick={()=>{
-                        dispatch(changeValue(val.value));
+                        setSelected(val.value);
                     }}
                 >
                     <input
@@ -87,7 +65,7 @@ const ModalFilterAcreage = (props) => {
                         type='radio'
                         name='acreage'
                         value={val.value}
-                        defaultChecked={JSON.stringify(acreageFilterBox.value) == JSON.stringify(val.value)}
+                        defaultChecked={JSON.stringify(seleted) == JSON.stringify(val.value)}
                     ></input>
                     <label htmlFor={`acreage_${index}`}>{val.label}</label>
                 </div>
@@ -101,13 +79,17 @@ const ModalFilterAcreage = (props) => {
         if (isNaN(minValue)) return;
         if (minValue < 0) return;
 
-        dispatch(changeMinValue(minValue));
+        let newSeleted = [...seleted];
+        newSeleted[0] = minValue;
+        setSelected(newSeleted);
     }
 
     function handleFixChangeMinValue()
     {
-        if (acreageFilterBox.value[0] > acreageFilterBox.value[1]) {
-            dispatch(changeMinValue(acreageFilterBox.value[1] - 5));
+        if (seleted[0] > seleted[1]) {
+            let newSeleted = [...seleted];
+            newSeleted[0] = newSeleted[1] - 5;
+            setSelected(newSeleted);
         }
     }
 
@@ -117,47 +99,46 @@ const ModalFilterAcreage = (props) => {
         if (isNaN(maxValue)) return;
         if (maxValue < 0) return;
 
-        dispatch(changeMaxValue(maxValue));
+        let newSeleted = [...seleted];
+        newSeleted[1] = maxValue;
+        setSelected(newSeleted);
     }
 
     function fixChangeMaxValue()
     {
-        if (acreageFilterBox.value[1] < acreageFilterBox.value[0]) {
-            let maxValue = parseInt(acreageFilterBox.value[0]) + 5;
-            dispatch(changeMaxValue(maxValue));
+        if (seleted[1] < seleted[0]) {
+            let maxValue = parseInt(seleted[0]) + 5;
+            let newSeleted = [...seleted];
+            newSeleted[1] = maxValue;
+            setSelected(newSeleted);
         }
-        if (acreageFilterBox.value[1] > 100) {
-            dispatch(changeMaxValue(100));
+        if (seleted[1] > 100) {
+            let newSeleted = [...seleted];
+            newSeleted[1] = 100;
+            setSelected(newSeleted);
         }
     }
 
     return (
         <Modal
-            isShowModal={isEnableModalFilter()}
+            isShowModal={isShowModal}
             title="Lọc diện tích"
             submitBtnText="Lọc kết quả"
             submitBtnIcon={<i className="fal fa-search"></i>}
-            onClose={()=>{
-                handleDisableModalFilter({
-                    is_enable: false,
-                })
-            }}
+            onClose={onClose}
             onRefresh={()=>{
-                dispatch(resetValue());
+                setSelected([0, 100]);
             }}
             onSubmit={()=>{
-                handleDisableModalFilter({
-                    is_enable: false,
-                });
-                dispatch(submitValue());
-                onSubmit(acreageFilterBox);
+                onSubmit(seleted);
+                onClose();
             }}
         >
             <div className={cl.acreage}>
                 <div className={`${cl.acreage_input} form-group`}>
                     <input
                         className={`${cl.hand_input} input`}
-                        value={acreageFilterBox.value[0]}
+                        value={seleted[0]}
                         onChange={(e)=>{
                             handleChangeMinValue(e.target.value);
                         }}
@@ -168,7 +149,7 @@ const ModalFilterAcreage = (props) => {
                     <span>-</span>
                     <input
                         className={`${cl.hand_input} input`}
-                        value={acreageFilterBox.value[1]}
+                        value={seleted[1]}
                         onChange={(e)=>{
                             handleChangeMaxValue(e.target.value);
                         }}
@@ -181,12 +162,12 @@ const ModalFilterAcreage = (props) => {
                     <PrettoSlider
                         min={0}
                         max={100}
-                        value={acreageFilterBox.value}
+                        value={seleted}
                         disableSwap
                         valueLabelDisplay="auto"
                         step={5}
                         onChange={(e, value)=>{
-                            dispatch(changeValue(value));
+                            setSelected(value);
                         }}
                     />
                 </div>

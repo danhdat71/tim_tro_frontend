@@ -10,6 +10,10 @@ export default function SearchBox(props) {
     const router = useRouter();
     const [inputed, setInputed] = useState(router?.query?.keyword);
 
+    useEffect(function(){
+        setInputed(router.query?.keyword || "");
+    }, [router.query]);
+
     function renderRemoveInputedButton () {
         if (inputed != '') {
             return (

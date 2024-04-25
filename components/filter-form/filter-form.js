@@ -11,7 +11,6 @@ import ModalCategory from './modal-filters/modal-category/modal-category';
 import ModalBedroom from './modal-filters/modal-bedroom/modal-bedroom';
 import ModalToiletRoom from './modal-filters/modal-toilet-room/modal-toilet-room';
 import ModalPet from './modal-filters/modal-pet/modal-pet';
-import { useDispatch } from 'react-redux';
 import { handleChangeRouterParam } from '@/helpers/routerHelper';
 import { useRouter } from 'next/router';
 
@@ -21,6 +20,7 @@ export default function filterForm()
 
     //Modal address
     const [isShowModalAddress, setIsShowModalAddress] = useState(false);
+    const [isShowModalAcreage, setIsShowModalAcreage] = useState(false);
 
     // Handle render buttons
     function renderButtonAddress() {
@@ -52,10 +52,31 @@ export default function filterForm()
             />
         );
     }
+    function renderButtonAcreage() {
+        let title = "Diện tích";
+        let isActive = false;
+        let routerQuery = router.query;
+
+        if (routerQuery.acreage) {
+            isActive = true;
+            title = routerQuery.acreage.replace(',', '-') + 'm';
+        }
+
+        return (
+            <SelectorBox
+                title={title}
+                active={isActive}
+                onClick={()=>{
+                    setIsShowModalAcreage(true);
+                }}
+            />
+        );
+    }
 
     // Handle redirect
     function handleSeletedAddress(value) {
         let routerQuery = router.query;
+        routerQuery.page = 1;
 
         if (value?.province?.value) {
             routerQuery.province_id = value?.province?.value;
@@ -86,6 +107,26 @@ export default function filterForm()
             query: routerQuery
         });
     }
+    function handleSeletedAcreage(value) {
+        let routerQuery = router.query;
+        routerQuery.page = 1;
+
+        if (String(value) != "0,100") {
+            routerQuery.acreage = String(value);
+        } else {
+            delete routerQuery.acreage;
+        }
+
+        router.push({
+            pathname: '/',
+            query: routerQuery
+        });
+    }
+    function handleResetRedirect() {
+        router.push({
+            pathname: '/',
+        });
+    }
 
     return (
         <form className={cl.filter_form}>
@@ -96,10 +137,12 @@ export default function filterForm()
             ></SearchBox>
             <div className={cl.select_box_list}>
                 {renderButtonAddress()}
+                {renderButtonAcreage()}
                 <button
                     type='button'
                     className={cl.recovery_filter_btn}
                     onClick={()=>{
+                        handleResetRedirect();
                     }}
                 >
                     <span><i className="fal fa-undo"></i></span>
@@ -117,8 +160,12 @@ export default function filterForm()
             ></ModalFilterAddress>
             <ModalFilterAcreage
                 onSubmit={(value)=>{
-                    handleChangeRouterParam(router, 'acreage', value.value.toString());
+                    handleSeletedAcreage(value);
                 }}
+                onClose={()=>{
+                    setIsShowModalAcreage(false);
+                }}
+                isShowModal={isShowModalAcreage}
             ></ModalFilterAcreage>
             <ModalPriceRange></ModalPriceRange>
             <ModalCategory></ModalCategory>
