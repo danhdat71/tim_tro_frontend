@@ -1,53 +1,43 @@
 import React, { useState } from 'react';
 import cl from './modal-price-range.module.css';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '@/redux/store';
 import { toggleModalFilter } from '@/redux/features/modal_filter';
 import { changeMaxValue, changeMinValue, changeValue, resetValue, submitValue } from '@/redux/features/filter_box/price_range_box';
 import { PrettoSlider } from '@/config/mui';
 import Modal from '@/components/modals/modal/modal';
 
-const ModalPriceRange = () => {
+const ModalPriceRange = (props) => {
 
-    const dispatch = useDispatch();
+    let {
+        onSubmit,
+        onClose,
+        isShowModal,
+    } = props;
 
-    const priceFilterBox = useAppSelector(function(state){
-        return state.filterPriceReducer.priceFilterBox;
-    });
-
-    const modalFilter = useAppSelector(function(state){
-        return state.modalFilterReducer.modalFilter;
-    });
-
-    function handleDisableModalFilter(pushData)
-    {
-        dispatch(toggleModalFilter(pushData));
-    }
-
-    function isEnableModalFilter()
-    {
-        return modalFilter.is_enable == true && modalFilter.box_type == 'price_range'
-            ? true
-            : false;
-    }
+    let [seleted, setSelected] = useState([500000, 20000000]);
 
     function handleChangeMinValue(minValue)
     {
         minValue = parseInt(minValue);
         if (isNaN(minValue)) return;
 
-        dispatch(changeMinValue(minValue));
+        let newSeleted = [...seleted];
+        newSeleted[0] = minValue;
+        setSelected(newSeleted);
     }
 
     function fixChangeMinValue()
     {
-        if (priceFilterBox.value[0] > priceFilterBox.value[1]) {
-            let minValue = parseInt(priceFilterBox.value[1]) - 500000;
-            dispatch(changeMinValue(minValue));
+        if (seleted[0] > seleted[1]) {
+            let minValue = parseInt(seleted[1]) - 500000;
+            let newSeleted = [...seleted];
+            newSeleted[0] = minValue;
+            setSelected(newSeleted);
         }
 
-        if (priceFilterBox.value[0] < 500000) {
-            dispatch(changeMinValue(500000));
+        if (seleted[0] < 500000) {
+            let newSeleted = [...seleted];
+            newSeleted[0] = 500000;
+            setSelected(newSeleted);
         }
     }
 
@@ -56,49 +46,49 @@ const ModalPriceRange = () => {
         maxValue = parseInt(maxValue);
         if (isNaN(maxValue)) return;
 
-        dispatch(changeMaxValue(maxValue));
+        let newSeleted = [...seleted];
+        newSeleted[1] = maxValue;
+        setSelected(newSeleted);
     }
 
     function fixChangeMaxValue()
     {
-        if (priceFilterBox.value[1] < priceFilterBox.value[0]) {
-            let maxValue = parseInt(priceFilterBox.value[0]) + 500000;
-            dispatch(changeMaxValue(maxValue));
+        if (seleted[1] < seleted[0]) {
+            let maxValue = parseInt(seleted[0]) + 500000;
+            let newSeleted = [...seleted];
+            newSeleted[0] = maxValue;
+            setSelected(newSeleted);
         }
-        if (priceFilterBox.value[1] > 20000000) {
-            dispatch(changeMaxValue(20000000));
+        if (seleted[1] > 20000000) {
+            let newSeleted = [...seleted];
+            newSeleted[1] = 20000000;
+            setSelected(newSeleted);
         }
     }
 
     return (
         <Modal
-            isShowModal={isEnableModalFilter()}
+            isShowModal={isShowModal}
             title="Lọc khoảng giá"
             submitBtnText="Lọc kết quả"
             submitBtnIcon={<i className="fal fa-search"></i>}
-            onClose={()=>{
-                handleDisableModalFilter({
-                    is_enable: false,
-                })
-            }}
+            onClose={onClose}
             onRefresh={()=>{
-                dispatch(resetValue());
+                setSelected([500000, 20000000]);
             }}
             onSubmit={()=>{
-                dispatch(submitValue());
-                handleDisableModalFilter({
-                    is_enable: false,
-                });
+                onSubmit(seleted);
+                onClose();
             }}
         >
             <div className={cl.preview_range}>
-                <div>Từ: <b>{parseInt(priceFilterBox.value[0]).toLocaleString('en-US')}đ</b></div>
-                <div>Đến: <b>{parseInt(priceFilterBox.value[1]).toLocaleString('en-US')}đ</b></div>
+                <div>Từ: <b>{parseInt(seleted[0]).toLocaleString('en-US')}đ</b></div>
+                <div>Đến: <b>{parseInt(seleted[1]).toLocaleString('en-US')}đ</b></div>
             </div>
             <div className={cl.input_range}>
                 <input
                     className={`${cl.hand_input} input`}
-                    value={priceFilterBox.value[0]}
+                    value={seleted[0]}
                     onChange={(e)=>{
                         handleChangeMinValue(e.target.value);
                     }}
@@ -109,7 +99,7 @@ const ModalPriceRange = () => {
                 <span>-</span>
                 <input
                     className={`${cl.hand_input} input`}
-                    value={priceFilterBox.value[1]}
+                    value={seleted[1]}
                     onChange={(e)=>{
                         handleChangeMaxValue(e.target.value);
                     }}
@@ -122,12 +112,12 @@ const ModalPriceRange = () => {
                 <PrettoSlider
                     min={500000}
                     max={20000000}
-                    value={priceFilterBox.value}
+                    value={seleted}
                     disableSwap
                     valueLabelDisplay="auto"
                     step={100000}
                     onChange={(e, value)=>{
-                        dispatch(changeValue(value))
+                        setSelected(value)
                     }}
                     valueLabelFormat={(value)=>{
                         return value.toLocaleString('en-US') + "đ";

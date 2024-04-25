@@ -13,6 +13,7 @@ import ModalToiletRoom from './modal-filters/modal-toilet-room/modal-toilet-room
 import ModalPet from './modal-filters/modal-pet/modal-pet';
 import { handleChangeRouterParam } from '@/helpers/routerHelper';
 import { useRouter } from 'next/router';
+import { formatNumber } from '@/helpers/priceHelper';
 
 export default function filterForm()
 {
@@ -21,6 +22,7 @@ export default function filterForm()
     //Modal address
     const [isShowModalAddress, setIsShowModalAddress] = useState(false);
     const [isShowModalAcreage, setIsShowModalAcreage] = useState(false);
+    const [isShowModalPrices, setIsShowModalPrices] = useState(false);
 
     // Handle render buttons
     function renderButtonAddress() {
@@ -68,6 +70,29 @@ export default function filterForm()
                 active={isActive}
                 onClick={()=>{
                     setIsShowModalAcreage(true);
+                }}
+            />
+        );
+    }
+    function renderButtonPrice() {
+        let title = "Khoảng giá";
+        let isActive = false;
+        let routerQuery = router.query;
+
+        if (routerQuery.prices) {
+            isActive = true;
+            let value = routerQuery.prices.split(',');
+            let min = formatNumber(value[0]);
+            let max = formatNumber(value[1]);
+            title = min + " - " + max;
+        }
+
+        return (
+            <SelectorBox
+                title={title}
+                active={isActive}
+                onClick={()=>{
+                    setIsShowModalPrices(true);
                 }}
             />
         );
@@ -122,6 +147,21 @@ export default function filterForm()
             query: routerQuery
         });
     }
+    function handleSeletedPrices(value) {
+        let routerQuery = router.query;
+        routerQuery.page = 1;
+
+        if (String(value) != "500000,20000000") {
+            routerQuery.prices = String(value);
+        } else {
+            delete routerQuery.prices;
+        }
+
+        router.push({
+            pathname: '/',
+            query: routerQuery
+        });
+    }
     function handleResetRedirect() {
         router.push({
             pathname: '/',
@@ -138,6 +178,7 @@ export default function filterForm()
             <div className={cl.select_box_list}>
                 {renderButtonAddress()}
                 {renderButtonAcreage()}
+                {renderButtonPrice()}
                 <button
                     type='button'
                     className={cl.recovery_filter_btn}
@@ -167,7 +208,15 @@ export default function filterForm()
                 }}
                 isShowModal={isShowModalAcreage}
             ></ModalFilterAcreage>
-            <ModalPriceRange></ModalPriceRange>
+            <ModalPriceRange
+                onSubmit={(value)=>{
+                    handleSeletedPrices(value);
+                }}
+                onClose={()=>{
+                    setIsShowModalPrices(false);
+                }}
+                isShowModal={isShowModalPrices}
+            ></ModalPriceRange>
             <ModalCategory></ModalCategory>
             <ModalBedroom></ModalBedroom>
             <ModalToiletRoom></ModalToiletRoom>

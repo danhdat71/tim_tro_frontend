@@ -36,6 +36,7 @@ export async function getServerSideProps(context) {
     ward_id = '',
     keyword = '',
     acreage = '',
+    prices = '',
   } = context.query;
 
   // Get provinces with count products
@@ -61,7 +62,7 @@ export async function getServerSideProps(context) {
   data.provincesDistrictCount = provincesDistrictCount.data;
 
   // Get products
-  let products = await fetch(`http://localhost/api/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}&ward_id=${ward_id}&keyword=${keyword}&acreage=${acreage}`, {
+  let products = await fetch(`http://localhost/api/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}&ward_id=${ward_id}&keyword=${keyword}&acreage=${acreage}&price_range=${prices}`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
