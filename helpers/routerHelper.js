@@ -1,4 +1,4 @@
-function handleChangeRouterParam(router, key, value) {
+function handleChangeRouterParam(router, key, value, pathname='/') {
     let routerQuery = router.query;
     routerQuery.page = 1;
     routerQuery[key] = value;
@@ -56,7 +56,7 @@ function handleChangeRouterParam(router, key, value) {
 
     // Action push
     router.push({
-        pathname: '/',
+        pathname: pathname,
         query: routerQuery
     });
 }

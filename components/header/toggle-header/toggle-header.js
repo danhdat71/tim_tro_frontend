@@ -60,7 +60,7 @@ const ToggleHeader = () => {
     }
 
     function handleRenderMenuUserType() {
-        if (authUserData?.user_type == 0) {
+        if (authUserData?.user_type == PROVIDER) {
             return (
                 <ProviderMenuItems
                     onLogout={()=>{

@@ -9,6 +9,7 @@ const AlertConfirm = (props) => {
         isShow = true,
         onCancel,
         onSubmit,
+        submitDisabled = false,
     } = props;
 
     useEffect(() => {
@@ -39,6 +40,7 @@ const AlertConfirm = (props) => {
                     <button
                         className={cl.confirm}
                         onClick={onSubmit}
+                        disabled={submitDisabled}
                     >Xác nhận</button>
                 </div>
             </div>

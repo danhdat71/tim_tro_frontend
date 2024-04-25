@@ -1,0 +1,11 @@
+.loves {
+    min-height: calc(100vh - (465.72px + 79.03px));
+    padding-bottom: 30px;
+}
+
+.paginate_bar {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    user-select: none;
+}

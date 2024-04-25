@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import { handleChangeRouterParam } from '@/helpers/routerHelper';
 import EmptyList from '../empty-list/empty-list';
 import axios from '@/helpers/http-requests/axios';
+import { setUserData } from '@/redux/auth';
+import { useDispatch } from 'react-redux';
 
 const ProductList = (props) => {
 
@@ -16,6 +18,7 @@ const ProductList = (props) => {
     } = props;
 
     const router = useRouter();
+    const dispatch = useDispatch();
     const [savedProductIds, setSavedProductIds] = useState([]);
 
     useEffect(function(){
@@ -30,6 +33,23 @@ const ProductList = (props) => {
                 }
             });
     }, []);
+
+    useEffect(function(){
+        axios.get(`/auth/get-me`, {
+            headers: {
+                Authorization : 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+            .then(response => {
+                if (response.status == 200) {
+                    handleSetUserLogin(response.data);
+                }
+            });
+    }, [savedProductIds]);
+
+    function handleSetUserLogin(userData) {
+        dispatch(setUserData(userData));
+    }
 
     function handleSaveProduct(payload) {
         axios.post(`/user/save-product`, payload, {
@@ -104,8 +124,6 @@ const ProductList = (props) => {
             }
         });
     }
-
-    console.log('savedProductIds', savedProductIds.findIndex(item => item == 17))
 
     return (
         <div className={cl.product_list}>
