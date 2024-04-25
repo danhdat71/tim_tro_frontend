@@ -10,19 +10,11 @@ import { useRouter } from "next/router";
 import { handleChangeRouterParam } from "@/helpers/routerHelper";
 import { useDispatch } from "react-redux";
 import { resetAllAddress } from "@/redux/features/filter_box/address_filter_box";
+import { useAppSelector } from '@/redux/store';
 
 const breadcrumbItems = [
   { label: 'Trang chủ', href: '/' },
   { label: 'Tất cả', href: '/' },
-];
-
-const prices = [
-  { label: 'Dưới 1 triệu', href: '/', products_count: 244 },
-  { label: 'Từ 1 - 2 triệu', href: '/', products_count: 653 },
-  { label: 'Từ 2 - 4 triệu', href: '/', products_count: 225 },
-  { label: 'Từ 4 - 6 triệu', href: '/', products_count: 1043 },
-  { label: 'Từ 6 - 12 triệu', href: '/', products_count: 3222 },
-  { label: 'Trên 12 triệu', href: '/', products_count: 1234 },
 ];
 
 export async function getServerSideProps(context) {
@@ -37,6 +29,7 @@ export async function getServerSideProps(context) {
     keyword = '',
     acreage = '',
     prices = '',
+    price_range = '',
     used_type = '',
     bed_rooms = '',
     is_allow_pet = '',
@@ -65,7 +58,7 @@ export async function getServerSideProps(context) {
   data.provincesDistrictCount = provincesDistrictCount.data;
 
   // Get products
-  let products = await fetch(`${process.env.API}/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}&ward_id=${ward_id}&keyword=${keyword}&acreage=${acreage}&price_range=${prices}&used_type=${used_type}&bed_rooms=${bed_rooms}&is_allow_pet=${is_allow_pet}`, {
+  let products = await fetch(`${process.env.API}/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}&ward_id=${ward_id}&keyword=${keyword}&acreage=${acreage}&price_range=${prices}&price_range=${price_range}&used_type=${used_type}&bed_rooms=${bed_rooms}&is_allow_pet=${is_allow_pet}`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -74,6 +67,17 @@ export async function getServerSideProps(context) {
   });
   products = await products.json();
   data.products = products.data;
+
+  // Get prices range
+  let pricesRange = await fetch(`${process.env.API}/prices-with-count`, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+  });
+  pricesRange = await pricesRange.json();
+  data.pricesRange = pricesRange.data;
 
   // Get current month
   let date = new Date();
@@ -88,6 +92,10 @@ export async function getServerSideProps(context) {
 export default function Home({ data }) {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const authUserData = useAppSelector(function(state){
+    return state.authUserReducer.user.data;
+  });
 
   return (
     <>
@@ -111,12 +119,18 @@ export default function Home({ data }) {
       </div>
       <div className={cl.best_area}>
         <BestAreaBox
-          items={prices}
+          items={data.pricesRange}
           title="Tìm theo giá"
+          onClick={(value)=>{
+            handleChangeRouterParam(router, 'price_range', value);
+          }}
         ></BestAreaBox>
       </div>
       <div className='wrap-layout-main'>
-        <ProductList data={data.products}></ProductList>
+        <ProductList
+          data={data.products}
+          isLogin={authUserData.app_id ? true : false}
+        ></ProductList>
       </div>
       <div className={cl.wrap_search_keyword}>
         <KeywordBox

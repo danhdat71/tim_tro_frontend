@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import cl from './product.module.css';
 import Link from 'next/link';
 import { formatNumber } from '@/helpers/priceHelper';
@@ -7,6 +7,7 @@ import {getStringValue as getStringValueBedRooms} from '@/config/productBedRoom'
 
 const Product = (props) => {
     let {
+        id,
         image,
         imageNum,
         title,
@@ -17,7 +18,44 @@ const Product = (props) => {
         price,
         toiletRooms,
         bedRooms,
+        isShowSaveButton = false,
+        isSaved = false,
+        onClickSave,
     } = props;
+
+    function renderSaveButton() {
+        if (isShowSaveButton == true) {
+            if (isSaved == true) {
+                return (
+                    <div
+                        className={cl.like_btn}
+                        onClick={()=>{
+                            onClickSave({
+                                product_id: id,
+                                action: 0
+                            });
+                        }}
+                    >
+                        <button><i className="fas fa-heart"></i></button>
+                    </div>
+                );
+            } else {
+                return (
+                    <div
+                        className={cl.like_btn}
+                        onClick={()=>{
+                            onClickSave({
+                                product_id: id,
+                                action: 1
+                            });
+                        }}
+                    >
+                        <button><i className="far fa-heart"></i></button>
+                    </div>
+                );
+            }
+        }
+    }
 
     return (
         <div className={cl.product_item}>
@@ -53,10 +91,7 @@ const Product = (props) => {
                     <span><i className="far fa-booth-curtain"></i></span>
                     <span>{getStringValueBedRooms(bedRooms)}, {getStringValueWC(toiletRooms)}</span>
                 </div>
-                <div className={cl.like_btn}>
-                    <button><i className="far fa-heart"></i></button>
-                    {/* <button><i className="fas fa-heart"></i></button> */}
-                </div>
+                {renderSaveButton()}
             </div>
         </div>
     );

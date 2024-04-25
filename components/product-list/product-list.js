@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import cl from './product-list.module.css';
 import Product from '../product/product';
 import ListOrderBar from '../list-order-bar/list-order-bar';
@@ -6,21 +6,59 @@ import { isNumeric } from '@/helpers/numberHelper';
 import { useRouter } from 'next/router';
 import { handleChangeRouterParam } from '@/helpers/routerHelper';
 import EmptyList from '../empty-list/empty-list';
+import axios from '@/helpers/http-requests/axios';
 
 const ProductList = (props) => {
 
     let {
-        data
+        data,
+        isLogin = false,
     } = props;
 
     const router = useRouter();
+    const [savedProductIds, setSavedProductIds] = useState([]);
+
+    useEffect(function(){
+        axios.get(`/user/list-saved-products?is_all=1`, {
+            headers: {
+                Authorization : 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+            .then(response => {
+                if (response.status == 200) {
+                    setSavedProductIds(response.data);
+                }
+            });
+    }, []);
+
+    function handleSaveProduct(payload) {
+        axios.post(`/user/save-product`, payload, {
+            headers: {
+                Authorization : 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+        .then(response => {
+            if (response.status == 200) {
+                setSavedProductIds(response.data);
+            }
+        });
+    }
 
     function renderProductItems() {
         if (data.data.length > 0) {
             return data.data.map(function (val, index) {
+                let isSaved = savedProductIds.findIndex(function(item){
+                    return item == val.id;
+                });
+                if (isSaved != -1) {
+                    isSaved = true;
+                } else {
+                    isSaved = false;
+                }
                 return (
                     <Product
                         key={index}
+                        id={val.id}
                         image={`${process.env.BACKEND_URL}/${val.product_images[0].thumb_url}`}
                         imageNum={val.product_images.length}
                         title={val.title}
@@ -31,11 +69,16 @@ const ProductList = (props) => {
                         price={val.price}
                         toiletRooms={val.toilet_rooms}
                         bedRooms={val.bed_rooms}
+                        isShowSaveButton={isLogin}
+                        isSaved={isSaved}
+                        onClickSave={(value)=>{
+                            handleSaveProduct(value);
+                        }}
                     />
                 );
             });
         } else {
-            return <EmptyList title="Không tìm thấy bài viết nào"></EmptyList>
+            return <EmptyList title="Không tìm thấy bài đăng nào"></EmptyList>
         }
     }
 
@@ -61,6 +104,8 @@ const ProductList = (props) => {
             }
         });
     }
+
+    console.log('savedProductIds', savedProductIds.findIndex(item => item == 17))
 
     return (
         <div className={cl.product_list}>
