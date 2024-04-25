@@ -9,7 +9,6 @@ import { getAccessTokenByContext } from "@/helpers/http-requests/cookie";
 import { useRouter } from "next/router";
 import { handleChangeRouterParam } from "@/helpers/routerHelper";
 import { useDispatch } from "react-redux";
-import { resetAllAddress } from "@/redux/features/filter_box/address_filter_box";
 import { useAppSelector } from '@/redux/store';
 
 const breadcrumbItems = [
