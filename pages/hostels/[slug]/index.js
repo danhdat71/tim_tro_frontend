@@ -21,8 +21,9 @@ import { formatNumber } from '@/helpers/priceHelper';
 import { formatToHiDMY } from '@/helpers/dateHelper';
 import { useAppSelector } from '@/redux/store';
 import axios from '@/helpers/http-requests/axios';
-import { handleChangeRouterParam } from '@/helpers/routerHelper';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '@/redux/auth';
 
 export async function getServerSideProps(context) {
     let accessToken = getAccessTokenByContext(context);
@@ -81,18 +82,9 @@ export async function getServerSideProps(context) {
     }
 }
 
-const searchKeyword = [
-    {label:'Trọ Bình Thạnh', href:'/', total: 100},
-    {label:'Trọ Quận 4', href:'/', total: 232},
-    {label:'Trọ Quận 1', href:'/', total: 468},
-    {label:'Trọ Quận 3', href:'/', total: 1664},
-    {label:'Trọ Quận 10', href:'/', total: 22353},
-    {label:'Trọ Quận 12', href:'/', total: 4543},
-    {label:'Trọ Bình Tân', href:'/', total: 12},
-];
-
 const Index = ({data}) => {
     let router = useRouter();
+    let dispatch = useDispatch();
     let [showModalReport, setShowModalReport] = useState(false);
     let [showModalShare, setShowModalShare] = useState(false);
     let [saveds, setSaveds] = useState([]);
@@ -113,6 +105,21 @@ const Index = ({data}) => {
     let authUserData = useAppSelector(function(state){
         return state.authUserReducer.user.data;
     });
+
+    useEffect(function(){
+        axios.get(`/auth/get-me`, {
+            headers: {
+                Authorization : 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+            .then(response => {
+                if (response.status == 200) {
+                    let newAuthUserData = {...authUserData};
+                    newAuthUserData.user_saved_products_count = saveds.length;
+                    dispatch(setUserData(newAuthUserData));
+                }
+            });
+    }, [saveds]);
 
     useEffect(function(){
         axios.get(`${process.env.API}/user/list-saved-products?is_all=1`, {
