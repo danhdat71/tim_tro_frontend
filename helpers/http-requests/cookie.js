@@ -1,11 +1,11 @@
 function setCookie(key, value) {
     var expires = new Date();
-    expires.setTime(expires.getTime() + 31536000000); //1 year  
-    document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+    expires.setTime(expires.getTime() + 31536000000); // 1 year
+    document.cookie = key +'='+ value +'; Path=/;' + 'expires=' + expires.toUTCString();
 }
 
 function deleteCookie(name) {
-    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
 function getAccessTokenByContext(context) {

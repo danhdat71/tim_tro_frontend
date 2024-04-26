@@ -79,6 +79,7 @@ const ProductList = (props) => {
                     <Product
                         key={index}
                         id={val.id}
+                        slug={val.slug}
                         image={`${process.env.BACKEND_URL}/${val.product_images[0].thumb_url}`}
                         imageNum={val.product_images.length}
                         title={val.title}

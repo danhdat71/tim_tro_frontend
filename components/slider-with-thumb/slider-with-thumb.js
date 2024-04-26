@@ -14,7 +14,8 @@ import useWindowSize from '@/hooks/useWindowDimensions';
 const SliderWithThumb = (props) => {
     const {
         images,
-        imageThumbs
+        imageThumbs,
+        baseUrl = '',
     } = props;
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const windowSize = useWindowSize();
@@ -37,12 +38,12 @@ const SliderWithThumb = (props) => {
                         <img
                             data-fancybox="gallery"
                             loading="lazy"
-                            src={val.url}
+                            src={baseUrl + val.url}
                         />
                         <div className={cl.slider_bg}>
                             <img
                                 loading="lazy"
-                                src={val.thumb_url}
+                                src={baseUrl + val.thumb_url}
                             />
                         </div>
                     </div>
@@ -61,7 +62,7 @@ const SliderWithThumb = (props) => {
                     <div className={`${cl.thumb_slider_item}`}>
                         <img
                             loading="lazy"
-                            src={val.url}
+                            src={baseUrl + val.url}
                         />
                     </div>
                 </SwiperSlide>

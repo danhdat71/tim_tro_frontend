@@ -11,7 +11,7 @@ import useAccountCheck from '@/hooks/useAccountCheck';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '@/redux/auth';
 import { ACTIVE, INACTIVE } from '@/config/userStatus';
-import { setCookie } from '@/helpers/http-requests/cookie';
+import { deleteCookie, setCookie } from '@/helpers/http-requests/cookie';
 
 const Index = () => {
     const [loginData, setLoginData] = useState({});

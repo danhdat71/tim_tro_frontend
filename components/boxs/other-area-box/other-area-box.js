@@ -1,14 +1,28 @@
 import React, { memo, useState } from 'react';
 import cl from './other-area-box.module.css';
 import Link from 'next/link';
+import { formatDotEach3Num } from '@/helpers/priceHelper';
+import { useRouter } from 'next/router';
 
 const OtherAreaBox = (props) => {
 
     let {
-        items
+        items,
+        district,
+        province,
     } = props;
 
     let [isMore, setIsMore] = useState(false);
+    let router = useRouter();
+
+    function total() {
+        let total = 0;
+        items.forEach(element => {
+            total+=element.count;
+        });
+
+        return total;
+    }
 
     function renderItems() {
         if (items && items.length > 0) {
@@ -16,10 +30,10 @@ const OtherAreaBox = (props) => {
                 return items.map(function(val, index) {
                     return (
                         <tr key={index}>
-                            <td>{val.label}</td>
-                            <td><b>{val.price}</b> / tháng</td>
+                            <td>{val.name}</td>
+                            <td><b>{formatDotEach3Num(val.price)}đ</b> / tháng</td>
                             <td>
-                                <Link href={val.href} className={cl.result_link}>Xem {val.result} kết quả</Link>
+                                <Link href={`/?province_id=${province.id}&province_label=${province.name}&district_id=${district.id}&district_label=${district.name}&ward_id=${val.id}&ward_label=${val.name}&prices=${val.price},${val.price}`} className={cl.result_link}>Tìm thấy {val.count} kết quả</Link>
                             </td>
                         </tr>
                     )
@@ -29,10 +43,10 @@ const OtherAreaBox = (props) => {
                     if (index < 3) {
                         return (
                             <tr key={index}>
-                                <td>{val.label}</td>
-                                <td><b>{val.price}</b> / tháng</td>
+                                <td>{val.name}</td>
+                                <td><b>{formatDotEach3Num(val.price)}đ</b> / tháng</td>
                                 <td>
-                                    <Link href={val.href} className={cl.result_link}>Xem {val.result} kết quả</Link>
+                                    <Link href={`/?province_id=${province.id}&province_label=${province.name}&district_id=${district.id}&district_label=${district.name}&ward_id=${val.id}&ward_label=${val.name}&prices=${val.price},${val.price}`} className={cl.result_link}>Tìm thấy {val.count} kết quả</Link>
                                 </td>
                             </tr>
                         )
@@ -55,28 +69,30 @@ const OtherAreaBox = (props) => {
     }
 
     function renderLoadMore() {
-        if (items && items.length > 0 && !isMore) {
-            return (
-                <button
-                    onClick={()=>{
-                        setIsMore(!isMore);
-                    }}
-                >
-                    <span>Xem tiếp</span>
-                    <span><i className="far fa-angle-down"></i></span>
-                </button>
-            );
-        } else {
-            return (
-                <button
-                    onClick={()=>{
-                        setIsMore(!isMore);
-                    }}
-                >
-                    <span>Thu nhỏ</span>
-                    <span><i className="far fa-angle-up"></i></span>
-                </button>
-            );
+        if (items?.length > 3) {
+            if (items && items.length > 0 && !isMore) {
+                return (
+                    <button
+                        onClick={()=>{
+                            setIsMore(!isMore);
+                        }}
+                    >
+                        <span>Xem tiếp</span>
+                        <span><i className="far fa-angle-down"></i></span>
+                    </button>
+                );
+            } else {
+                return (
+                    <button
+                        onClick={()=>{
+                            setIsMore(!isMore);
+                        }}
+                    >
+                        <span>Thu nhỏ</span>
+                        <span><i className="far fa-angle-up"></i></span>
+                    </button>
+                );
+            }
         }
     }
 
@@ -89,7 +105,7 @@ const OtherAreaBox = (props) => {
                         <tr>
                             <th width={'30%'}>
                                 <div>Khu vực</div>
-                                <div className={cl.header_sub}>Quận 4</div>
+                                <div className={cl.header_sub}>{district.name}</div>
                             </th>
                             <th width={'30%'}>
                                 <div>Mức giá</div>
@@ -97,7 +113,7 @@ const OtherAreaBox = (props) => {
                             </th>
                             <th width={'40%'}>
                                 <div>Tổng số tìm thấy</div>
-                                <div className={cl.header_sub}>1.022 kết quả</div>
+                                <div className={cl.header_sub}>{total()} kết quả</div>
                             </th>
                         </tr>
                     </thead>

@@ -17,7 +17,8 @@
     font-size: 17px;
 }
 
-.button_like:hover {
+.button_like:hover,
+.button_like.active {
     background-color: rgb(174, 0, 0);
     color: white;
 }

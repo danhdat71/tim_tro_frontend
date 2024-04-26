@@ -30,7 +30,7 @@ const InputPassword = (props) => {
             ></input>
             <button
                 type='button'
-                className={`${cls.show} ${className}`}
+                className={`${cls.show} ${className} ${cls.button_toggle}`}
                 onClick={()=>{
                     setIsShow(!isShow);
                 }}

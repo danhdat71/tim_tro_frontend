@@ -84,11 +84,12 @@ const Index = ({ data }) => {
     }, [router.query]);
 
     function handleRenderProducts() {
-        if (data.products.data.length > 0) {
-            return data.products.data.map(function (val, index) {
+        if (data?.products?.data?.length > 0) {
+            return data?.products?.data?.map(function (val, index) {
                 return (
                     <Product
                         key={index}
+                        slug={val.slug}
                         id={val.id}
                         image={`${process.env.BACKEND_URL}/${val.product_images[0].thumb_url}`}
                         imageNum={val.product_images.length}

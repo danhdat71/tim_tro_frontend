@@ -29,10 +29,30 @@ function isValidDateYmd(dateString)
         date.getMonth() === month - 1 &&
         date.getDate() === day
     );
-} 
+}
+/**
+ * Convert 2024-04-26 10:49:00 to "10:49 ngày 26/04/2024"
+ * **/
+function formatToHiDMY(inputDate) {
+    const date = new Date(inputDate);
+    const formattedDate = `${date.getHours()}:${('0' + date.getMinutes()).slice(-2)} ngày ${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
+    return formattedDate;
+}
+
+/**
+ * Convert 2024-04-26 10:49:00 to "04, 2024"
+ * **/
+function formatToMY(inputDate) {
+    const date = new Date(inputDate);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    return `${month}, ${year}`;
+}
 
 export {
     dateToYmd,
     getToday,
     isValidDateYmd,
+    formatToHiDMY,
+    formatToMY,
 };

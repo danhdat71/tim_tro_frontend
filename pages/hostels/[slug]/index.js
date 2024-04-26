@@ -11,37 +11,75 @@ import ButtonReport from '@/components/buttons/button-report/button-report';
 import ButtonShare from '@/components/buttons/button-share/button-share';
 import ModalReport from '@/components/modals/modal-report/modal-report';
 import ModalShare from '@/components/modals/modal-share/modal-share';
-import axios from 'axios';
-import { getDetailProduct } from '@/helpers/http-requests/product';
 import Product from '@/components/product/product';
 import TitleLeftBig from '@/components/titles/title-left-big/title-left-big';
 import BestAreaBox from '@/components/boxs/best-area-box/best-area-box';
 import ButtonCall from '@/components/buttons/button-call/button-call';
 import OtherAreaBox from '@/components/boxs/other-area-box/other-area-box';
+import { getAccessTokenByContext } from '@/helpers/http-requests/cookie';
+import { formatNumber } from '@/helpers/priceHelper';
+import { formatToHiDMY } from '@/helpers/dateHelper';
+import { useAppSelector } from '@/redux/store';
+import axios from '@/helpers/http-requests/axios';
+import { handleChangeRouterParam } from '@/helpers/routerHelper';
+import { useRouter } from 'next/router';
 
-// export async function getServerSideProps(context) {
-//     let slug = context.query.slug;
-//     let data = await getDetailProduct(process.env.API + `product/${slug}`);
+export async function getServerSideProps(context) {
+    let accessToken = getAccessTokenByContext(context);
+    let {slug} = context.query;
+    let data = {};
 
-//     return {
-//         props: { data },
-//     }
-// }
+    // Get detail product
+    let product = await fetch(`${process.env.API}/public-product/${slug}`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        method: 'GET',
+    });
+    product = await product.json();
+    data.product = product.data;
 
-const breadCrumbItems = [
-    {
-        label: 'Trang chủ',
-        href: '/'
-    },
-    {
-        label: 'Danh sách trọ',
-        href: '/'
-    },
-    {
-        label: 'Trọ quận 1',
-        href: '/'
+    // Get others same districts with count
+    let districtId = product?.data?.district_id;
+    let price = product?.data?.price;
+    let othersInDistrict = await fetch(`${process.env.API}/wards-with-count-products?district_id=${districtId}&current_price=${price}`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        method: 'GET',
+    });
+    othersInDistrict = await othersInDistrict.json();
+    data.othersInDistrict = othersInDistrict.data;
+
+    // Get other districts with count products
+    let provinceId = product?.data?.province_id;
+    let otherDistricts = await fetch(`${process.env.API}/districts-with-count-products?province_id=${provinceId}`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        method: 'GET',
+    });
+    otherDistricts = await otherDistricts.json();
+    data.otherDistricts = otherDistricts.data;
+
+    // Get other products
+    let otherProducts = await fetch(`${process.env.API}/products?without_id=${product.data.id}&province_id=${product.data.province_id}&limit=4`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        method: 'GET',
+    });
+    otherProducts = await otherProducts.json();
+    data.otherProducts = otherProducts.data;
+
+    return {
+        props: { data },
     }
-];
+}
 
 const searchKeyword = [
     {label:'Trọ Bình Thạnh', href:'/', total: 100},
@@ -53,102 +91,199 @@ const searchKeyword = [
     {label:'Trọ Bình Tân', href:'/', total: 12},
 ];
 
-const otherPriceSameArea = [
-    {label:'Phường 1', price: '10tr', result: 563, href: '/'},
-    {label:'Phường 2', price: '5tr', result: 43453, href: '/'},
-    {label:'Phường 3', price: '2tr', result: 12, href: '/'},
-    {label:'Phường 4', price: '1tr', result: 3, href: '/'},
-    {label:'Phường 5', price: '500k', result: 1, href: '/'},
-    {label:'Phường 6', price: '12tr', result: 122, href: '/'},
-    {label:'Phường 7', price: '17tr', result: 100, href: '/'},
-];
-
-const Index = () => {
-
-    let [showModalBooking, setShowModalBooking] = useState(false);
+const Index = ({data}) => {
+    let router = useRouter();
     let [showModalReport, setShowModalReport] = useState(false);
     let [showModalShare, setShowModalShare] = useState(false);
+    let [saveds, setSaveds] = useState([]);
+    let breadCrumbs = useRef([
+        {
+            label: 'Trang chủ',
+            href: '/'
+        },
+        {
+            label: 'Danh sách trọ',
+            href: '/'
+        },
+        {
+            label: data?.product?.title,
+            href: `/hostels/${data?.product?.slug}`
+        }
+    ]);
+    let authUserData = useAppSelector(function(state){
+        return state.authUserReducer.user.data;
+    });
 
-    function handleShowModalReport(status)
-    {
-        setShowModalReport(status);
+    useEffect(function(){
+        axios.get(`${process.env.API}/user/list-saved-products?is_all=1`, {
+            headers: {
+                Authorization : 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+            .then(response => {
+                if (response.status == 200) {
+                    setSaveds(response.data);
+                }
+            });
+    }, []);
+
+    function handleSaveProduct(payload) {
+        axios.post(`/user/save-product`, payload, {
+            headers: {
+                Authorization : 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+        .then(response => {
+            if (response.status == 200) {
+                setSaveds(response.data);
+            }
+        });
     }
 
-    function handleShowModalShare(status)
-    {
-        setShowModalShare(status);
+    function handleRenderButtonSave() {
+        if (authUserData?.app_id) {
+            if (saveds.includes(data.product.id)) {
+                return (
+                    <ButtonLike
+                        onClick={()=>{
+                            handleSaveProduct({
+                                product_id: data.product.id,
+                                action: 0
+                            });
+                        }}
+                        isActive={true}
+                    >
+                        <span>Huỷ lưu</span>
+                        <span><i className="far fa-heart"></i></span>
+                    </ButtonLike>
+                )
+            } else {
+                return (
+                    <ButtonLike
+                        onClick={()=>{
+                            handleSaveProduct({
+                                product_id: data.product.id,
+                                action: 1
+                            });
+                        }}
+                        isActive={false}
+                    >
+                        <span>Lưu tin</span>
+                        <span><i className="far fa-heart"></i></span>
+                    </ButtonLike>
+                )
+            }
+        }
     }
+
+    function handleRenderOtherProductItems() {
+        return data?.otherProducts?.data?.map(function(val, index){
+            return (
+                <Product
+                    key={index}
+                    id={val.id}
+                    slug={val.slug}
+                    image={`${process.env.BACKEND_URL}/${val.product_images[0].thumb_url}`}
+                    imageNum={val.product_images.length}
+                    title={val.title}
+                    acreage={val.acreage}
+                    wardName={val.ward.name}
+                    districtName={val.district.name}
+                    provinceName={val.province.name}
+                    price={val.price}
+                    toiletRooms={val.toilet_rooms}
+                    bedRooms={val.bed_rooms}
+                    isShowSaveButton={false}
+                /> 
+            )
+        })
+    }
+
+    function handleRenderOtherProduct() {
+        if (data?.otherProducts?.data?.length > 0) {
+            return (
+                <div>
+                    <TitleLeftBig title="Các trọ liên quan khác"></TitleLeftBig>
+                    {handleRenderOtherProductItems()}
+                </div>
+            )
+        } 
+    }
+
+    console.log('data', data);
 
     return (
         <div className={cl.hostel_detail}>
-            <Breadcrumb items={breadCrumbItems}></Breadcrumb>
-            <SliderWithThumb></SliderWithThumb>
+            <Breadcrumb items={breadCrumbs.current}></Breadcrumb>
+            <SliderWithThumb
+                images={data?.product?.product_images}
+                imageThumbs={data?.product?.product_images}
+                baseUrl={process.env.BACKEND_URL + '/'}
+            ></SliderWithThumb>
             <div className={cl.hostel_detail}>
-                <h2 className={cl.product_name}>Cho thuê phòng trọ hẻm an ninh - xe tải tận cửa - Nguyễn Văn Đậu - Bình Thạnh</h2>
-                <div className={cl.price}>1,5 triệu / tháng</div>
+                <h2 className={cl.product_name}>{data?.product?.title}</h2>
+                <div className={cl.price}>{formatNumber(data?.product?.price)} / tháng</div>
                 <div className={cl.button_bar}>
                     <div>
                         <div className={cl.wrap_main_button}>
-                            <ButtonLike>
-                                <span>Lưu lại</span>
-                                <span><i className="far fa-heart"></i></span>
-                            </ButtonLike>
-                            <ButtonCall tel="0365774667"></ButtonCall>
+                            {handleRenderButtonSave()}
+                            <ButtonCall tel={data?.product?.tel}></ButtonCall>
                         </div>
                     </div>
                     <div className={cl.other_button}>
                         <ButtonReport
                             onClick={()=>{
-                                handleShowModalReport(true);
+                                setShowModalReport(true);
                             }}
                         ></ButtonReport>
                         <ButtonShare
                             onClick={()=>{
-                                handleShowModalShare(true);
+                                setShowModalShare(true);
                             }}
                         />
                     </div>
                 </div>
-                <ProductDetailInfo></ProductDetailInfo>
+                <ProductDetailInfo
+                    data={data?.product}
+                />
                 <div className={cl.wrap_avatar}>
-                    <AvatarUsername></AvatarUsername>
-                    <div className={cl.created_at}>Đăng lúc: <i>14:40 ngày 23/02/2024</i></div>
+                    <AvatarUsername
+                        createdAt={data?.product?.user?.created_at}
+                        fullName={data?.product?.user?.full_name}
+                    />
+                    <div className={cl.created_at}>Đăng lúc: <i>{formatToHiDMY(data?.product?.posted_at)}</i></div>
                 </div>
             </div>
             <div className={cl.search_other_price}>
                 <TitleLeftBig title="Bảng giá theo khu vực"></TitleLeftBig>
                 <OtherAreaBox
-                    items={otherPriceSameArea}
-                ></OtherAreaBox>
+                    items={data?.othersInDistrict?.wards}
+                    district={data?.othersInDistrict?.district}
+                    province={data?.othersInDistrict?.province}
+                />
             </div>
             <div className={cl.other_search}>
                 <BestAreaBox
                     title="Các trọ theo khu vực"
-                    items={searchKeyword}
+                    items={data.otherDistricts}
+                    onClick={(value)=>{
+                        router.push({
+                            pathname: '/',
+                            query: {
+                                district_id: value
+                            }
+                        });
+                    }}
                 ></BestAreaBox>
             </div>
-            <div>
-                <TitleLeftBig title="Các trọ liên quan khác"></TitleLeftBig>
-                <Product
-                    image="https://file4.batdongsan.com.vn/resize/1275x717/2024/03/25/20240325135526-ed0c_wm.jpg"
-                />
-                <Product
-                    image="https://cloud.mogi.vn/images/thumb-small/2024/01/06/060/2787999e36bc48d68aedf7425be6c8f1.jpg"
-                />
-                <Product
-                    image="https://cloud.mogi.vn/images/thumb-small/2023/05/06/411/51a739ff9ef243a3bf056839899ea5d0.jpg"
-                />
-                <Product
-                    image="https://cloud.mogi.vn/images/thumb-small/2024/04/03/239/2ee0e5cf90f44dbfabb424ed6ef3928f.jpg"
-                />
-            </div>
+            {handleRenderOtherProduct()}
             <ModalReport
                 showModalReport={showModalReport}
-                handleShowModalReport={handleShowModalReport}
+                handleShowModalReport={setShowModalReport}
             ></ModalReport>
             <ModalShare
                 showModalShare={showModalShare}
-                handleShowModalShare={handleShowModalShare}
+                handleShowModalShare={setShowModalShare}
             ></ModalShare>
         </div>
     );
