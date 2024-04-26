@@ -119,10 +119,12 @@ const Index = ({data}) => {
                         title={value.title}
                         price={value.price}
                         slug={value.slug}
-                        isLike={dataLike.includes(value.id) ? 'Đã like' : 'chưa like'}
                         onClickRemove={(id)=>{
                             setIsShowConfirmPopUp(id);
                         }}
+                        viewedCount={value.user_viewed_product_count}
+                        status={value.status}
+                        detailAddress={value.detail_address}
                     />
                 )
             });

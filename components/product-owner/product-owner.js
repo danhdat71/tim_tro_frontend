@@ -2,6 +2,7 @@ import React from 'react';
 import cl from './product-owner.module.css';
 import Link from 'next/link';
 import { formatNumber } from '@/helpers/priceHelper';
+import { DRAFT } from '@/config/productStatus';
 
 const ProductOwner = (props) => {
 
@@ -11,8 +12,22 @@ const ProductOwner = (props) => {
         title,
         price,
         slug,
-        onClickRemove
+        onClickRemove,
+        viewedCount=0,
+        status,
+        detailAddress
     } = props;
+
+    function handleRenderViewCount() {
+        if (status != DRAFT) {
+            return (
+                <div className={cl.info_item}>
+                    <span>Lượt xem: </span>
+                    <b>{viewedCount}</b>
+                </div>
+            )
+        }
+    }
 
     return (
         <div className={cl.product_item}>
@@ -32,10 +47,8 @@ const ProductOwner = (props) => {
                     <div className={cl.product_name}>{title}</div>
                 </Link>
                 <div className={cl.price}>{formatNumber(price)} / tháng</div>
-                <div className={cl.info_item}>
-                    <span>Lượt xem: </span>
-                    <b>10</b>
-                </div>
+                <div className={cl.detail_address}>{detailAddress}</div>
+                {handleRenderViewCount()}
                 <div className={cl.button_bar}>
                     <Link href={`/provider/hostel-edit/${slug}`}>
                         <button className={`${cl.button} ${cl.button_yellow}`}>
