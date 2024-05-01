@@ -1,28 +1,40 @@
-import React, { memo, useRef } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import cl from './modal-report.module.css';
 import Modal from '../modal/modal';
+import { MAX_DESCRIPTION, getOptions } from '@/config/productReport';
+import InputGroup from '@/components/inputs/input-group/input-group';
+import TextareaInputWithCount from '@/components/inputs/textarea-input-with-count/textarea-input-with-count';
 
 const ModalReport = (props) => {
 
     let {showModalReport, handleShowModalReport} = props;
-    let categories = useRef([
-        {id : 1, label: 'Thông tin sai sự thật'},
-        {id : 2, label: 'Địa chỉ không tồn tại'},
-        {id : 3, label: 'Lừa đảo, đa cấp độc hại, ...'},
-        {id : 4, label: 'Ảnh khỏa thân, máu, tự sát, ...'},
-        {id : 5, label: 'Bài viết sao chép từ nơi khác'},
-        {id : 6, label: 'Khác'},
-    ]);
+    let categories = useRef(getOptions());
+    let [inputData, setInputData] = useState({});
+    let [errors, setErrors] = useState({});
+
+    console.log('inputData', inputData);
+
+    function handleSetInputData(key, value) {
+        let newInputData = {...inputData};
+        newInputData[key] = value;
+        setInputData(newInputData);
+    }
 
     function renderCategories() {
         return categories.current.map(function(val, index) {
             return (
-                <div key={index} className='label-group'>
+                <div
+                    key={index} className='label-group'
+                    onClick={()=>{
+                        handleSetInputData('report_type', val.value);
+                    }}
+                >
                     <input
                         id={`checkbox_${index}`}
                         type='checkbox'
-                        value={val.id}
+                        value={val.value}
                         className='checkbox-md'
+                        checked={inputData.report_type == val.value}
                     ></input>
                     <label
                         htmlFor={`checkbox_${index}`}
@@ -52,18 +64,39 @@ const ModalReport = (props) => {
             <div className={cl.group_info}>
                 <div className='form-group'>
                     <label className='label label-block' htmlFor='full_name'>Họ tên <span>*</span></label>
-                    <input className={`input ${cl.input}`} id='full_name'></input>
-                    <div className='err-msg'>Vui lòng điền họ tên</div>
+                    <InputGroup
+                        type="text"
+                        min="5"
+                        max="50"
+                        errMsg={errors?.full_name}
+                        onChange={(value)=>{
+                            handleSetInputData('full_name', value);
+                        }}
+                    ></InputGroup>
                 </div>
                 <div className='form-group'>
                     <label className='label label-block' htmlFor='email'>Email <span>*</span></label>
-                    <input className={`input ${cl.input}`} id='email'></input>
-                    <div className='err-msg'>Vui lòng điền email</div>
+                    <InputGroup
+                        type="text"
+                        min="10"
+                        max="100"
+                        errMsg={errors?.email}
+                        onChange={(value)=>{
+                            handleSetInputData('email', value);
+                        }}
+                    ></InputGroup>
                 </div>
                 <div className='form-group'>
                     <label className='label label-block' htmlFor='tel'>Số điện thoại <span>*</span></label>
-                    <input className={`input ${cl.input}`} id='tel'></input>
-                    <div className='err-msg'>Vui lòng điền số điện thoại</div>
+                    <InputGroup
+                        type="number"
+                        min="10"
+                        max="50"
+                        errMsg={errors?.tel}
+                        onChange={(value)=>{
+                            handleSetInputData('tel', value);
+                        }}
+                    ></InputGroup>
                 </div>
             </div>
 
@@ -71,18 +104,23 @@ const ModalReport = (props) => {
                 <div className='form-group'>
                     <label className='label label-block'>Loại vi phạm <span>*</span></label>
                     {renderCategories()}
-                    <div className='err-msg'>Vui lòng chọn loại vi phạm</div>
+                    <div className='err-msg'>{errors?.report_type}</div>
                 </div>
             </div>
 
             <div className={cl.group_info}>
                 <div className='form-group'>
                     <label htmlFor='description' className='label label-block'>Mô tả</label>
-                    <textarea
-                        id='description'
-                        className={`textarea ${cl.textarea}`}
-                    ></textarea>
-                    <div className='err-msg'>Mô tả quá 200 ký tự</div>
+                    <TextareaInputWithCount
+                        className="textarea w-100"
+                        isDisableOnMax={true}
+                        max={MAX_DESCRIPTION}
+                        errMsg={errors?.description}
+                        style={{height:'120px'}}
+                        onChange={(value)=>{
+                            handleSetInputData('description', value);
+                        }}
+                    ></TextareaInputWithCount>
                 </div>
             </div>
         </Modal>

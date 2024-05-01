@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import cl from './textarea-input-with-count.module.css';
 
 const TextareaInputWithCount = (props) => {
@@ -132,4 +132,4 @@ const TextareaInputWithCount = (props) => {
     );
 }
 
-export default TextareaInputWithCount;
+export default memo(TextareaInputWithCount);
