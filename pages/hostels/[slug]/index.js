@@ -24,6 +24,8 @@ import axios from '@/helpers/http-requests/axios';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '@/redux/auth';
+import AlertSuccess from '@/components/alerts/alert-success/alert-success';
+import AlertError from '@/components/alerts/alert-error/alert-error';
 
 export async function getServerSideProps(context) {
     let accessToken = getAccessTokenByContext(context);
@@ -88,6 +90,15 @@ const Index = ({data}) => {
     let [showModalReport, setShowModalReport] = useState(false);
     let [showModalShare, setShowModalShare] = useState(false);
     let [saveds, setSaveds] = useState([]);
+    let [reportErrors, setReportErrors] = useState({});
+    let [alertSuccess, setAlertSucess] = useState({
+        isShow: false,
+    });
+    let [alertError, setAlertError] = useState({
+        isShow: false,
+    });
+    let timeoutSuccess = useRef();
+    let timeoutError = useRef();
     let breadCrumbs = useRef([
         {
             label: 'Trang chủ',
@@ -134,6 +145,32 @@ const Index = ({data}) => {
             });
     }, []);
 
+    useEffect(function(){
+        timeoutSuccess.current = setTimeout(function(){
+            clearTimeout(timeoutSuccess.current);
+            let newAlert = {...alertSuccess};
+            newAlert.isShow = false;
+            setAlertSucess(newAlert);
+        }, 3000);
+
+        return () => {
+            clearTimeout(timeoutSuccess.current);
+        }
+    }, [timeoutSuccess.current]);
+
+    useEffect(function(){
+        timeoutError.current = setTimeout(function(){
+            clearTimeout(timeoutError.current);
+            let newAlert = {...alertError};
+            newAlert.isShow = false;
+            setAlertError(newAlert);
+        }, 3000);
+
+        return () => {
+            clearTimeout(timeoutError.current);
+        }
+    }, [timeoutError.current]);
+
     function handleSaveProduct(payload) {
         axios.post(`/user/save-product`, payload, {
             headers: {
@@ -142,7 +179,33 @@ const Index = ({data}) => {
         })
         .then(response => {
             if (response.status == 200) {
-                setSaveds(response.data);
+                //
+            }
+        });
+    }
+
+    function handleSubmitReport(payload) {
+        axios.post(`/user/report-product`, payload, {
+            headers: {
+                Authorization : 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+        .then(response => {
+            if (response.status == 200) {
+                setAlertSucess({
+                    message: "Báo cáo bài đăng thành công !",
+                    sub: "Chúng tôi sẽ phản hồi sau khi xem xét báo cáo này",
+                    isShow: true,
+                });
+                setShowModalReport(false);
+            } else if (response.status == 422) {
+                setReportErrors(response.errors);
+            } else if (response.status == 400) {
+                setAlertError({
+                    message: "Bạn đã báo cáo bài đăng này!",
+                    sub: "Chúng tôi sẽ phản hồi sau khi xem xét báo cáo này",
+                    isShow: true,
+                });
             }
         });
     }
@@ -217,8 +280,6 @@ const Index = ({data}) => {
         } 
     }
 
-    console.log('data', data);
-
     return (
         <div className={cl.hostel_detail}>
             <Breadcrumb items={breadCrumbs.current}></Breadcrumb>
@@ -287,11 +348,26 @@ const Index = ({data}) => {
             <ModalReport
                 showModalReport={showModalReport}
                 handleShowModalReport={setShowModalReport}
+                onSubmit={(value)=>{
+                    handleSubmitReport(value);
+                }}
+                errors={reportErrors}
+                productId={data?.product?.id}
             ></ModalReport>
             <ModalShare
                 showModalShare={showModalShare}
                 handleShowModalShare={setShowModalShare}
             ></ModalShare>
+            <AlertSuccess
+                isShow={alertSuccess?.isShow}
+                sub={alertSuccess?.sub}
+                message={alertSuccess?.message}
+            />
+            <AlertError
+                isShow={alertError?.isShow}
+                sub={alertError?.sub}
+                message={alertError?.message}
+            />
         </div>
     );
 }

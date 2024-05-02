@@ -7,12 +7,20 @@ import TextareaInputWithCount from '@/components/inputs/textarea-input-with-coun
 
 const ModalReport = (props) => {
 
-    let {showModalReport, handleShowModalReport} = props;
-    let categories = useRef(getOptions());
-    let [inputData, setInputData] = useState({});
-    let [errors, setErrors] = useState({});
+    let {
+        showModalReport,
+        handleShowModalReport,
+        onSubmit,
+        errors = {},
+        productId,
+    } = props;
 
-    console.log('inputData', inputData);
+    let categories = useRef(getOptions());
+    let [inputData, setInputData] = useState({
+        product_id : productId,
+    });
+
+    console.log('errors', errors);
 
     function handleSetInputData(key, value) {
         let newInputData = {...inputData};
@@ -58,7 +66,7 @@ const ModalReport = (props) => {
                 handleShowModalReport(false);
             }}
             onSubmit={()=>{
-                handleShowModalReport(false);
+                onSubmit(inputData);
             }}
         >
             <div className={cl.group_info}>
