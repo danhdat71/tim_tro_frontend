@@ -4,7 +4,6 @@ import Product from '@/components/product/product';
 import { Rating } from 'react-simple-star-rating';
 import ButtonIcon from '@/components/buttons/button-icon/button-icon';
 import TitleCenterBig from '@/components/titles/title-center-big/title-center-big';
-import { convertStarToStringLabel } from '@/helpers/startHelper';
 import { useRouter } from 'next/router';
 
 const NotificationVote = () => {

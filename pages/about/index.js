@@ -20,7 +20,7 @@ const Index = () => {
                 <img src={logoImg.src}></img>
             </div>
             <div className={cl.content}>
-                <div>Người Việt có câu: "An cư, lạc nghiệp". Để giúp bạn "lạc nghiệp" thì <b>Stay Seeker</b> sinh ra để giúp bạn giải quyết vấn đề "An cư". Thông qua công cụ tìm kiếm mọi người có thể dễ dàng tìm thấy chúng tôi thông qua các từ khóa: <i>tìm trọ</i>, <i>tìm trọ stay seeker</i>, ... </div>
+                <div>Người Việt có câu: An cư, lạc nghiệp. Để giúp bạn <b>lạc nghiệp</b> thì <b>Stay Seeker</b> sinh ra để giúp bạn giải quyết vấn đề <b>An cư</b>. Thông qua công cụ tìm kiếm mọi người có thể dễ dàng tìm thấy chúng tôi thông qua các từ khóa: <i>tìm trọ</i>, <i>tìm trọ stay seeker</i>, ... </div>
                 <div><b>Stay Seeker</b> sinh ra để giải quyết nhu cầu cho ai cần tìm và thuê trọ, cũng như cho ai đang cần cho thuê trọ, ... một cách miễn phí.</div>
                 <div><b>Stay Seeker</b> hiện không thu phí trên bất cứ giao dịch hoặc bài đăng của người sử dụng. Và đảm bảo thông tin đến người dùng một cách chính xác và trung thực nhất.</div>
                 <div>Để đảm bảo quyền lợi cho mọi người sử dụng hệ thống, chúng tôi sẽ luôn mạnh tay đối với những hành động vi phạm vi tắc sử dụng. <Link href="/">Xem điều khoản</Link>.</div>

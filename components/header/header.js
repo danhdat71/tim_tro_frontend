@@ -59,7 +59,7 @@ const Header = () => {
                         <span className={cl.count}>{authUserData?.user_saved_products_count}</span>
                         <span><i className="fal fa-heart"></i></span>
                     </Link>
-                    <Link href='/notifications' className={cl.menu_button}>
+                    <Link href='/' className={cl.menu_button}>
                         <span className={cl.count}>1</span>
                         <span><i className="fal fa-bell"></i></span>
                     </Link>

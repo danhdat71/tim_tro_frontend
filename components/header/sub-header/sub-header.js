@@ -16,7 +16,7 @@ const SubHeader = () => {
         <div className={cl.sub_header}>
             <div className={cl.item}>
                 <Link
-                    href='/report'
+                    href='/'
                     onClick={()=>{
                         handleSetEnableHeader(false);
                     }}

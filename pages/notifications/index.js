@@ -12,7 +12,7 @@ const breadcrumbs = [
     },
     {
         'label' : 'Thông báo',
-        'href' : '/notifications'
+        'href' : '/'
     },
 ];
 
