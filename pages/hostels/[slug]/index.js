@@ -319,6 +319,7 @@ const Index = ({data}) => {
                         createdAt={data?.product?.user?.created_at}
                         fullName={data?.product?.user?.full_name}
                         href={`/provider?app_id=${data?.product?.user?.app_id}`}
+                        avatar={data?.product?.user?.avatar}
                     />
                     <div className={cl.created_at}>Đăng lúc: <i>{formatToHiDMY(data?.product?.posted_at)}</i></div>
                 </div>
