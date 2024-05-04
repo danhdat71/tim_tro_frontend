@@ -19,7 +19,7 @@ import { getStringValue as getStringValueBedRoom } from '@/config/productBedRoom
 import { getStringValue as getStringValueToiletRoom } from '@/config/productToiletRoom';
 import { getStringValue as getStringValueAllowPet } from '@/config/productAllowPet';
 
-export default function filterForm()
+export default function FilterForm()
 {
     const router = useRouter();
 
