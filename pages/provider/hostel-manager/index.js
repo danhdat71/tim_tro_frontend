@@ -14,6 +14,8 @@ import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import AlertError from '@/components/alerts/alert-error/alert-error';
 import emptyImage from '@/assets/imgs/empty_image.png';
 import { getAccessTokenByContext } from '@/helpers/http-requests/cookie';
+import { useAppSelector } from '@/redux/store';
+import { PROVIDER } from '@/config/userType';
 
 const breadCrumbs = [
     {label: 'Trang chủ', href: '/'},
@@ -81,10 +83,18 @@ const Index = ({data}) => {
     }, [isShowConfirmPopup]);
 
     const router = useRouter();
+    const authUserData = useAppSelector(function(state){
+        return state.authUserReducer.user.data;
+    });
 
-    if (data == null) {
-        router.push('/auth/login');
-    }
+    useEffect(function(){
+        if (data == null) {
+            router.push('/auth/login');
+        }
+        if (authUserData?.user_type != PROVIDER) {
+            router.push('/');
+        }
+    }, []);
 
     function handleRenderPaginate() {
         return data?.list?.links?.map(function(val, index) {
@@ -107,8 +117,6 @@ const Index = ({data}) => {
     }
 
     function handleRenderProduct() {
-        let dataLike = [12, 17];
-
         if (data?.list?.data?.length > 0) {
             return data?.list?.data?.map(function(value, index) {
                 return (

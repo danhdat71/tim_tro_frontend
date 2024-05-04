@@ -11,10 +11,11 @@ const AvatarUsername = (props) => {
         avatar = null,
         fullName = '',
         createdAt = '',
+        href='/'
     } = props;
 
     return (
-        <Link href='/' className={cl.wrap_avatar_username}>
+        <Link href={href} className={cl.wrap_avatar_username}>
             <div className={cl.wrap_avatar}>
                 <img
                     src={avatar ? process.env.BACKEND_URL + '/' + avatar : defaulAvatar.src}

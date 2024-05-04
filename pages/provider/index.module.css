@@ -97,3 +97,14 @@
     gap: 15px;
     padding-bottom: 25px;
 }
+
+.button_bar {
+    padding: 5px 0 25px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.wrap_paginate {
+    display: flex;
+    justify-content: center;
+}

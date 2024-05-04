@@ -40,6 +40,15 @@ function formatToHiDMY(inputDate) {
 }
 
 /**
+ * Convert 2024-04-26 10:49:00 to "26/04/2024"
+ * **/
+function formatToDMY(inputDate) {
+    const date = new Date(inputDate);
+    const formattedDate = `${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
+    return formattedDate;
+}
+
+/**
  * Convert 2024-04-26 10:49:00 to "04, 2024"
  * **/
 function formatToMY(inputDate) {
@@ -55,4 +64,5 @@ export {
     isValidDateYmd,
     formatToHiDMY,
     formatToMY,
+    formatToDMY,
 };
