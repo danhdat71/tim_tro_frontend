@@ -7,7 +7,6 @@ import Link from 'next/link';
 import axios from '../../../helpers/http-requests/axios';
 import AlertError from '@/components/alerts/alert-error/alert-error';
 import { useRouter } from 'next/navigation';
-import useAccountCheck from '@/hooks/useAccountCheck';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '@/redux/auth';
 import { ACTIVE, INACTIVE } from '@/config/userStatus';
@@ -23,11 +22,6 @@ const Index = () => {
     const timeoutAlertError = useRef();
     let router = useRouter();
     const dispatch = useDispatch();
-    let authCheck = useAccountCheck();
-
-    if (authCheck) {
-        router.push('/');
-    }
 
     useEffect(function(){
         timeoutAlertError.current = setTimeout(function(){

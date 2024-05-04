@@ -43,11 +43,6 @@ const Index = () => {
     let timeoutRef = useRef();
     const dispatch = useDispatch();
     let router = useRouter();
-    const authCheck = useAccountCheck();
-
-    if (authCheck!= undefined && authCheck == false) {
-        router.push('/auth/login');
-    }
 
     const userMypageData = useAppSelector(function(state){
         return state.authUserReducer.user.data;
@@ -59,21 +54,6 @@ const Index = () => {
             value: value,
         }));
     }
-
-    useEffect(function(){
-        axios.get(`/provider/mypage`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`
-            }
-        })
-            .then(response => {
-                if (response.status == 200) {
-                    handleUpdateAuthUserData('avatar', response.data.avatar);
-                } else if (response?.message == 'Unauthenticated.') {
-                    router.push('/auth/login');
-                }
-            });
-    }, []);
 
     useEffect(function(){
         timeoutRef.current = setTimeout(function(){

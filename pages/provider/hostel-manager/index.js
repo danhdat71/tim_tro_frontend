@@ -83,18 +83,6 @@ const Index = ({data}) => {
     }, [isShowConfirmPopup]);
 
     const router = useRouter();
-    const authUserData = useAppSelector(function(state){
-        return state.authUserReducer.user.data;
-    });
-
-    useEffect(function(){
-        if (data == null) {
-            router.push('/auth/login');
-        }
-        if (authUserData?.user_type != PROVIDER) {
-            router.push('/');
-        }
-    }, []);
 
     function handleRenderPaginate() {
         return data?.list?.links?.map(function(val, index) {

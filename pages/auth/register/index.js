@@ -7,8 +7,7 @@ import ButtonIcon from '@/components/buttons/button-icon/button-icon';
 import InputGroup from '@/components/inputs/input-group/input-group';
 import axios from '../../../helpers/http-requests/axios';
 import { FINDER, PROVIDER } from '../../../config/userType';
-import { useRouter } from 'next/navigation'
-import useAccountCheck from '@/hooks/useAccountCheck';
+import { useRouter } from 'next/navigation';
 
 const Register = () => {
 
@@ -19,11 +18,6 @@ const Register = () => {
     let [errors, setErrors] = useState({});
     let [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
     let router = useRouter();
-    let authCheck = useAccountCheck();
-
-    if (authCheck) {
-        router.push('/');
-    }
 
     function handleSetRegisterData(key, value) {
         let newRegisterData = {...registerData};
