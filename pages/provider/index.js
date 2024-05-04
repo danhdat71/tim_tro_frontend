@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cl from './index.module.css';
 import TitleCenterBig from '@/components/titles/title-center-big/title-center-big';
 import TitleLeftBig from '@/components/titles/title-left-big/title-left-big';
@@ -14,6 +14,8 @@ import { isNumeric } from '@/helpers/numberHelper';
 import { REALITY } from '@/config/productStatus';
 import { handleChangeRouterParam } from '@/helpers/routerHelper';
 import EmptyList from '@/components/empty-list/empty-list';
+import axios from '@/helpers/http-requests/axios';
+import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 
 export async function getServerSideProps(context) {
     let accessToken = getAccessTokenByContext(context);
@@ -29,11 +31,7 @@ export async function getServerSideProps(context) {
         method: 'GET',
     });
     provider = await provider.json();
-    if (provider.status == 200) {
-        data.provider = provider.data;
-    } else if (provider.status == 404) {
-        data.provider = 404;
-    }
+    data.provider = provider.data;
 
     // Get products
     let products = await fetch(`${process.env.API}/public-provider/${app_id}/products?page=${page}`, {
@@ -52,15 +50,37 @@ export async function getServerSideProps(context) {
 }
 
 const Index = ({data}) => {
-
-    console.log('data', data);
-
     const router = useRouter();
+    const [alertSuccess, setAlertSuccess] = useState({
+        isShow: false
+    });
+    const [followings, setFollowings] = useState([]);
+    const timeoutSuccess = useRef();
 
     useEffect(function(){
-        if (data.provider == 404) {
-            router.push('/errors/404');
+        timeoutSuccess.current = setTimeout(function(){
+            clearTimeout(timeoutSuccess.current);
+            let newAlertSuccess = {...alertSuccess};
+            newAlertSuccess.isShow = false;
+            setAlertSuccess(newAlertSuccess);
+        }, 3000);
+
+        return () => {
+            clearTimeout(timeoutSuccess.current);
         }
+    }, [timeoutSuccess.current]);
+
+    useEffect(function(){
+        axios.get('/finder/followings?is_all=true', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
+        .then(function(response) {
+            if (response.status == 200) {
+                setFollowings(response.data);
+            }
+        });
     }, []);
 
     function handleRenderPaginate() {
@@ -113,6 +133,75 @@ const Index = ({data}) => {
         }
     }
 
+    function handleFollow(payload) {
+        axios.post(`/finder/follow`, payload, {
+            headers: {
+                Authorization : 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+            .then(response => {
+                console.log('response', response);
+                if (response.status == 200) {
+                    if (payload.action == 1) {
+                        setAlertSuccess({
+                            isShow:true,
+                            message:'Theo dõi thành công !',
+                            sub:"Bạn sẽ nhận được thông báo từ thành viên này."
+                        });
+                    } else {
+                        setAlertSuccess({
+                            isShow:true,
+                            message:'Bỏ theo dõi thành công !',
+                            sub:"Bạn sẽ không nhận thông báo từ thành viên này."
+                        });
+                    }
+                    
+                    setFollowings(response.data);
+                }
+            });
+    }
+
+    function handleRenderFollowButton() {
+        let index = followings.findIndex(function(item){
+            return item == data.provider.id;
+        });
+
+        if (index == -1) {
+            return (
+                <ButtonIcon
+                    icon={<i className="fal fa-heart"></i>}
+                    isIconLeft={true}
+                    text="Theo Dõi"
+                    onClick={()=>{
+                        handleFollow({
+                            follower_receive_id: data.provider.id,
+                            action: true
+                        });
+                    }}
+                    backgroundColor='rgb(0 190 171)'
+                    color='white'
+                ></ButtonIcon>
+            )
+        } else {
+            return (
+                <ButtonIcon
+                    icon={<i className="fal fa-heart"></i>}
+                    isIconLeft={true}
+                    text="Hủy theo Dõi"
+                    onClick={()=>{
+                        handleFollow({
+                            follower_receive_id: data.provider.id,
+                            action: 0
+                        });
+                    }}
+                    backgroundColor="transparent"
+                    border="1px solid #d7d7d7"
+                    color="#646464"
+                ></ButtonIcon>
+            )
+        }
+    }
+
     return (
         <div className={cl.mypage}>
             <TitleCenterBig title="Trang cá nhân"></TitleCenterBig>
@@ -127,11 +216,7 @@ const Index = ({data}) => {
                 </div>
             </div>
             <div className={cl.button_bar}>
-                <ButtonIcon
-                    icon={<i className="fal fa-heart"></i>}
-                    isIconLeft={true}
-                    text="Theo Dõi"
-                ></ButtonIcon>
+                {handleRenderFollowButton()}
             </div>
             <div className={cl.info_item_box}>
                 <label className='label label-block'>Họ tên</label>
@@ -168,6 +253,11 @@ const Index = ({data}) => {
             <div className={`${cl.wrap_paginate} paginate-md`}>
                 {handleRenderPaginate()}
             </div>
+            <AlertSuccess
+                isShow={alertSuccess.isShow}
+                message={alertSuccess?.message}
+                sub={alertSuccess?.sub}
+            />
         </div>
     );
 }

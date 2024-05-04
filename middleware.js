@@ -35,7 +35,6 @@ export async function middleware(request) {
   // Hostel regist
   if (request.nextUrl.pathname.startsWith('/provider/hostel-regist')) {
     let result = await get('/auth/get-me', accessToken);
-    console.log(result.data.user_type)
     if (result.data.user_type != PROVIDER) {
       return NextResponse.redirect(new URL('/', request.url))
     }
@@ -44,9 +43,18 @@ export async function middleware(request) {
   // Hostel manager
   if (request.nextUrl.pathname.startsWith('/provider/hostel-manager')) {
     let result = await get('/auth/get-me', accessToken);
-    console.log(result.data.user_type)
     if (result.data.user_type != PROVIDER) {
       return NextResponse.redirect(new URL('/', request.url))
+    }
+  }
+
+  // Finder access provider page
+  if (request.nextUrl.pathname.startsWith('/provider')) {
+    let params = new URLSearchParams(request.nextUrl.search);
+    let appUrl = params.get('app_id');
+    let result = await get(`/public-provider/${appUrl}`, accessToken);
+    if (result.status != 200) {
+      return NextResponse.redirect(new URL('/errors/404', request.url))
     }
   }
 }
