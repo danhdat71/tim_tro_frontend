@@ -144,10 +144,10 @@ const Index = ({data}) => {
                 }
             });
     }, []);
+    
 
     useEffect(function(){
         timeoutSuccess.current = setTimeout(function(){
-            clearTimeout(timeoutSuccess.current);
             let newAlert = {...alertSuccess};
             newAlert.isShow = false;
             setAlertSucess(newAlert);
@@ -156,11 +156,10 @@ const Index = ({data}) => {
         return () => {
             clearTimeout(timeoutSuccess.current);
         }
-    }, [timeoutSuccess.current]);
+    }, [alertSuccess?.isShow]);
 
     useEffect(function(){
         timeoutError.current = setTimeout(function(){
-            clearTimeout(timeoutError.current);
             let newAlert = {...alertError};
             newAlert.isShow = false;
             setAlertError(newAlert);
@@ -169,7 +168,7 @@ const Index = ({data}) => {
         return () => {
             clearTimeout(timeoutError.current);
         }
-    }, [timeoutError.current]);
+    }, [alertError?.isShow]);
 
     function handleSaveProduct(payload) {
         axios.post(`/user/save-product`, payload, {
