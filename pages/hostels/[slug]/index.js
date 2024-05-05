@@ -179,7 +179,7 @@ const Index = ({data}) => {
         })
         .then(response => {
             if (response.status == 200) {
-                //
+                setSaveds(response.data);
             }
         });
     }
