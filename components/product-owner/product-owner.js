@@ -32,7 +32,7 @@ const ProductOwner = (props) => {
     return (
         <div className={cl.product_item}>
             <div className={cl.left_card}>
-                <Link href='/hostels/25' className={cl.product_item_link}>
+                <Link href={status != DRAFT ? `/hostels/${slug}` : '#'} className={cl.product_item_link}>
                     <div className={cl.wrap_img}>
                         <img
                             src={image}
@@ -43,14 +43,16 @@ const ProductOwner = (props) => {
                 </Link>
             </div>
             <div className={cl.right_card}>
-                <Link href='/detail' className={cl.product_item_link}>
+                <Link href={status != DRAFT ? `/hostels/${slug}` : '#'} className={cl.product_item_link}>
                     <div className={cl.product_name}>{title}</div>
                 </Link>
                 <div className={cl.price}>{formatNumber(price)} / tháng</div>
                 <div className={cl.detail_address}>{detailAddress}</div>
                 {handleRenderViewCount()}
                 <div className={cl.button_bar}>
-                    <Link href={`/provider/hostel-edit/${slug}`}>
+                    <Link
+                        href={status == DRAFT ? `/provider/hostel-draft-edit/${slug}` : `/provider/hostel-edit/${slug}`}
+                    >
                         <button className={`${cl.button} ${cl.button_yellow}`}>
                             <span className={cl.button_icon}><i className="far fa-vote-yea"></i></span>
                             <span>Chỉnh sửa</span>

@@ -4,6 +4,7 @@ import { PROVIDER } from './config/userType';
 
 export async function middleware(request) {
   const accessToken = request.cookies.get("access_token")?.value || '';
+  const path = request.nextUrl.href.replace(process.env.FRONTEND_URL, '');
 
   // Login screen
   if (request.nextUrl.pathname.startsWith('/auth/login')) {
@@ -49,12 +50,15 @@ export async function middleware(request) {
   }
 
   // Finder access provider page
-  if (request.nextUrl.pathname.startsWith('/provider?')) {
+  if (path.startsWith('/provider?app_id')) {
     let params = new URLSearchParams(request.nextUrl.search);
     let appUrl = params.get('app_id');
     let result = await get(`/public-provider/${appUrl}`, accessToken);
+    let getMe = await get('/auth/get-me', accessToken);
     if (result.status != 200) {
-      return NextResponse.redirect(new URL('/errors/404', request.url))
+      return NextResponse.redirect(new URL('/errors/404', request.url));
+    } else if (getMe.data.user_type == PROVIDER) {
+      return NextResponse.redirect(new URL('/errors/404', request.url));
     }
   }
 }

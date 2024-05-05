@@ -1,0 +1,21 @@
+.rooms,
+.other_info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 15px;
+}
+
+@media screen and (max-width: 425px) {
+    .rooms,
+    .other_info {
+        grid-column-gap: 10px;
+    }
+}
+
+.buttons {
+    display: flex;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    gap: 15px;
+    justify-content: space-between;
+}
