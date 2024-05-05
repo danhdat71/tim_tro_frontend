@@ -49,7 +49,7 @@ export async function middleware(request) {
   }
 
   // Finder access provider page
-  if (request.nextUrl.pathname.startsWith('/provider')) {
+  if (request.nextUrl.pathname.startsWith('/provider?')) {
     let params = new URLSearchParams(request.nextUrl.search);
     let appUrl = params.get('app_id');
     let result = await get(`/public-provider/${appUrl}`, accessToken);

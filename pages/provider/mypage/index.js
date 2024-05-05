@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cl from './index.module.css';
 import TitleCenterBig from '@/components/titles/title-center-big/title-center-big';
-import ButtonIcon from '@/components/buttons/button-icon/button-icon';
 import TitleLeftBig from '@/components/titles/title-left-big/title-left-big';
 import AvatarUsername from '@/components/avatar-username/avatar-username';
-import Product from '@/components/product/product';
 import ModalAvatar from '@/components/modals/modal-avatar/modal-avatar';
 import ModalAppId from '@/components/modals/modal-app-id/modal-app-id';
 import ModalFullName from '@/components/modals/modal-full-name/modal-full-name';
@@ -19,12 +17,28 @@ import { getStringValue } from '@/config/userGender';
 import { useAppSelector } from '@/redux/store';
 import { useDispatch } from 'react-redux';
 import { updateUserDataAttr } from '@/redux/auth';
-import useAccountCheck from '@/hooks/useAccountCheck';
 import { useRouter } from 'next/router';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import { isValidDateYmd } from '@/helpers/dateHelper';
+import { getAccessTokenByContext } from '@/helpers/http-requests/cookie';
+import { get } from '@/helpers/http-requests/fetch';
+import { isNumeric } from '@/helpers/numberHelper';
+import { handleChangeRouterParam } from '@/helpers/routerHelper';
 
-const Index = () => {
+export async function getServerSideProps(context) {
+    let accessToken = getAccessTokenByContext(context);
+    let data = {};
+
+    // Get following
+    let followings = await get('/provider/followings', accessToken);
+    data.followings = followings.data;
+
+    return {
+        props: { data },
+    }
+}
+
+const Index = ({data}) => {
     let [isShowAvatarModal, setIsShowAvatarModal] = useState(false);
     let [isShowFullnameModal, setIsShowFullnameModal] = useState(false);
     let [isShowAppIdModal, setIsShowAppIdModal] = useState(false);
@@ -143,6 +157,46 @@ const Index = () => {
                     router.push('/auth/login');
                 }
             });
+    }
+
+    function handleRenderFollowingList() {
+        if (data?.followings?.data?.length > 0) {
+            return data?.followings?.data?.map(function (val, index) {
+                return (
+                    <AvatarUsername
+                        createdAt={val.created_at}
+                        fullName={val.full_name}
+                        href={`#`}
+                        avatar={val.avatar}
+                    />
+                );
+            });
+        } else {
+            return <div className={cl.follow_empty}>Hiện chưa có theo dõi nào.</div>
+        }
+    }
+
+    function handleRenderPaginate() {
+        return data?.followings?.links?.map(function (val, index) {
+            if (isNumeric(val.label)) {
+                return (
+                    <div
+                        key={index}
+                        className={`handle-item ${val.label == router.query.page || (router.query.page == null && val.label == 1) ? 'active' : ''}`}
+                        onClick={()=>{
+                            handleChangeRouterParam(router, 'page', val.label, '/provider/mypage')
+                        }}
+                    ><span>{val.label}</span></div>
+                );
+            } else if (val.label == '...') {
+                return (
+                    <div
+                        key={index}
+                        className='handle-item dot'
+                    >...</div>
+                );
+            }
+        });
     }
 
     return (
@@ -265,20 +319,10 @@ const Index = () => {
                 style={{paddingTop: '20px', paddingBottom: '5px'}}
             ></TitleLeftBig>
             <div>
-                <AvatarUsername></AvatarUsername>
-                <AvatarUsername></AvatarUsername>
-                <AvatarUsername></AvatarUsername>
+                {handleRenderFollowingList()}
             </div>
-
-            <TitleLeftBig
-                title="Các trọ đăng tuyển"
-                style={{paddingTop: '20px'}}
-            ></TitleLeftBig>
-            <div>
-                <Product></Product>
-                <Product></Product>
-                <Product></Product>
-                <Product></Product>
+            <div className={`${cl.paginate_bar} paginate-md`}>
+                {handleRenderPaginate()}
             </div>
 
             <ModalAvatar

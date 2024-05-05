@@ -96,3 +96,14 @@
     gap: 15px;
     padding-bottom: 25px;
 }
+
+.follow_empty {
+    font-size: 14px;
+}
+
+.paginate_bar {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    user-select: none;
+}

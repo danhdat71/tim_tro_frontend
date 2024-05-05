@@ -3,6 +3,7 @@
     align-items: center;
     text-decoration: none;
     padding: 6px 0;
+    cursor: pointer;
 }
 
 .wrap_avatar {
@@ -22,14 +23,26 @@
     padding-left: 10px;
 }
 
-.wrap_info div:first-child {
+.wrap_info div:nth-child(1) {
     font-weight: 600;
     font-size: 17px;
     color: rgb(33, 33, 33);
 }
 
-.wrap_info div:last-child {
+.wrap_info div:nth-child(2) {
     font-size: 13px;
     padding-top: 5px;
     color: rgb(76, 76, 76);
+}
+
+.unfollow {
+    background-color: transparent;
+    border: none;
+    color: rgb(204, 0, 0);
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.full_name {
+    text-decoration: none;
 }
