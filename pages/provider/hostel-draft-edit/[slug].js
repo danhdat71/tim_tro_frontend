@@ -470,11 +470,11 @@ const Slug = ({data}) => {
             </div>
             <Modal
                 isShowModal={showPreview}
-                title="Xem lại tin cập nhật"
-                subTitle="Sau khi cập, bài đăng của bạn sẽ tiếp cận đến mọi người sớm nhất"
+                title="Xem lại tin đăng"
+                subTitle="Sau khi đăng tải, bài đăng của bạn sẽ tiếp cận đến mọi người sớm nhất"
                 top={'5%'}
                 mobileTop={'10%'}
-                submitBtnText="Cập nhật"
+                submitBtnText="Đăng tin"
                 submitBtnIcon={<i className="far fa-check"></i>}
                 onClose={()=>{
                     handleShowPreview(false);
