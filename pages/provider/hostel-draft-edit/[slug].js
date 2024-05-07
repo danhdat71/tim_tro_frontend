@@ -386,7 +386,8 @@ const Slug = ({data}) => {
                             <option value={3}>Sleep Box</option>
                             <option value={4}>Chung cư</option>
                             <option value={5}>Văn phòng</option>
-                            <option value={6}>Khác</option>
+                            <option value={6}>Ở ghép</option>
+                            <option value={7}>Khác</option>
                         </select>
                         <div className='err-msg'>{errors?.used_type}</div>
                     </div>

@@ -3,7 +3,8 @@ const FULL_HOUSE = 2;
 const SLEEP_BOX = 3;
 const APARTMENT = 4;
 const OFFICE = 5;
-const OTHER = 6;
+const TOGETHER = 6;
+const OTHER = 7;
 
 function getStringValue(status) {
     if (status == HOSTEL) {
@@ -16,6 +17,8 @@ function getStringValue(status) {
         return "Chung cư";
     } else if (status == OFFICE) {
         return "Văn phòng";
+    } else if (status == TOGETHER) {
+        return "Ở ghép";
     } else if (status == OTHER) {
         return "Khác";
     } else {
@@ -59,6 +62,10 @@ function getOptions() {
             value: OFFICE
         },
         {
+            label: getStringValue(TOGETHER),
+            value: TOGETHER
+        },
+        {
             label: getStringValue(OTHER),
             value: OTHER
         }
@@ -71,6 +78,7 @@ export {
     SLEEP_BOX,
     APARTMENT,
     OFFICE,
+    TOGETHER,
     OTHER,
     getStringValue,
     getOptions,
