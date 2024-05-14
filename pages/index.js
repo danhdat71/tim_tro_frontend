@@ -9,6 +9,7 @@ import { getAccessTokenByContext } from "@/helpers/http-requests/cookie";
 import { useRouter } from "next/router";
 import { handleChangeRouterParam } from "@/helpers/routerHelper";
 import { useAppSelector } from '@/redux/store';
+import HelperBox from "@/components/boxs/helper-box/helper-box";
 
 const breadcrumbItems = [
   { label: 'Trang chủ', href: '/' },
@@ -164,6 +165,7 @@ export default function Home({ data }) {
           }}
         />
       </div>
+      <HelperBox></HelperBox>
     </>
   );
 }
