@@ -41,7 +41,7 @@ const ModalFilterAddress = (props) => {
     useEffect(function(){
         axios.get(`${process.env.API}/location/get-provinces`)
             .then(function(res) {
-                if (res.status == 200) {
+                if (res?.status == 200) {
                     setProvinces(res.data);
                 }
             });

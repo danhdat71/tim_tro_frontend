@@ -10,6 +10,7 @@ import Link from 'next/link';
 import axios from '../../helpers/http-requests/axios';
 import auth, { setUserData } from '@/redux/auth';
 import { useAppSelector } from '@/redux/store';
+import { APARTMENT, FULL_HOUSE, HOSTEL, OFFICE, TOGETHER } from '@/config/productUsedType';
 
 const Header = () => {
 
@@ -81,11 +82,11 @@ const Header = () => {
                     <Link href='/'><img src={logoImg.src} alt='logo'></img></Link>
                 </div>
                 <div className={cl.fast_menu}>
-                    <div className={`${cl.fast_menu_item} ${cl.active}`}><Link href=''>Phòng trọ</Link></div>
-                    <div className={cl.fast_menu_item}><Link href=''>Văn phòng</Link></div>
-                    <div className={cl.fast_menu_item}><Link href=''>Nhà nguyên căn</Link></div>
-                    <div className={cl.fast_menu_item}><Link href=''>Ở ghép</Link></div>
-                    {/* <div className={cl.fast_menu_item}><Link href=''>Bảng giá trọ</Link></div> */}
+                    <div className={`${cl.fast_menu_item}`}><Link href={`/?used_type=${HOSTEL}`}>Phòng trọ</Link></div>
+                    <div className={cl.fast_menu_item}><Link href={`/?used_type=${OFFICE}`}>Văn phòng</Link></div>
+                    <div className={cl.fast_menu_item}><Link href={`/?used_type=${FULL_HOUSE}`}>Nhà nguyên căn</Link></div>
+                    <div className={cl.fast_menu_item}><Link href={`/?used_type=${TOGETHER}`}>Ở ghép</Link></div>
+                    <div className={cl.fast_menu_item}><Link href={`/?used_type=${APARTMENT}`}>Chung cư</Link></div>
                     <div className={cl.fast_menu_item}><Link href=''>Tin tức</Link></div>
                 </div>
             </div>
