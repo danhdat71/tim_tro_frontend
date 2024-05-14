@@ -57,7 +57,7 @@ export async function middleware(request) {
     let getMe = await get('/auth/get-me', accessToken);
     if (result.status != 200) {
       return NextResponse.redirect(new URL('/errors/404', request.url));
-    } else if (getMe.data.user_type == PROVIDER) {
+    } else if (getMe?.data?.user_type == PROVIDER) {
       return NextResponse.redirect(new URL('/errors/404', request.url));
     }
   }

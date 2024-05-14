@@ -16,6 +16,7 @@ import { handleChangeRouterParam } from '@/helpers/routerHelper';
 import EmptyList from '@/components/empty-list/empty-list';
 import axios from '@/helpers/http-requests/axios';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
+import { useAppSelector } from '@/redux/store';
 
 export async function getServerSideProps(context) {
     let accessToken = getAccessTokenByContext(context);
@@ -56,6 +57,9 @@ const Index = ({data}) => {
     });
     const [followings, setFollowings] = useState([]);
     const timeoutSuccess = useRef();
+    const authUserData = useAppSelector(function(state){
+        return state.authUserReducer.user.data;
+    });
 
     useEffect(function(){
         timeoutSuccess.current = setTimeout(function(){
@@ -161,7 +165,14 @@ const Index = ({data}) => {
             });
     }
 
+    console.log('authUserData', authUserData);
+
     function handleRenderFollowButton() {
+        // Case guest not login
+        if (Object.keys(authUserData).length === 0) {
+            return;
+        }
+
         let index = followings.findIndex(function(item){
             return item == data.provider.id;
         });
