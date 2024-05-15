@@ -3,6 +3,7 @@ import cl from './finder-menu-items.module.css';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { toggleMenuHeader } from '@/redux/features/header';
+import { FULL_HOUSE, HOSTEL, TOGETHER } from '@/config/productUsedType';
 
 const FinderMenuItems = (props) => {
 
@@ -20,7 +21,7 @@ const FinderMenuItems = (props) => {
         <>
             <div className={cl.list_menu_item}>
                 <Link
-                    href="/"
+                    href={`/?used_type=${HOSTEL}`}
                     className={cl.menu_item_wrap}
                     onClick={()=>{handleSetEnableHeader(false)}}
                 >
@@ -34,7 +35,7 @@ const FinderMenuItems = (props) => {
                     </div>
                 </Link>
                 <Link
-                    href="/"
+                    href={`/?used_type=${FULL_HOUSE}`}
                     className={cl.menu_item_wrap}
                     onClick={()=>{handleSetEnableHeader(false)}}
                 >
@@ -48,7 +49,7 @@ const FinderMenuItems = (props) => {
                     </div>
                 </Link>
                 <Link
-                    href="/"
+                    href={`/?used_type=${TOGETHER}`}
                     className={cl.menu_item_wrap}
                     onClick={()=>{handleSetEnableHeader(false)}}
                 >
@@ -58,20 +59,6 @@ const FinderMenuItems = (props) => {
                         </div>
                         <div className={cl.text}>
                             Tìm ở ghép
-                        </div>
-                    </div>
-                </Link>
-                <Link
-                    href="/"
-                    className={cl.menu_item_wrap}
-                    onClick={()=>{handleSetEnableHeader(false)}}
-                >
-                    <div className={cl.menu_item}>
-                        <div className={cl.icon}>
-                            <i className="fal fa-list"></i>
-                        </div>
-                        <div className={cl.text}>
-                            Bảng giá
                         </div>
                     </div>
                 </Link>

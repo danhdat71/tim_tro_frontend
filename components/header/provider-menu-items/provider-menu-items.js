@@ -47,7 +47,7 @@ const ProviderMenuItems = (props) => {
                 </div>
             </Link>
             <Link
-                href=""
+                href="/provider/mypage"
                 className={cl.menu_item_wrap}
             >
                 <div className={cl.menu_item}>
