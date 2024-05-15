@@ -49,6 +49,9 @@ const ProviderMenuItems = (props) => {
             <Link
                 href="/provider/mypage"
                 className={cl.menu_item_wrap}
+                onClick={()=>{
+                    handleSetEnableHeader(false);
+                }}
             >
                 <div className={cl.menu_item}>
                     <div className={cl.icon}>

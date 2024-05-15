@@ -11,6 +11,7 @@ import { objectToFormData } from '@/helpers/http-requests/formData';
 import axios from '@/helpers/http-requests/axios';
 import AlertError from '@/components/alerts/alert-error/alert-error';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
+import { useRouter } from 'next/router';
 
 const Index = () => {
 
@@ -20,12 +21,17 @@ const Index = () => {
     ]);
     let formDataRef = useRef();
     let timeoutAlertSuccess = useRef();
+    let timeoutAlertError = useRef();
+    let router = useRouter();
 
     let [errors, setErrors] = useState({});
     let [createData, setCreateData] = useState({});
     let [isShowConfirm, setIsShowConfirm] = useState(false);
     let [submitDisabled, setSubmitDisabled] = useState(false);
     let [isShowAlertSuccess, setIsShowAlertSuccess] = useState(false);
+    let [alertError400, setAlertError400] = useState({
+        isShow: false,
+    });
 
     useEffect(function(){
         timeoutAlertSuccess.current = setTimeout(function(){
@@ -34,6 +40,18 @@ const Index = () => {
 
         return () => {
             clearTimeout(timeoutAlertSuccess.current);
+        }
+    }, [submitDisabled]);
+
+    useEffect(function(){
+        timeoutAlertError.current = setTimeout(function(){
+            let newAlertError = {...alertError400};
+            newAlertError.isShow = false;
+            setAlertError400(newAlertError);
+        }, 3000);
+
+        return () => {
+            clearTimeout(timeoutAlertError.current);
         }
     }, [submitDisabled]);
 
@@ -58,11 +76,18 @@ const Index = () => {
             if (response.status == 200) {
                 setIsShowAlertSuccess(true);
                 formDataRef.current = null;
-                setCreateData({});
+                let timeout = setTimeout(function(){
+                    clearTimeout(timeout);
+                    router.push('/');
+                }, 3000)
             } else if (response.status == 422) {
                 setErrors(response.errors);
-            } else if (response?.message == 'Unauthenticated.') {
-                router.push('/auth/login');
+            } else if (response.status == 400) {
+                setAlertError400({
+                    isShow: true,
+                    message : response.message,
+                    sub: 'Bạn đang thao tác quá nhanh, vui lòng thử lại sau !'
+                });
             }
         });
     }
@@ -153,8 +178,13 @@ const Index = () => {
                 sub="Chúng tôi sẽ tiến hành xem xét và phản hồi lại bạn qua email"
                 isShow={isShowAlertSuccess}
             >
-
             </AlertSuccess>
+            <AlertError
+                message={alertError400?.message}
+                sub={alertError400?.sub}
+                isShow={alertError400.isShow}
+            >  
+            </AlertError>
         </div>
     );
 }
