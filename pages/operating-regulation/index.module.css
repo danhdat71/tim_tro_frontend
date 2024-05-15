@@ -1,0 +1,17 @@
+.big_title {
+    font-weight: 500;
+    padding-bottom: 10px;
+}
+
+.detail_item {
+    line-height: 1.7;
+}
+
+.group {
+    padding-bottom: 20px;
+}
+
+.slash_item {
+    padding-left: 15px;
+    line-height: 1.7;
+}

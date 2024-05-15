@@ -29,6 +29,7 @@ const Footer = () => {
                         <div className={cl.col_title}>Hỗ trợ người dùng</div>
                         <Link className={cl.col_item} href=''><div>Câu hỏi thường gặp</div></Link>
                         <Link className={cl.col_item} href=''><div>Hướng dẫn sử dụng</div></Link>
+                        <Link className={cl.col_item} href='/operating-regulation'><div>Quy chế hoạt động</div></Link>
                         <Link className={cl.col_item} href=''><div>Quy định sử dụng</div></Link>
                     </div>
                     <div className={cl.col}>

@@ -11,6 +11,9 @@ const nextConfig = {
     GMAIL: process.env.GMAIL,
     ZALO: process.env.ZALO,
     FACEBOOK: process.env.FACEBOOK,
+    //Site Info
+    SITE_NAME: process.env.SITE_NAME,
+    COMPANY_NAME: process.env.COMPANY_NAME,
   }
 };
 
