@@ -43,9 +43,27 @@ const Index = () => {
             <div className={cl.group}>
                 <div className={cl.big_title}>IV. NGUYÊN TẮC HOẠT ĐỘNG</div>
 
-                <div className={cl.detail_item}>1. <b>Minh bạch và trung thực:</b> Thông tin đăng tải trên Sàn phải đầy đủ, chính xác và trung thực.</div>
-                <div className={cl.detail_item}>2. <b>Bảo mật thông tin:</b> Sàn cam kết bảo mật thông tin cá nhân của thành viên.</div>
-                <div className={cl.detail_item}>3. <b>Chống gian lận:</b> Áp dụng biện pháp kiểm duyệt để ngăn chặn các hành vi gian lận.</div>
+                <div className={cl.detail_item}>1. <b>Minh bạch và trung thực:</b></div>
+                <div className={cl.slash_item}>- Các tin đăng phải cung cấp đầy đủ, chính xác và rõ ràng thông tin về sản phẩm và dịch vụ bất động sản, bao gồm địa chỉ, giá cả, diện tích, tình trạng pháp lý, và hình ảnh thực tế.</div>
+                <div className={cl.slash_item}>- Thông tin về sản phẩm và dịch vụ phải được cập nhật kịp thời. Thành viên phải đảm bảo thông tin đăng tải là chính xác và không gây hiểu lầm cho người dùng.</div>
+
+                <div className={cl.detail_item}>2. <b>Bảo mật thông tin:</b></div>
+                <div className={cl.slash_item}>- {process.env.SITE_NAME} cam kết bảo mật thông tin cá nhân của thành viên. Thông tin cá nhân chỉ được sử dụng cho mục đích cung cấp dịch vụ và không chia sẻ cho bên thứ ba khi chưa có sự đồng ý của thành viên, trừ khi có yêu cầu từ cơ quan chức năng.</div>
+                <div className={cl.slash_item}>- {process.env.SITE_NAME} áp dụng các biện pháp bảo mật để đảm bảo an toàn cho các giao dịch trực tuyến và bảo vệ thông tin tài khoản của thành viên.</div>
+
+                <div className={cl.detail_item}>3. <b>Chống gian lận:</b></div>
+                <div className={cl.slash_item}>- {process.env.SITE_NAME}  thực hiện việc kiểm duyệt nội dung tin đăng để phát hiện và ngăn chặn các hành vi gian lận, lừa đảo. Các tin đăng vi phạm sẽ bị xóa bỏ và tài khoản vi phạm có thể bị khóa hoặc xóa.</div>
+                <div className={cl.slash_item}>- Thành viên có quyền và trách nhiệm báo cáo các hành vi gian lận, lừa đảo hoặc vi phạm quy định của sàn. Sàn sẽ xem xét và xử lý các báo cáo này một cách nghiêm túc và nhanh chóng.</div>
+
+                <div className={cl.detail_item}>4. <b>Quyền và nghĩa vụ của các bên tham gia:</b></div>
+                <div className={cl.slash_item}>- Các bên tham gia giao dịch trên Sàn TMĐT {process.env.SITE_NAME} phải tôn trọng quyền và lợi ích hợp pháp của nhau. Mọi hành vi vi phạm sẽ bị xử lý theo quy định của sàn và pháp luật.</div>
+                <div className={cl.slash_item}>- Người bán phải đảm bảo sản phẩm và dịch vụ được chào bán là hợp pháp, có chất lượng như mô tả và không vi phạm quyền sở hữu trí tuệ hoặc các quy định pháp luật khác.</div>
+                <div className={cl.slash_item}>- Người mua phải tuân thủ các quy định của sàn và pháp luật, thực hiện các giao dịch một cách trung thực và có trách nhiệm.</div>
+
+                <div className={cl.detail_item}>5. <b>Tuân thủ pháp luật:</b></div>
+                <div className={cl.slash_item}>- Mọi hoạt động trên Sàn TMĐT {process.env.SITE_NAME} phải tuân thủ các quy định của pháp luật Việt Nam. Các hành vi vi phạm sẽ bị xử lý theo quy định của pháp luật và quy chế hoạt động của sàn.</div>
+                <div className={cl.slash_item}>- Sàn TMĐT {process.env.SITE_NAME} cam kết hợp tác với các cơ quan chức năng trong việc điều tra và xử lý các hành vi vi phạm pháp luật xảy ra trên sàn.</div>
+
             </div>
             <div className={cl.group}>
                 <div className={cl.big_title}>V. QUY ĐỊNH VỀ GIAO DỊCH</div>
