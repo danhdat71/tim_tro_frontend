@@ -87,7 +87,7 @@ const Header = () => {
                     <div className={cl.fast_menu_item}><Link href={`/?used_type=${FULL_HOUSE}`}>Nhà nguyên căn</Link></div>
                     <div className={cl.fast_menu_item}><Link href={`/?used_type=${TOGETHER}`}>Ở ghép</Link></div>
                     <div className={cl.fast_menu_item}><Link href={`/?used_type=${APARTMENT}`}>Chung cư</Link></div>
-                    <div className={cl.fast_menu_item}><Link href=''>Tin tức</Link></div>
+                    <div className={cl.fast_menu_item}><Link href='/price-locale'>Thống kê giá</Link></div>
                 </div>
             </div>
 

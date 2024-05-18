@@ -79,6 +79,29 @@
 .map {
     width: 100%;
     height: 400px;
+    position: relative;
+}
+
+.view_map_app {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 999;
+    display: inline-block;
+    background-color: white;
+    background-color: rgb(197, 0, 0);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.view_map_app:hover {
+    background-color: rgb(154, 0, 0);
+}
+
+.view_map_app span:first-child {
+    padding-right: 10px;
 }
 
 .marker {

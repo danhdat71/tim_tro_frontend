@@ -107,7 +107,7 @@
     width: 100%;
 }
 
-@media screen and (max-width: 833px) {
+@media screen and (max-width: 986px) {
     .fast_menu {
         display: none;
     }
