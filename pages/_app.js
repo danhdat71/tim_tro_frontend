@@ -5,6 +5,7 @@ import '../styles/form-element.css';
 import { ReduxProvider } from "@/redux/provider";
 import { useRouter } from "next/router";
 import NextNProgress from 'nextjs-progressbar';
+import LayoutAdmin from "@/layouts/layout_admin";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -12,11 +13,15 @@ export default function App({ Component, pageProps }) {
   function checkDisplay()
   {
     if (router.pathname.startsWith('/admin')) {
-      // return (
-      //   <AdminLayout>
-      //     <Component {...pageProps} />
-      //   </AdminLayout>
-      // )
+      // Import admin css
+      import('../styles/admin/adminlte.min.css');
+      import('../styles/admin/OverlayScrollbars.min.css');
+
+      return (
+        <LayoutAdmin>
+          <Component {...pageProps} />
+        </LayoutAdmin>
+      )
     } else {
       return (
         <Layout>

@@ -14,6 +14,7 @@ const nextConfig = {
     //Site Info
     SITE_NAME: process.env.SITE_NAME,
     COMPANY_NAME: process.env.COMPANY_NAME,
+    APP_NAME: process.env.APP_NAME,
   }
 };
 
