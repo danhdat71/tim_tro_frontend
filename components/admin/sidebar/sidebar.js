@@ -39,6 +39,12 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className="nav-item mb-1">
+                            <Link href="/admin/products" className={`nav-link ${handleActiveMenuItem('/admin/products')}`}>
+                                <i className="nav-icon fad fa-copy"></i>
+                                <p>Bài đăng</p>
+                            </Link>
+                        </li>
+                        <li className="nav-item mb-1">
                             <Link href="/admin/bug-report" className={`nav-link ${handleActiveMenuItem('/admin/bug-report')}`}>
                                 <i className="nav-icon fad fa-bug"></i>
                                 <p>Báo cáo lỗi</p>

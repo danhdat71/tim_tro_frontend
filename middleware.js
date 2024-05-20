@@ -61,4 +61,9 @@ export async function middleware(request) {
       return NextResponse.redirect(new URL('/errors/404', request.url));
     }
   }
+
+  // Admin screen
+  if (path == '/admin') {
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+  }
 }

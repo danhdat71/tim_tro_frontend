@@ -25,7 +25,7 @@ const LayoutAdmin = (props) => {
                     <div class="content-wrapper">
                         <ContentHeader></ContentHeader>
                         <div className='content'>
-                            <div class="container-fluid">{props.children}</div>
+                            {props.children}
                         </div>
                     </div>
 
