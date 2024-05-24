@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import SidebarBrand from './sidebar-brand/sidebar-brand';
 import SidebarUser from './sidebar-user/sidebar-user';
 import Link from 'next/link';
@@ -69,4 +69,4 @@ const Sidebar = () => {
     );
 }
 
-export default Sidebar;
+export default memo(Sidebar);
