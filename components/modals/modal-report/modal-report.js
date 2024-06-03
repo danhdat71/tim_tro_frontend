@@ -13,14 +13,13 @@ const ModalReport = (props) => {
         onSubmit,
         errors = {},
         productId,
+        disableSubmitReport = false,
     } = props;
 
     let categories = useRef(getOptions());
     let [inputData, setInputData] = useState({
         product_id : productId,
     });
-
-    console.log('errors', errors);
 
     function handleSetInputData(key, value) {
         let newInputData = {...inputData};
@@ -68,6 +67,7 @@ const ModalReport = (props) => {
             onSubmit={()=>{
                 onSubmit(inputData);
             }}
+            submitBtnDisabled={disableSubmitReport}
         >
             <div className={cl.group_info}>
                 <div className='form-group'>

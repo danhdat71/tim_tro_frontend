@@ -87,6 +87,7 @@ export async function getServerSideProps(context) {
 const Index = ({data}) => {
     let router = useRouter();
     let dispatch = useDispatch();
+    let [disableSubmitReport, setDisableSubmitReport] = useState(false);
     let [showModalReport, setShowModalReport] = useState(false);
     let [showModalShare, setShowModalShare] = useState(false);
     let [saveds, setSaveds] = useState([]);
@@ -184,12 +185,14 @@ const Index = ({data}) => {
     }
 
     function handleSubmitReport(payload) {
+        setReportErrors({});
         axios.post(`/user/report-product`, payload, {
             headers: {
                 Authorization : 'Bearer ' + localStorage.getItem('access_token')
             }
         })
         .then(response => {
+            setDisableSubmitReport(false);
             if (response.status == 200) {
                 setAlertSucess({
                     message: "Báo cáo bài đăng thành công !",
@@ -350,10 +353,12 @@ const Index = ({data}) => {
                 showModalReport={showModalReport}
                 handleShowModalReport={setShowModalReport}
                 onSubmit={(value)=>{
+                    setDisableSubmitReport(true);
                     handleSubmitReport(value);
                 }}
                 errors={reportErrors}
                 productId={data?.product?.id}
+                disableSubmitReport={disableSubmitReport}
             ></ModalReport>
             <ModalShare
                 showModalShare={showModalShare}
