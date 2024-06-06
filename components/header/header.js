@@ -41,6 +41,17 @@ const Header = () => {
             });
     }, []);
 
+    function renderButtonPostNow() {
+        if (authUserData.user_type == 0) {
+            return (
+                <Link href='/provider/hostel-regist' className={cl.menu_button_post_now}>
+                    <div>Bạn đang muốn cho thuê ?</div>
+                    <div>Đăng tin ngay <span><i class="fal fa-file-upload"></i></span></div>
+                </Link>
+            );
+        }
+    }
+
     function renderIsAuthButton() {
         if (authUserData.status == undefined) {
             return (
@@ -56,6 +67,7 @@ const Header = () => {
         } else {
             return (
                 <>
+                    {renderButtonPostNow()}  
                     <Link href='/loves' className={cl.menu_button}>
                         <span className={cl.count}>{authUserData?.user_saved_products_count}</span>
                         <span><i className="fal fa-heart"></i></span>
