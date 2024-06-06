@@ -12,3 +12,10 @@
     color: rgb(130, 130, 130);
     cursor: pointer;
 }
+
+@media screen and (max-width: 480px) {
+    .item {
+        font-size: 13.5px;
+        padding: 5px 0;
+    }
+}

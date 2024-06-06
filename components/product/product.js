@@ -80,15 +80,15 @@ const Product = (props) => {
                     <div className={cl.product_name}>{title}</div>
                 </Link>
                 <div className={cl.price}>{formatNumber(price)} / tháng</div>
-                <div className={cl.product_info_item}>
+                <div className={`${cl.product_info_item} ${cl.product_info_item_acreage}`}>
                     <span><i className="fal fa-home-lg"></i></span>
                     <span>{acreage} mét</span>
                 </div>
-                <div className={cl.product_info_item}>
+                <div className={`${cl.product_info_item} ${cl.product_info_item_address}`}>
                     <span><i className="far fa-map-marker-alt"></i></span>
                     <span>{wardName}, {districtName}, {provinceName}</span>
                 </div>
-                <div className={cl.product_info_item}>
+                <div className={`${cl.product_info_item} ${cl.product_info_item_rooms}`}>
                     <span><i className="far fa-booth-curtain"></i></span>
                     <span>{getStringValueBedRooms(bedRooms)}, {getStringValueWC(toiletRooms)}</span>
                 </div>

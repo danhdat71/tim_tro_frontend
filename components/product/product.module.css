@@ -49,29 +49,6 @@
     position: relative;
 }
 
-@media screen and (max-width: 910px) {
-    .left_card {
-        width: 33%;
-    }
-    .right_card {
-        width: 67%;
-    }
-}
-
-@media screen and (max-width: 489px) {
-    .product_item {
-        flex-direction: column;
-    }
-    .left_card {
-        width: 100%;
-    }
-    .right_card {
-        width: 100%;
-        padding-left: 0;
-        padding-top: 15px;
-    }
-}
-
 .product_name {
     font-weight: 500;
     color: rgb(60, 60, 60);
@@ -100,13 +77,17 @@
 }
 
 .like_btn {
+    width: 30px;
+    height: 30px;
     position: absolute;
     right: 10px;
     bottom: 10px;
     border: 1px solid rgb(216, 216, 216);
-    padding: 5px 10px;
     cursor: pointer;
     border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .like_btn button {
@@ -116,4 +97,60 @@
     outline: none;
     background-color: transparent;
     color: rgb(149, 0, 0);
+}
+
+@media screen and (max-width: 910px) {
+    .left_card {
+        width: 33%;
+    }
+    .right_card {
+        width: 67%;
+    }
+}
+
+@media screen and (max-width: 595px) {
+    .product_name {
+        padding-bottom: 2px;
+        font-size: 15px;
+    }
+    .price {
+        font-size: 15px;
+        padding-bottom: 3px;
+    }
+    .product_info_item {
+        font-size: 14px;
+    }
+    .product_info_item_rooms,
+    .product_info_item_address span:first-child,
+    .product_info_item_acreage {
+        display: none;
+    }
+    .like_btn {
+        bottom: 0;
+    }
+}
+
+@media screen and (max-width: 455px) {
+    .left_card {
+        width: 40%;
+    }
+    .right_card {
+        width: 60%;
+    }
+    .product_name {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+                line-clamp: 1; 
+        -webkit-box-orient: vertical;
+    }
+    .product_info_item_address {
+        font-size: 13px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+                line-clamp: 2; 
+        -webkit-box-orient: vertical;
+        padding: 0;
+    }
 }
