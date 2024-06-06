@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 import { handleChangeRouterParam } from "@/helpers/routerHelper";
 import { useAppSelector } from '@/redux/store';
 import HelperBox from "@/components/boxs/helper-box/helper-box";
+import PublicCounter from "@/components/boxs/public-counter/public-counter";
+import AdsBox1 from "@/components/boxs/ads-box-1/ads-box-1";
 
 const breadcrumbItems = [
   { label: 'Trang chủ', href: '/' },
@@ -104,6 +106,8 @@ export default function Home({ data }) {
   return (
     <>
       <FilterForm></FilterForm>
+      <PublicCounter></PublicCounter>
+      <AdsBox1></AdsBox1>
       <Breadcrumb
         items={breadcrumbItems}
       />

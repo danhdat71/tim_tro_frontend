@@ -1,0 +1,39 @@
+.public_counter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    padding: 5px 0 10px 0;
+}
+
+.item {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.item span:first-child {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    padding-right: 5px;
+    color: rgb(0, 170, 62);
+}
+
+.item span:first-child i {
+    font-size: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+}
+
+.item span:last-child {
+    color: rgb(90, 90, 90);
+    font-size: 14px;
+}
+
+@media screen and (max-width: 612px) {
+    .public_counter {
+        gap: 5px;
+        justify-content: center;
+    }
+}

@@ -12,6 +12,34 @@
     font-size: 20px;
 }
 
+/* slider-ads-1 */
+.slider-ads-1 .slider-navigation-sm .swiper-button-prev,
+.slider-ads-1 .slider-navigation-sm .swiper-button-next{
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background-color: rgb(0 199 129);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    margin: 0;
+    padding: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    opacity: 0.8;
+}
+
+.slider-ads-1 .slider-navigation-sm .swiper-button-prev:after,
+.slider-ads-1 .slider-navigation-sm .swiper-button-next:after {
+    font-size: 10px;
+}
+
+.slider-ads-1 .swiper-button-disabled {
+    opacity: 0.5!important;
+}
+
 /* Verify input */
 .verify-input {
     display: flex;
