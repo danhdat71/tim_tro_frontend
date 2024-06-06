@@ -161,4 +161,9 @@
     .paginate-md .handle-item span {
         font-size: 13px;
     }
+    .paginate-md button,
+    .paginate-md div {
+        width: 26px;
+        height: 26px;
+    }
 }
