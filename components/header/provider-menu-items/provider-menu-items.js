@@ -28,7 +28,7 @@ const ProviderMenuItems = (props) => {
                         <i className="fal fa-comment-alt-edit"></i>
                     </div>
                     <div className={cl.text}>
-                        Đăng phòng trọ
+                        Đăng tin
                     </div>
                 </div>
             </Link>
