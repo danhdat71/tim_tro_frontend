@@ -133,6 +133,10 @@
     width: 100%;
 }
 
+.notification_mobile {
+    display: none;
+}
+
 @media screen and (max-width: 1189px) {
     .fast_menu_item {
         margin: 0 10px;
@@ -150,6 +154,12 @@
 
 @media screen and (max-width: 568px) {
     .menu_button_post_now {
+        display: none;
+    }
+    .notification_mobile {
+        display: block;
+    }
+    .notification_desktop {
         display: none;
     }
 }

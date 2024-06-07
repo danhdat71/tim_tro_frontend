@@ -4,13 +4,14 @@ import React, { useEffect } from 'react';
 import cl from './header.module.css';
 import logoImg from '../../assets/imgs/logo.png';
 import ToggleHeader from './toggle-header/toggle-header';
-import { toggleMenuHeader } from '@/redux/features/header';
+import { toggleMenuHeader, toggleNotificationBox } from '@/redux/features/header';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import axios from '../../helpers/http-requests/axios';
 import auth, { setUserData } from '@/redux/auth';
 import { useAppSelector } from '@/redux/store';
 import { APARTMENT, FULL_HOUSE, HOSTEL, OFFICE, TOGETHER } from '@/config/productUsedType';
+import HeaderNotifications from './header-notifications/header-notifications';
 
 const Header = () => {
 
@@ -20,8 +21,16 @@ const Header = () => {
         return state.authUserReducer.user.data;
     });
 
+    const headerState = useAppSelector(function(state){
+        return state.headerReducer.header;
+    });
+
     function handleSetEnableHeader(status) {
         dispatch(toggleMenuHeader(status));
+    }
+
+    function handleSetEnableHeaderNotificationsBox(status) {
+        dispatch(toggleNotificationBox(status));
     }
 
     function handleSetUserLogin(userData) {
@@ -72,7 +81,18 @@ const Header = () => {
                         <span className={cl.count}>{authUserData?.user_saved_products_count}</span>
                         <span><i className="fal fa-heart"></i></span>
                     </Link>
-                    <Link href='/' className={cl.menu_button}>
+                    <div className={`${cl.menu_button} ${cl.notification_desktop}`}>
+                        <span
+                            onClick={()=>{
+                                handleSetEnableHeaderNotificationsBox(!headerState.is_enable_notification_box);
+                            }}
+                        >
+                            <span className={cl.count}>1</span>
+                            <span><i className="fal fa-bell"></i></span>
+                        </span>
+                        <HeaderNotifications />
+                    </div>
+                    <Link href='/notifications' className={`${cl.menu_button} ${cl.notification_mobile}`}>
                         <span className={cl.count}>1</span>
                         <span><i className="fal fa-bell"></i></span>
                     </Link>
