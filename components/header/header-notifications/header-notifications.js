@@ -18,7 +18,7 @@ const HeaderNotifications = (props) => {
 
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef, function(){
-        handleSetEnableHeaderNotificationsBox(!headerState.is_enable_notification_box);
+        handleSetEnableHeaderNotificationsBox(false);
     });
 
     return (

@@ -84,7 +84,7 @@ const Header = () => {
                     <div className={`${cl.menu_button} ${cl.notification_desktop}`}>
                         <span
                             onClick={()=>{
-                                handleSetEnableHeaderNotificationsBox(!headerState.is_enable_notification_box);
+                                handleSetEnableHeaderNotificationsBox(true);
                             }}
                         >
                             <span className={cl.count}>1</span>
