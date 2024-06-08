@@ -125,6 +125,20 @@ const HeaderNotifications = (props) => {
                         setNotifications(response.data.data);
                     }
                 });
+            axios.get(`/auth/get-me`, {
+                headers: {
+                    Authorization : 'Bearer ' + localStorage.getItem('access_token')
+                }
+            })
+                .then(res => {
+                    if (res.status == 200) {
+                        console.log('res', res);
+                        dispatch(updateUserDataAttr({
+                            key: 'notifications_count',
+                            value: res?.data?.notifications_count || 0
+                        }));
+                    }
+                });
         }
     }, [headerState.is_enable_notification_box]);
 
