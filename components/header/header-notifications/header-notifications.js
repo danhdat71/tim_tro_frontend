@@ -43,13 +43,14 @@ const HeaderNotifications = (props) => {
         // Set notification item is read
         axios.post(`/notification/mark-read`, {
             id: notificationData.id,
-            status: !notificationData.status
+            status: true
         }, {
             headers: {
                 Authorization : 'Bearer ' + localStorage.getItem('access_token')
             }
         })
         .then(function(res) {
+            console.log('res', res);
             if (res.status == 200) {
                 dispatch(updateUserDataAttr({
                     key: 'notifications_count',
