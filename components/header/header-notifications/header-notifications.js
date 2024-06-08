@@ -23,23 +23,24 @@ const HeaderNotifications = (props) => {
     }
 
     function handleUnreadAll() {
+        dispatch(updateUserDataAttr({
+            key: 'notifications_count',
+            value: 0
+        }));
+        handleSetEnableHeaderNotificationsBox(false);
         axios.post(`/notification/mark-read-all`, null, {
             headers: {
                 Authorization : 'Bearer ' + localStorage.getItem('access_token')
-            }
-        })
-        .then(function(res) {
-            if (res.status == 200) {
-                dispatch(updateUserDataAttr({
-                    key: 'notifications_count',
-                    value: 0
-                }));
-                handleSetEnableHeaderNotificationsBox(false);
             }
         });
     }
 
     function handleClickNotificationItem(notificationData) {
+        // Redirect to notification link
+        if (notificationData.link != null) {
+            handleSetEnableHeaderNotificationsBox(false);
+            router.push(notificationData.link);
+        }
         // Set notification item is read
         axios.post(`/notification/mark-read`, {
             id: notificationData.id,
@@ -56,11 +57,6 @@ const HeaderNotifications = (props) => {
                     key: 'notifications_count',
                     value: res?.data?.un_read_count || 0
                 }));
-
-                if (notificationData.link != null) {
-                    handleSetEnableHeaderNotificationsBox(false);
-                    router.push(notificationData.link);
-                }
             }
         });
     }
