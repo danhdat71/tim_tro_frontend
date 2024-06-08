@@ -21,7 +21,7 @@ const CountItemDboard = (props) => {
             <Link
                 href={link}
                 className="small-box-footer"
-            >Xem chi tiết <i class="fas fa-arrow-circle-right"></i></Link>
+            >Xem chi tiết <i className="fas fa-arrow-circle-right"></i></Link>
         </div>
     );
 }

@@ -21,10 +21,6 @@ const Header = () => {
         return state.authUserReducer.user.data;
     });
 
-    const headerState = useAppSelector(function(state){
-        return state.headerReducer.header;
-    });
-
     function handleSetEnableHeader(status) {
         dispatch(toggleMenuHeader(status));
     }
@@ -55,7 +51,7 @@ const Header = () => {
             return (
                 <Link href='/provider/hostel-regist' className={cl.menu_button_post_now}>
                     <div>Bạn đang muốn cho thuê ?</div>
-                    <div>Đăng tin ngay <span><i class="fal fa-file-upload"></i></span></div>
+                    <div>Đăng tin ngay <span><i className="fal fa-file-upload"></i></span></div>
                 </Link>
             );
         }
@@ -87,7 +83,7 @@ const Header = () => {
                                 handleSetEnableHeaderNotificationsBox(true);
                             }}
                         >
-                            <span className={cl.count}>1</span>
+                            <span className={cl.count}>{authUserData?.notifications_count}</span>
                             <span><i className="fal fa-bell"></i></span>
                         </span>
                         <HeaderNotifications />

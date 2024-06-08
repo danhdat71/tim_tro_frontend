@@ -22,7 +22,7 @@ const LayoutAdmin = (props) => {
                 <div className="wrapper">
                     <Header></Header>
                     <Sidebar></Sidebar>
-                    <div class="content-wrapper">
+                    <div className="content-wrapper">
                         <ContentHeader></ContentHeader>
                         <div className='content'>
                             {props.children}

@@ -38,7 +38,7 @@ const Index = () => {
                         </div>
                         <div>
                             <span className={`${cl.grow_icon} ${cl.grow_icon_down}`}>
-                                <i class="fas fa-sort-down"></i>
+                                <i className="fas fa-sort-down"></i>
                             </span>
                             <span>Giảm 5%</span>
                         </div>
@@ -51,7 +51,7 @@ const Index = () => {
                         </div>
                         <div>
                             <span className={`${cl.grow_icon} ${cl.grow_icon_up}`}>
-                                <i class="fas fa-sort-up"></i>
+                                <i className="fas fa-sort-up"></i>
                             </span>
                             <span>Tăng 5%</span>
                         </div>
@@ -64,7 +64,7 @@ const Index = () => {
                         </div>
                         <div>
                             <span className={`${cl.grow_icon} ${cl.grow_icon_up}`}>
-                                <i class="fas fa-sort-up"></i>
+                                <i className="fas fa-sort-up"></i>
                             </span>
                             <span>Tăng 5%</span>
                         </div>
@@ -77,7 +77,7 @@ const Index = () => {
                         </div>
                         <div>
                             <span className={`${cl.grow_icon} ${cl.grow_icon_up}`}>
-                                <i class="fas fa-sort-up"></i>
+                                <i className="fas fa-sort-up"></i>
                             </span>
                             <span>Tăng 5%</span>
                         </div>
@@ -90,7 +90,7 @@ const Index = () => {
                         </div>
                         <div>
                             <span className={`${cl.grow_icon} ${cl.grow_icon_up}`}>
-                                <i class="fas fa-sort-up"></i>
+                                <i className="fas fa-sort-up"></i>
                             </span>
                             <span>Tăng 5%</span>
                         </div>
@@ -103,7 +103,7 @@ const Index = () => {
                         </div>
                         <div>
                             <span className={`${cl.grow_icon} ${cl.grow_icon_down}`}>
-                                <i class="fas fa-sort-down"></i>
+                                <i className="fas fa-sort-down"></i>
                             </span>
                             <span>Giảm 5%</span>
                         </div>

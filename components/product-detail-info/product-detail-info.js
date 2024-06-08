@@ -105,7 +105,7 @@ const ProductDetailInfo = (props) => {
                     href={`http://maps.google.com/?q=${data?.lat},${data?.long}`}
                     target='_blank'
                 >
-                    <span><i class="fab fa-google"></i></span>
+                    <span><i className="fab fa-google"></i></span>
                     <span>Xem bằng ứng dụng</span>
                 </a>
             </div>
