@@ -39,8 +39,6 @@ export async function getServerSideProps(context) {
         method: 'GET',
     });
 
-    console.log('status', fetchData.status);
-
     let data = {};
     if (fetchData.status != 500) {
         data = await fetchData.json();
