@@ -23,7 +23,7 @@ import { useAppSelector } from '@/redux/store';
 import axios from '@/helpers/http-requests/axios';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { setUserData } from '@/redux/auth';
+import { updateUserDataAttr } from '@/redux/auth';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import AlertError from '@/components/alerts/alert-error/alert-error';
 
@@ -126,9 +126,10 @@ const Index = ({data}) => {
         })
             .then(response => {
                 if (response.status == 200) {
-                    let newAuthUserData = {...authUserData};
-                    newAuthUserData.user_saved_products_count = saveds.length;
-                    dispatch(setUserData(newAuthUserData));
+                    dispatch(updateUserDataAttr({
+                        key : 'user_saved_products_count',
+                        value : saveds.length
+                    }));
                 }
             });
     }, [saveds]);
