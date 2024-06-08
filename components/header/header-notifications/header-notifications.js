@@ -76,7 +76,7 @@ const HeaderNotifications = (props) => {
     }
 
     function handleRenderViewAll() {
-        return isLoading == false
+        return isLoading == false && notifications.length > 0
             ? <div
                 className={cl.view_all}
                 href='/notifications'
@@ -88,21 +88,25 @@ const HeaderNotifications = (props) => {
     }
 
     function handleRenderNotifications() {
-        return notifications.map(function(val, index) {
-            return (
-                <div
-                    className={`${cl.notification_item} ${val.status == true ? cl.is_read : false}`}
-                    key={index}
-                    onClick={()=>{
-                        handleClickNotificationItem(val);
-                    }}
-                >
-                    <div className={cl.title}>{val.title}</div>
-                    <div className={cl.sub_title}>{val.description}</div>
-                    <div className={cl.time}>{val.sent_at_ago}</div>
-                </div>
-            )
-        })
+        if (notifications.length > 0) {
+            return notifications.map(function(val, index) {
+                return (
+                    <div
+                        className={`${cl.notification_item} ${val.status == true ? cl.is_read : false}`}
+                        key={index}
+                        onClick={()=>{
+                            handleClickNotificationItem(val);
+                        }}
+                    >
+                        <div className={cl.title}>{val.title}</div>
+                        <div className={cl.sub_title}>{val.description}</div>
+                        <div className={cl.time}>{val.sent_at_ago}</div>
+                    </div>
+                )
+            });
+        }
+
+        return <div className={cl.loading}>Chưa có thông báo nào</div>        
     }
 
     const wrapperRef = useRef(null);
