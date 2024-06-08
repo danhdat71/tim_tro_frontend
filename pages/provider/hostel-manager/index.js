@@ -147,8 +147,6 @@ const Index = ({data}) => {
             });
     }
 
-    console.log('data', data);
-
     return (
         <div className={cl.my_hostel}>
             <Breadcrumb items={breadCrumbs}></Breadcrumb>

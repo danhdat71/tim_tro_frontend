@@ -22,7 +22,7 @@ const HeaderNotifications = (props) => {
         dispatch(toggleNotificationBox(status));
     }
 
-    function handleUnreadAll() {
+    function handleReadAll() {
         dispatch(updateUserDataAttr({
             key: 'notifications_count',
             value: 0
@@ -103,7 +103,7 @@ const HeaderNotifications = (props) => {
             });
         }
 
-        return <div className={cl.loading}>Chưa có thông báo nào</div>        
+        return <div className={cl.loading}>Chưa có thông báo nào</div>
     }
 
     const wrapperRef = useRef(null);
@@ -151,7 +151,7 @@ const HeaderNotifications = (props) => {
                 <div>Thông báo</div>
                 <div
                     onClick={()=>{
-                        handleUnreadAll();
+                        handleReadAll();
                     }}
                 >Đánh dấu đã xem</div>
             </div>

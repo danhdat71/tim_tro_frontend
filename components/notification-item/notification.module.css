@@ -13,6 +13,12 @@
     position: relative;
     padding-right: 15px;
     text-decoration: none;
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+.item.is_read {
+    opacity: 0.6;
 }
 
 .icon {
