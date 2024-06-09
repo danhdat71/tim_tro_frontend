@@ -37,6 +37,11 @@ export default function SearchBox(props) {
                 onInput={(e)=>{
                     setInputed(e.target.value);
                 }}
+                onKeyDown={(e) => {
+                    if (e.key == 'Enter') {
+                        onSubmit(inputed); 
+                    }
+                }}
             />
             <div className={cl.button_list}>
                 {renderRemoveInputedButton()}
