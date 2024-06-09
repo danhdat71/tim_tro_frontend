@@ -12,6 +12,7 @@ import { useAppSelector } from '@/redux/store';
 import HelperBox from "@/components/boxs/helper-box/helper-box";
 import PublicCounter from "@/components/boxs/public-counter/public-counter";
 import AdsBox1 from "@/components/boxs/ads-box-1/ads-box-1";
+import Head from "next/head";
 
 const breadcrumbItems = [
   { label: 'Trang chủ', href: '/' },
@@ -105,6 +106,16 @@ export default function Home({ data }) {
 
   return (
     <>
+      <Head>
+        <title>{`Cho thuê phòng trọ cập nhật tháng ${data.currentMonth} - ${data.currentYear}`}</title>
+        <meta name="keywords" content="thuê trọ" />
+        <meta name="description" content={`Phòng trọ giá rẻ, chất lượng, uy tín, an toàn tại ${process.env.APP_NAME}`} />
+        <meta property="og:description" content={`Phòng trọ giá rẻ, chất lượng, uy tín, an toàn tại ${process.env.APP_NAME}`} />
+        <meta property="og:title" content={`Cho thuê phòng trọ giá rẻ tháng ${data.currentMonth} - ${data.currentYear}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="vi_VN" />
+        <meta property="og:site_name" content={`${process.env.APP_NAME} phòng trọ giá rẻ`} />
+      </Head>
       <FilterForm></FilterForm>
       <PublicCounter></PublicCounter>
       <AdsBox1></AdsBox1>

@@ -21,9 +21,8 @@ const ProductOwner = (props) => {
     function handleRenderViewCount() {
         if (status != DRAFT) {
             return (
-                <div className={cl.info_item}>
-                    <span>Lượt xem: </span>
-                    <b>{viewedCount}</b>
+                <div className={cl.view_count}>
+                    <div><i class="fad fa-eye"></i> {viewedCount} lượt xem</div>
                 </div>
             )
         }
