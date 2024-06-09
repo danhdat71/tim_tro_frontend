@@ -31,7 +31,7 @@ const Index = () => {
                 </div>
                 <div className={cl.wrap_list}>
                     <div className={cl.item}>
-                        <div>Quận 1</div>
+                        <div><span>•</span> Quận 1</div>
                         <div>
                             <span>Giá: </span>
                             <span>2.5tr/m<sup>2</sup></span>
@@ -44,7 +44,7 @@ const Index = () => {
                         </div>
                     </div>
                     <div className={cl.item}>
-                        <div>Quận Bình Tân</div>
+                        <div><span>•</span> Quận Bình Tân</div>
                         <div>
                             <span>Giá: </span>
                             <span>2.5tr/m<sup>2</sup></span>
@@ -57,7 +57,7 @@ const Index = () => {
                         </div>
                     </div>
                     <div className={cl.item}>
-                        <div>Quận Bình Thạnh</div>
+                        <div><span>•</span> Quận Bình Thạnh</div>
                         <div>
                             <span>Giá: </span>
                             <span>2.5tr/m<sup>2</sup></span>
@@ -70,7 +70,7 @@ const Index = () => {
                         </div>
                     </div>
                     <div className={cl.item}>
-                        <div>Quận Thủ Đức</div>
+                        <div><span>•</span> Quận Thủ Đức</div>
                         <div>
                             <span>Giá: </span>
                             <span>2.5tr/m<sup>2</sup></span>
@@ -83,7 +83,7 @@ const Index = () => {
                         </div>
                     </div>
                     <div className={cl.item}>
-                        <div>Quận 4</div>
+                        <div><span>•</span> Quận 4</div>
                         <div>
                             <span>Giá: </span>
                             <span>2.5tr/m<sup>2</sup></span>
@@ -96,7 +96,7 @@ const Index = () => {
                         </div>
                     </div>
                     <div className={cl.item}>
-                        <div>Quận 5</div>
+                        <div><span>•</span> Quận 5</div>
                         <div>
                             <span>Giá: </span>
                             <span>2.5tr/m<sup>2</sup></span>
