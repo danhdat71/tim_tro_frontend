@@ -89,7 +89,7 @@ const Header = () => {
                         <HeaderNotifications />
                     </div>
                     <Link href='/notifications' className={`${cl.menu_button} ${cl.notification_mobile}`}>
-                        <span className={cl.count}>1</span>
+                        <span className={cl.count}>{authUserData?.notifications_count}</span>
                         <span><i className="fal fa-bell"></i></span>
                     </Link>
                     <div
