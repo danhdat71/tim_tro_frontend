@@ -39,9 +39,11 @@ export default function SearchBox(props) {
                 }}
                 onKeyDown={(e) => {
                     if (e.key == 'Enter') {
-                        onSubmit(inputed); 
+                        e.target.blur();
+                        onSubmit(inputed);
                     }
                 }}
+                placeholder='Từ khóa, địa chỉ, quận huyện, loại sử dụng,...'
             />
             <div className={cl.button_list}>
                 {renderRemoveInputedButton()}
