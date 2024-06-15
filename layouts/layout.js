@@ -2,8 +2,19 @@ import Header from '@/components/header/header';
 import Head from 'next/head';
 import cl from './layout.module.css';
 import Footer from '@/components/footer/footer';
+import AdsLeft from '@/components/ads/ads-left/ads-left';
+import AdsRight from '@/components/ads/ads-right/ads-right';
+import { useEffect, useState } from 'react';
+import axios from '@/helpers/http-requests/axios';
+import { useDispatch } from 'react-redux';
+import { setAdsData } from '@/redux/features/ads';
+import { useAppSelector } from '@/redux/store';
 
 const Layout = (props) => {
+    const dispatch = useDispatch();
+    const adsData = useAppSelector(function(state){
+        return state.adsReducer.adsData;
+    });
 
     function head()
     {
@@ -24,17 +35,32 @@ const Layout = (props) => {
         );
     }
 
+    useEffect(function(){
+        axios.get('/public-ads')
+            .then(function(res){
+                if (res?.status == 200) {
+                    dispatch(setAdsData(res.data));
+                }
+            });
+    }, []);
+
     return (
         <>
             {head()}
             <div className={cl.container}>
                 <Header></Header>
                 <div className={cl.main_container}>
+                    <AdsLeft
+                        ads={adsData?.side_left}
+                    ></AdsLeft>
                     <div className={cl.padding_container}>
                         <main>
                             {props.children}
                         </main>
                     </div>
+                    <AdsRight
+                        ads={adsData?.side_right}
+                    ></AdsRight>
                 </div>
                 <Footer></Footer>
             </div>

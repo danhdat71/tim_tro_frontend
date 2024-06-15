@@ -31,6 +31,10 @@
     height: 100%;
 }
 
+.hide {
+    display: none!important;
+}
+
 @media screen and (max-width: 600px) {
     .slider_item {
         aspect-ratio: 50/12;

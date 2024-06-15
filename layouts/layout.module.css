@@ -7,6 +7,7 @@
     max-width: 1080px;
     margin: auto;
     background-color: white;
+    position: relative;
 }
 
 .padding_container {

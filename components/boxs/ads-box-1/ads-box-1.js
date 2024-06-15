@@ -6,10 +6,63 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
+import axios from '@/helpers/http-requests/axios';
 
-const AdsBox1 = () => {
+const AdsBox1 = (props) => {
+
+    let {
+        ads=[]
+    } = props;
+
+    async function handleClickAds(adsItem)
+    {
+        window.open(adsItem?.link, '_blank').focus();
+        axios.post(
+            `/ads/click`,
+            {
+                ads_id: adsItem?.id
+            }, 
+            {
+                headers: {
+                    Authorization : 'Bearer ' + localStorage.getItem('access_token')
+                }
+            }
+        );
+    }
+
+    function handleRenderAdsItem()
+    {
+        return ads?.map(function(item, index){
+            return (
+                <SwiperSlide>
+                    <div
+                        className={`${cl.slider_item}`}
+                        target='_blank'
+                        href='#'
+                        onClick={()=>{
+                            handleClickAds(item);
+                        }}
+                    >
+                        <img
+                            loading="lazy"
+                            src={`${process.env.BACKEND_URL}/${item.img_url}`}
+                            alt={`${process.env.BACKEND_URL}/${item.img_url}`}
+                        />
+                        <div className={cl.slider_bg}>
+                            <img
+                                loading="lazy"
+                                src={`${process.env.BACKEND_URL}/${item.img_url}`}
+                                alt={`${process.env.BACKEND_URL}/${item.img_url}`}
+                            />
+                        </div>
+                    </div>
+                </SwiperSlide>
+            )
+        });
+    }
+
     return (
-        <div className='slider-ads-1'>
+        <div className={`slider-ads-1 ${ads?.lenght == 0 ? cl.hide : false}`}>
             <Swiper
                 style={{
                     '--swiper-navigation-color': '#fff',
@@ -22,34 +75,7 @@ const AdsBox1 = () => {
                 lazy={true}
                 loop={true}
             >
-                <SwiperSlide>
-                    <a className={`${cl.slider_item}`} target='_blank' href='#'>
-                        <img
-                            loading="lazy"
-                            src='https://static.topcv.vn/img/AWC_banner1.png'
-                        />
-                        <div className={cl.slider_bg}>
-                            <img
-                                loading="lazy"
-                                src='https://static.topcv.vn/img/AWC_banner1.png'
-                            />
-                        </div>
-                    </a>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <a className={`${cl.slider_item}`} target='_blank' href='#'>
-                        <img
-                            loading="lazy"
-                            src='https://static.topcv.vn/img/wrhlQ5Qiu2W8dktNngWo3GoVqmsiF8OI_1717579647____b92afeaae0785f603e00ffcf850bed56.png'
-                        />
-                        <div className={cl.slider_bg}>
-                            <img
-                                loading="lazy"
-                                src='https://static.topcv.vn/img/wrhlQ5Qiu2W8dktNngWo3GoVqmsiF8OI_1717579647____b92afeaae0785f603e00ffcf850bed56.png'
-                            />
-                        </div>
-                    </a>
-                </SwiperSlide>
+            {handleRenderAdsItem()}
             </Swiper>
         </div>
     );

@@ -103,6 +103,9 @@ export default function Home({ data }) {
   const authUserData = useAppSelector(function(state){
     return state.authUserReducer.user.data;
   });
+  const adsData = useAppSelector(function(state){
+    return state.adsReducer.adsData;
+  });
 
   return (
     <>
@@ -118,7 +121,9 @@ export default function Home({ data }) {
       </Head>
       <FilterForm></FilterForm>
       <PublicCounter></PublicCounter>
-      <AdsBox1></AdsBox1>
+      <AdsBox1
+        ads={adsData?.top_head}
+      ></AdsBox1>
       <Breadcrumb
         items={breadcrumbItems}
       />
