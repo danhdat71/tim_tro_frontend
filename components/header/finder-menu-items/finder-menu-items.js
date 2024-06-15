@@ -62,20 +62,6 @@ const FinderMenuItems = (props) => {
                         </div>
                     </div>
                 </Link>
-                <Link
-                    href="/"
-                    className={cl.menu_item_wrap}
-                    onClick={()=>{handleSetEnableHeader(false)}}
-                >
-                    <div className={cl.menu_item}>
-                        <div className={cl.icon}>
-                            <i className="fal fa-rss-square"></i>
-                        </div>
-                        <div className={cl.text}>
-                            Tin tức
-                        </div>
-                    </div>
-                </Link>
                 <div
                     className={cl.menu_item_wrap}
                     onClick={()=>{
