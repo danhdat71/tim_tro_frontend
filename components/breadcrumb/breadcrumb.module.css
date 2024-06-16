@@ -1,5 +1,6 @@
 .breadcrumb {
     display: flex;
+    flex-wrap: wrap;
     padding: 15px 0;
 }
 
