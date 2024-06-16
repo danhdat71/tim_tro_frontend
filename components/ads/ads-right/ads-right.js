@@ -42,7 +42,7 @@ const AdsRight = (props) => {
     }
 
     function handleRenderAds() {
-        if (ads) {
+        if (ads?.img_url) {
             return (
                 <div
                     className={`${cl.wrap_ads} ${isTop == true ? cl.isTop : false}`}

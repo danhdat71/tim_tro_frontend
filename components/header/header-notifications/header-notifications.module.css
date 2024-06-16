@@ -80,6 +80,7 @@
 .sub_title {
     font-size: 13.5px;
     color: rgb(82, 82, 82);
+    line-height: 1.4;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
