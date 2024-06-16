@@ -67,9 +67,9 @@ const InputFiles = (props) => {
                 return (
                     <div key={index} className={cl.preview_item}>
                         <div className={cl.preview_item_backdrop}>
-                            <img loading="lazy" src={`${process.env.BACKEND_URL}/${value.url}`} />
+                            <img loading="lazy" src={`${process.env.BACKEND_URL}/${value.url}`} alt={`${process.env.BACKEND_URL}/${value.url}`} />
                         </div>
-                        <img loading="lazy" src={`${process.env.BACKEND_URL}/${value.url}`} />
+                        <img loading="lazy" src={`${process.env.BACKEND_URL}/${value.url}`} alt={`${process.env.BACKEND_URL}/${value.url}`} />
                         <div
                             className={cl.btn_remove}
                             onClick={()=>{
@@ -91,9 +91,9 @@ const InputFiles = (props) => {
                 return (
                     <div key={index} className={cl.preview_item}>
                         <div className={cl.preview_item_backdrop}>
-                            <img loading="lazy" src={value.preview} />
+                            <img loading="lazy" src={value.preview} alt={value.preview} />
                         </div>
-                        <img loading="lazy" src={value.preview} />
+                        <img loading="lazy" src={value.preview} alt={value.preview} />
                         <div
                             className={cl.btn_remove}
                             onClick={()=>{

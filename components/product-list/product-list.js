@@ -45,7 +45,7 @@ const ProductList = (props) => {
                     handleSetUserLogin(response.data);
                 }
             });
-    }, [savedProductIds]);
+    }, [savedProductIds]); //eslint-disable-line react-hooks/exhaustive-deps
 
     function handleSetUserLogin(userData) {
         dispatch(setUserData(userData));

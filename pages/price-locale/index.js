@@ -15,7 +15,7 @@ const Index = () => {
     return (
         <div className={cl.wrap_main}>
             <div className={cl.header_bg}>
-                <img src={headerBackground.src}></img>
+                <img src={headerBackground.src} alt={headerBackground.src}></img>
             </div>
             <div className={cl.main}>
                 <div className={cl.title_big}>Thống kê giá nhà đất theo khu vực - Tháng 5/2024</div>

@@ -44,7 +44,7 @@ const Header = () => {
                     handleSetUserLogin(response.data);
                 }
             });
-    }, []);
+    }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
     function renderButtonPostNow() {
         if (authUserData.user_type == 0) {

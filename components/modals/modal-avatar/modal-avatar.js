@@ -26,7 +26,7 @@ const ModalAvatar = (props) => {
             preview: defaultAvatar,
         });
         document.getElementById('input-avatar').value = null;
-    }, [isShowModal]);
+    }, [isShowModal]); //eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(function(){
         return () => {
@@ -51,6 +51,7 @@ const ModalAvatar = (props) => {
             return (
                 <img
                     src={selectedAvatar?.preview}
+                    alt={selectedAvatar?.preview}
                 />
             )
         } else {
@@ -58,6 +59,7 @@ const ModalAvatar = (props) => {
                 return (
                     <img
                         src={oldAvatar?.preview}
+                        alt={oldAvatar?.preview}
                     />
                 );
             }
@@ -66,6 +68,7 @@ const ModalAvatar = (props) => {
         return (
             <img
                 src={defaultAvatarIcon.src}
+                alt={defaultAvatarIcon.src}
             />
         );
     }

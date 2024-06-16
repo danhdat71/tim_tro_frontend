@@ -16,7 +16,7 @@ const Index = () => {
             <TitleCenterBig title="Quy Chế Hoạt Động"></TitleCenterBig>
             <div className={cl.group}>
                 <div className={cl.big_title}>I. GIỚI THIỆU CHUNG</div>
-                <div className={cl.detail_item}>1. <b>Tên sàn giao dịch:</b> Sàn giao dịch thương mại điện tử <b>{process.env.SITE_NAME}</b> (hoặc được gọi là "Sàn", "Kênh", "Trang").</div>
+                <div className={cl.detail_item}>1. <b>Tên sàn giao dịch:</b> Sàn giao dịch thương mại điện tử <b>{process.env.SITE_NAME}</b> (hoặc được gọi là &quot;Sàn&quot;, &quot;Kênh&quot;, &quot;Trang&quot;).</div>
                 <div className={cl.detail_item}>2. <b>Chủ sở hữu:</b> {process.env.COMPANY_NAME}.</div>
                 <div className={cl.detail_item}>3. <b>Mục tiêu:</b> Tạo điều kiện thuận lợi và an toàn cho các tổ chức, cá nhân, doanh nghiệp trao đổi thông tin, đăng tin, chào bán, chào mua các sản phẩm và dịch vụ bất động sản một cách hợp pháp.</div>
             </div>

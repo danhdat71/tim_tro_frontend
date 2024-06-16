@@ -53,7 +53,7 @@ const Index = () => {
         return () => {
             clearTimeout(timeoutAlertError.current);
         }
-    }, [submitDisabled]);
+    }, [submitDisabled]); //eslint-disable-line react-hooks/exhaustive-deps
 
     function handleSetCreateData(key, value) {
         let newCreateData = {...createData};

@@ -132,7 +132,7 @@ const Index = ({data}) => {
                     }));
                 }
             });
-    }, [saveds]);
+    }, [saveds]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(function(){
         axios.get(`${process.env.API}/user/list-saved-products?is_all=1`, {
@@ -158,7 +158,7 @@ const Index = ({data}) => {
         return () => {
             clearTimeout(timeoutSuccess.current);
         }
-    }, [alertSuccess?.isShow]);
+    }, [alertSuccess?.isShow]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(function(){
         timeoutError.current = setTimeout(function(){
@@ -170,7 +170,7 @@ const Index = ({data}) => {
         return () => {
             clearTimeout(timeoutError.current);
         }
-    }, [alertError?.isShow]);
+    }, [alertError?.isShow]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function handleSaveProduct(payload) {
         axios.post(`/user/save-product`, payload, {

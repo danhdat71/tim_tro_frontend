@@ -17,7 +17,7 @@ const Index = () => {
             <Breadcrumb items={breadcrumbs}></Breadcrumb>
             <TitleCenterBig title="Về Chúng Tôi"></TitleCenterBig>
             <div className={cl.brand_logo}>
-                <img src={logoImg.src}></img>
+                <img src={logoImg.src} alt={logoImg.src}></img>
             </div>
             <div className={cl.content}>
                 <div>Người Việt có câu: An cư, lạc nghiệp. Để giúp bạn <b>lạc nghiệp</b> thì <b>Stay Seeker</b> sinh ra để giúp bạn giải quyết vấn đề <b>An cư</b>. Thông qua công cụ tìm kiếm mọi người có thể dễ dàng tìm thấy chúng tôi thông qua các từ khóa: <i>tìm trọ</i>, <i>tìm trọ stay seeker</i>, ... </div>

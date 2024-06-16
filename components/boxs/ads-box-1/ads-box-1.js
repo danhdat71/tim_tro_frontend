@@ -34,7 +34,9 @@ const AdsBox1 = (props) => {
     {
         return ads?.map(function(item, index){
             return (
-                <SwiperSlide>
+                <SwiperSlide
+                    key={index}
+                >
                     <div
                         className={`${cl.slider_item}`}
                         target='_blank'

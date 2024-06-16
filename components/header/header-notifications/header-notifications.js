@@ -140,7 +140,7 @@ const HeaderNotifications = (props) => {
                     }
                 });
         }
-    }, [headerState.is_enable_notification_box]);
+    }, [headerState.is_enable_notification_box]); //eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div

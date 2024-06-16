@@ -76,13 +76,14 @@ const Index = ({data}) => {
                     }));
                 }
             });
-    }, [router]);
+    }, [router]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function handleRenderNotificationItem() {
         if (data?.data?.length > 0) {
             return data?.data?.map(function(val, index) {
                 return (
                     <NotificationItem
+                        key={index}
                         id={val.id}
                         title={val.title}
                         description={val.description}

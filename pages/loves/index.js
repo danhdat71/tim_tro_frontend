@@ -68,7 +68,7 @@ const Index = ({ data }) => {
         if (data?.status == 401) {
             router.push('/');
         }
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(function(){
         axios.get(`/auth/get-me`, {
@@ -81,7 +81,7 @@ const Index = ({ data }) => {
                     dispatch(setUserData(response.data));
                 }
             });
-    }, [router.query]);
+    }, [router.query]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function handleRenderProducts() {
         if (data?.products?.data?.length > 0) {

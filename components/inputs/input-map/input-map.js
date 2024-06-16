@@ -22,7 +22,7 @@ const InputMap = (props) => {
 
     useEffect(function(){
         onChange(center);
-    }, [center]);
+    }, [center]); //eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(function(){
         if (address != '') {
@@ -46,7 +46,7 @@ const InputMap = (props) => {
             }
         }
 
-    }, [address]);
+    }, [address]); //eslint-disable-line react-hooks/exhaustive-deps
 
     function handleSetCenter(value) {
         let newCenter = {...center};

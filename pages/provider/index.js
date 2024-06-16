@@ -72,7 +72,7 @@ const Index = ({data}) => {
         return () => {
             clearTimeout(timeoutSuccess.current);
         }
-    }, [timeoutSuccess.current]);
+    }, [timeoutSuccess.current]); //eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(function(){
         axios.get('/finder/followings?is_all=true', {
@@ -219,9 +219,13 @@ const Index = ({data}) => {
             <div className={cl.wrap_avatar_box}>
                 <div className={cl.wrap_avatar}>
                     <div className={cl.preview_img}>
-                        <img src={data?.provider?.avatar
-                            ? process.env.BACKEND_URL + '/' + data?.provider?.avatar
-                            : defaultAvatarIcon.src}
+                        <img
+                            src={data?.provider?.avatar
+                                ? process.env.BACKEND_URL + '/' + data?.provider?.avatar
+                                : defaultAvatarIcon.src}
+                            alt={data?.provider?.avatar
+                                ? process.env.BACKEND_URL + '/' + data?.provider?.avatar
+                                : defaultAvatarIcon.src}
                         ></img>
                     </div>
                 </div>

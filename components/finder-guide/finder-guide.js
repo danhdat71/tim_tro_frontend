@@ -18,7 +18,7 @@ const FinderGuide = () => {
                         <span>Đăng nhập</span>
                     </div>
                     <div className={cl.step_item_img}>
-                        <img src={userLoginIcon.src}/>
+                        <img src={userLoginIcon.src} alt={userLoginIcon.src}/>
                     </div>
                     <div className={cl.desc}>Bạn có thể đăng nhập với tư cách người tìm hoặc người rao.</div>
                 </div>
@@ -28,7 +28,7 @@ const FinderGuide = () => {
                         <span>Tìm kiếm</span>
                     </div>
                     <div className={cl.step_item_img}>
-                        <img src={searchIconImg.src}/>
+                        <img src={searchIconImg.src} alt={searchIconImg.src}/>
                     </div>
                     <div className={cl.desc}>Tìm kiếm & lọc các tin đăng để tìm trọ phù hợp.</div>
                 </div>
@@ -38,7 +38,7 @@ const FinderGuide = () => {
                         <span>Đặt lịch hẹn</span>
                     </div>
                     <div className={cl.step_item_img}>
-                        <img src={calendarIcon.src}/>
+                        <img src={calendarIcon.src} alt={calendarIcon.src}/>
                     </div>
                     <div className={cl.desc}>Thỏa thuận hẹn xem giữa người đăng và người tìm.</div>
                 </div>
@@ -48,7 +48,7 @@ const FinderGuide = () => {
                         <span>Đến xem trọ</span>
                     </div>
                     <div className={cl.step_item_img}>
-                        <img src={partnerIconImg.src}/>
+                        <img src={partnerIconImg.src} alt={calendarIcon.src}/>
                     </div>
                     <div className={cl.desc}>Liên hệ và đến xem trọ trực tiếp thông qua thỏa thuận trước.</div>
                 </div>
@@ -58,7 +58,7 @@ const FinderGuide = () => {
                         <span>Đánh giá</span>
                     </div>
                     <div className={cl.step_item_img}>
-                        <img src={ratetinIcon.src}/>
+                        <img src={ratetinIcon.src} alt={calendarIcon.src}/>
                     </div>
                     <div className={cl.desc}>Có thể để lại đánh giá giữa người đăng và người tìm.</div>
                 </div>
@@ -68,7 +68,7 @@ const FinderGuide = () => {
                         <span>Quyết định</span>
                     </div>
                     <div className={cl.step_item_img}>
-                        <img src={contractSignImg.src}/>
+                        <img src={contractSignImg.src} alt={calendarIcon.src}/>
                     </div>
                     <div className={cl.desc}>Bước cuối cùng để đưa ra quyết định thuê.</div>
                 </div>

@@ -104,7 +104,7 @@ const Slug = ({data}) => {
 
     useEffect(function(){
         handleSetCreateData('tel', authUserData?.tel);
-    }, [authUserData]);
+    }, [authUserData]); //eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(function(){
         timeoutAlertSuccessRef.current = setTimeout(function(){

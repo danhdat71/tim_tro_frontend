@@ -23,7 +23,7 @@ const AdsLeft = (props) => {
 
         window.addEventListener('scroll', actionScroll);
         return () => window.removeEventListener('scroll', actionScroll);
-    }, []);
+    }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
     async function handleClickAds()
     {

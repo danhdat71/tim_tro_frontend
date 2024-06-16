@@ -52,11 +52,11 @@ const InputAddress = (props) => {
                 }
             });
         }
-    }, []);
+    }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(function(){
         onChange(selectedData);
-    }, [selectedData]);
+    }, [selectedData]); //eslint-disable-line react-hooks/exhaustive-deps
 
     function handleSetSelectedData(key, value) {
         let newSelectedData = {...selectedData};

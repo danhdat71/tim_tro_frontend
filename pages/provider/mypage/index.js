@@ -164,6 +164,7 @@ const Index = ({data}) => {
             return data?.followings?.data?.map(function (val, index) {
                 return (
                     <AvatarUsername
+                        key={index}
                         createdAt={val.created_at}
                         fullName={val.full_name}
                         href={`#`}
@@ -210,9 +211,14 @@ const Index = ({data}) => {
                     }}
                 >
                     <div className={cl.preview_img}>
-                        <img src={userMypageData?.avatar
+                        <img
+                            src={userMypageData?.avatar
                                 ? `${process.env.BACKEND_URL}/${userMypageData.avatar}`
-                                : defaultAvatarIcon.src}></img>
+                                : defaultAvatarIcon.src}
+                            alt={userMypageData?.avatar
+                                ? `${process.env.BACKEND_URL}/${userMypageData.avatar}`
+                                : defaultAvatarIcon.src}
+                        ></img>
                     </div>
                     <div className={cl.icon}>
                         <i className="fas fa-camera"></i>

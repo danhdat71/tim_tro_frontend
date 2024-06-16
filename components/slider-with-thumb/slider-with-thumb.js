@@ -39,11 +39,13 @@ const SliderWithThumb = (props) => {
                             data-fancybox="gallery"
                             loading="lazy"
                             src={baseUrl + val.url}
+                            alt={baseUrl + val.url}
                         />
                         <div className={cl.slider_bg}>
                             <img
                                 loading="lazy"
                                 src={baseUrl + val.thumb_url}
+                                alt={baseUrl + val.thumb_url}
                             />
                         </div>
                     </div>
@@ -63,6 +65,7 @@ const SliderWithThumb = (props) => {
                         <img
                             loading="lazy"
                             src={baseUrl + val.url}
+                            alt={baseUrl + val.url}
                         />
                     </div>
                 </SwiperSlide>
