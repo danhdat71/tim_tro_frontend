@@ -116,7 +116,7 @@ const Index = () => {
         })
         .then(response => {
             setIsDisableSubmit(false);
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 handleShowPreview(true);
             } else if (response.status == 422) {
                 setErrors(response.errors);
@@ -138,7 +138,7 @@ const Index = () => {
         })
         .then(response => {
             setIsDisableSubmit(false);
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 handleShowPreview(false);
                 setIsShowAlertSuccess(true);
                 timeoutRedirect.current = setTimeout(function(){
@@ -162,7 +162,7 @@ const Index = () => {
         })
         .then(response => {
             setIsDisableSubmit(false);
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 router.push('/provider/hostel-manager?status=0&page=1')
             } else if (response.status == 422) {
                 setErrors(response.errors);

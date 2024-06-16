@@ -1,5 +1,5 @@
 async function get(endpoint, accessToken = '') {
-    let res = await fetch(process.env.API + endpoint, {
+    let res = await fetch(process.env.API_SERVERSIDE + endpoint, {
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Accept': 'application/json',

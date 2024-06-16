@@ -33,7 +33,7 @@ export async function getServerSideProps(context) {
     let data = {};
 
     // Get detail product
-    let product = await fetch(`${process.env.API}/public-product/${slug}`, {
+    let product = await fetch(`${process.env.API_SERVERSIDE}/public-product/${slug}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export async function getServerSideProps(context) {
     // Get others same districts with count
     let districtId = product?.data?.district_id;
     let price = product?.data?.price;
-    let othersInDistrict = await fetch(`${process.env.API}/wards-with-count-products?district_id=${districtId}&current_price=${price}`, {
+    let othersInDistrict = await fetch(`${process.env.API_SERVERSIDE}/wards-with-count-products?district_id=${districtId}&current_price=${price}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export async function getServerSideProps(context) {
 
     // Get other districts with count products
     let provinceId = product?.data?.province_id;
-    let otherDistricts = await fetch(`${process.env.API}/districts-with-count-products?province_id=${provinceId}`, {
+    let otherDistricts = await fetch(`${process.env.API_SERVERSIDE}/districts-with-count-products?province_id=${provinceId}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export async function getServerSideProps(context) {
     data.otherDistricts = otherDistricts.data;
 
     // Get other products
-    let otherProducts = await fetch(`${process.env.API}/products?without_id=${product.data.id}&province_id=${product.data.province_id}&limit=4`, {
+    let otherProducts = await fetch(`${process.env.API_SERVERSIDE}/products?without_id=${product.data.id}&province_id=${product.data.province_id}&limit=4`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ const Index = ({data}) => {
             }
         })
             .then(response => {
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     dispatch(updateUserDataAttr({
                         key : 'user_saved_products_count',
                         value : saveds.length
@@ -141,7 +141,7 @@ const Index = ({data}) => {
             }
         })
             .then(response => {
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     setSaveds(response.data);
                 }
             });
@@ -179,7 +179,7 @@ const Index = ({data}) => {
             }
         })
         .then(response => {
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 setSaveds(response.data);
             }
         });
@@ -194,7 +194,7 @@ const Index = ({data}) => {
         })
         .then(response => {
             setDisableSubmitReport(false);
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 setAlertSucess({
                     message: "Báo cáo bài đăng thành công !",
                     sub: "Chúng tôi sẽ phản hồi sau khi xem xét báo cáo này",

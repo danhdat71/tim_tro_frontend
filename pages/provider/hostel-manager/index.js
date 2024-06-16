@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
         page = 1,
     } = context.query;
 
-    let fetchData = await fetch(`${process.env.API}/provider/product/list?page=${page}&status=${status}`, {
+    let fetchData = await fetch(`${process.env.API_SERVERSIDE}/provider/product/list?page=${page}&status=${status}`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ const Index = ({data}) => {
             }
         })
             .then(function(response) {
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     setIsShowAlertSuccess(true);
                     router.push(window.location.href);
                 } else if (response.status == 422) {

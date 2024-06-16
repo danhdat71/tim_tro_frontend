@@ -47,7 +47,7 @@ const ToggleHeader = () => {
             }
         })
             .then(response => {
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     handleSetEnableHeader(false);
                     localStorage.removeItem('access_token');
                     deleteCookie('access_token');

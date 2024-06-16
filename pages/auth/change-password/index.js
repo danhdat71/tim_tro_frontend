@@ -55,7 +55,7 @@ const Index = () => {
                 setDisableSubmit(false);
                 if (response.status == 422) {
                     setErrors(response.errors);
-                } else if (response.status == 200) {
+                } else if (response?.status == 200) {
                     let accessToken = response.data.access_token;
                     localStorage.setItem('access_token', accessToken);
                     setCookie('access_token', accessToken);

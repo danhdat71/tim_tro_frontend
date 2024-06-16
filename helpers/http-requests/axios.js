@@ -8,14 +8,14 @@ axios.interceptors.response.use(
         return response.data;
     },
     error => {
-        if (error.response.status == 422) {
-            return error.response.data;
-        } else if (error.response.status == 400) {
-            return error.response.data; 
-        } else if (error.response.status == 401) {
-            return error.response.data;
-        } else if (error.response.status == 404) {
-            return error.response.data;
+        if (error?.response?.status == 422) {
+            return error?.response?.data;
+        } else if (error?.response?.status == 400) {
+            return error?.response?.data; 
+        } else if (error?.response?.status == 401) {
+            return error?.response?.data;
+        } else if (error?.response?.status == 404) {
+            return error?.response?.data;
         }
     }
 );

@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
         page = 1,
     } = context.query;
 
-    let fetchData = await fetch(`${process.env.API}/notifications?page=${page}`, {
+    let fetchData = await fetch(`${process.env.API_SERVERSIDE}/notifications?page=${page}`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',

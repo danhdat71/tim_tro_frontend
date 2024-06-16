@@ -93,7 +93,7 @@ const Index = ({data}) => {
             .then(response => {
                 setSubmitBtnDisabled(false);
                 formDataRef.current = null;
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     handleUpdateAuthUserData('avatar', response.data.avatar);
                     setIsShowAvatarModal(false);
                     setIsShowAlertSuccess(true);
@@ -118,7 +118,7 @@ const Index = ({data}) => {
             .then(response => {
                 setSubmitBtnDisabled(false);
                 formDataRef.current = null;
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     handleUpdateAuthUserData(paramName, response.data[paramName]);
                     callBackCloseModal(false);
                     setIsShowAlertSuccess(true);
@@ -147,7 +147,7 @@ const Index = ({data}) => {
             .then(response => {
                 setSubmitBtnDisabled(false);
                 formDataRef.current = null;
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     callBackCloseModal(false);
                     setIsShowAlertSuccess(true);
                     setDataInfoPassword({});

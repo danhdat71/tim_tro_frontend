@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
   } = context.query;
 
   // Get provinces with count products
-  let provincesCount = await fetch(`${process.env.API}/provinces?limit=10`, {
+  let provincesCount = await fetch(`${process.env.API_SERVERSIDE}/provinces?limit=10`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export async function getServerSideProps(context) {
   data.provincesCount = provincesCount.data;
 
   // Get provionces with districts count products
-  let provincesDistrictCount = await fetch(`${process.env.API}/provinces-with-districts`, {
+  let provincesDistrictCount = await fetch(`${process.env.API_SERVERSIDE}/provinces-with-districts`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export async function getServerSideProps(context) {
   } else {
     priceRange = price_range;
   }
-  let products = await fetch(`${process.env.API}/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}&ward_id=${ward_id}&keyword=${keyword}&acreage=${acreage}&price_range=${priceRange}&used_type=${used_type}&bed_rooms=${bed_rooms}&is_allow_pet=${is_allow_pet}`, {
+  let products = await fetch(`${process.env.API_SERVERSIDE}/products?page=${page}&order_by=${order_by}&province_id=${province_id}&district_id=${district_id}&ward_id=${ward_id}&keyword=${keyword}&acreage=${acreage}&price_range=${priceRange}&used_type=${used_type}&bed_rooms=${bed_rooms}&is_allow_pet=${is_allow_pet}`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export async function getServerSideProps(context) {
   data.products = products.data;
 
   // Get prices range
-  let pricesRange = await fetch(`${process.env.API}/prices-with-count`, {
+  let pricesRange = await fetch(`${process.env.API_SERVERSIDE}/prices-with-count`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',

@@ -77,7 +77,7 @@ const Index = () => {
                     sub: 'Nếu vẫn không xác nhận xin hãy thử gửi lại mã OTP'
                 })
             }
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 router.push({
                     pathname: '/auth/change-password',
                     query: { 

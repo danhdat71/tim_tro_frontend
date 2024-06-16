@@ -34,7 +34,7 @@ const Register = () => {
                     window.scrollTo(0, 0)
                     setErrors(response.errors);
                 }
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     setIsShowModalReview(true);
                 }
             });
@@ -47,7 +47,7 @@ const Register = () => {
                     window.scrollTo(0, 0)
                     setErrors(response.errors);
                 }
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     let email = registerData.email;
                     setSubmitBtnDisabled(false);
                     setIsShowModalReview(false);

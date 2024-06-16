@@ -34,7 +34,7 @@ export async function getServerSideProps(context) {
     } = context.query;
 
     // Get products
-    let products = await fetch(`${process.env.API}/user/list-saved-products?page=${page}&order_by=${order_by}`, {
+    let products = await fetch(`${process.env.API_SERVERSIDE}/user/list-saved-products?page=${page}&order_by=${order_by}`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const Index = ({ data }) => {
             }
         })
             .then(response => {
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     dispatch(setUserData(response.data));
                 }
             });
@@ -147,7 +147,7 @@ const Index = ({ data }) => {
             .then(response => {
                 setTmpDelete({});
                 setSubmitDisabled(false);
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     handleChangeRouterParam(router, 'page', 1, '/loves');
                 }
             });

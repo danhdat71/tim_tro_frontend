@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
     let data = {};
 
     // Get detail provider
-    let provider = await fetch(`${process.env.API}/public-provider/${app_id}`, {
+    let provider = await fetch(`${process.env.API_SERVERSIDE}/public-provider/${app_id}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export async function getServerSideProps(context) {
     data.provider = provider.data;
 
     // Get products
-    let products = await fetch(`${process.env.API}/public-provider/${app_id}/products?page=${page}`, {
+    let products = await fetch(`${process.env.API_SERVERSIDE}/public-provider/${app_id}/products?page=${page}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const Index = ({data}) => {
             }
         })
         .then(function(response) {
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 setFollowings(response.data);
             }
         });
@@ -145,7 +145,7 @@ const Index = ({data}) => {
         })
             .then(response => {
                 console.log('response', response);
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     if (payload.action == 1) {
                         setAlertSuccess({
                             isShow:true,

@@ -73,7 +73,7 @@ const Index = () => {
         .then(response => {
             setSubmitDisabled(false);
             setIsShowConfirm(false);
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 setIsShowAlertSuccess(true);
                 formDataRef.current = null;
                 let timeout = setTimeout(function(){

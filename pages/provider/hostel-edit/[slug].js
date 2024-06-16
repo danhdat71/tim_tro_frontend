@@ -30,7 +30,7 @@ export async function getServerSideProps(context) {
         slug = '',
     } = context.query;
 
-    let fetchData = await fetch(`${process.env.API}/provider/product/detail?slug=${slug}`, {
+    let fetchData = await fetch(`${process.env.API_SERVERSIDE}/provider/product/detail?slug=${slug}`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ const Slug = ({data}) => {
         })
         .then(response => {
             setIsDisableSubmit(false);
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 handleShowPreview(true);
             } else if (response.status == 422) {
                 setErrors(response.errors);
@@ -196,7 +196,7 @@ const Slug = ({data}) => {
         })
         .then(response => {
             setIsDisableSubmit(false);
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 handleShowPreview(false);
                 setIsShowAlertSuccess(true);
                 timeoutRedirect.current = setTimeout(function(){

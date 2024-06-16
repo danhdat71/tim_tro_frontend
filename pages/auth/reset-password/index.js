@@ -41,7 +41,7 @@ const Index = () => {
                     });
                 } else if (response.status == 422) {
                     setErrors(response.errors);
-                } else if (response.status == 200) {
+                } else if (response?.status == 200) {
                     router.push({
                         pathname: '/auth/verify-otp-change-password',
                         query: { 

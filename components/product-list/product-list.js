@@ -58,7 +58,7 @@ const ProductList = (props) => {
             }
         })
         .then(response => {
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 setSavedProductIds(response.data);
             }
         });

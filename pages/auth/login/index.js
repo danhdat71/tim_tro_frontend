@@ -60,7 +60,7 @@ const Index = () => {
                         message:response.message
                     });
                 }
-                if (response.status == 200) {
+                if (response?.status == 200) {
                     // Case user is not active
                     if (response.data.status == INACTIVE) {
                         router.push({

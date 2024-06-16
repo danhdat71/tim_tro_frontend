@@ -94,7 +94,7 @@ const VerifyOtp = () => {
                     sub: 'Nếu vẫn không xác nhận xin hãy thử gửi lại mã OTP'
                 })
             }
-            if (response.status == 200) {
+            if (response?.status == 200) {
                 setSuccess({
                     message: 'Chúc mừng bạn đã đăng ký thành công !',
                     sub: 'Đang di chuyển về trang chủ'
