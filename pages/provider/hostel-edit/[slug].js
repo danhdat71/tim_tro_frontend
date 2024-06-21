@@ -224,7 +224,7 @@ const Slug = ({data}) => {
                         placeholder="Cho thuê phòng trọ ABC còn trống giá rẻ"
                         isDisableEnterLine
                         min={20}
-                        max={50}
+                        max={100}
                         onChange={(value)=>{
                             handleSetCreateData('title', value);
                         }}
