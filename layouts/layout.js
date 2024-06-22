@@ -9,15 +9,18 @@ import axios from '@/helpers/http-requests/axios';
 import { useDispatch } from 'react-redux';
 import { setAdsData } from '@/redux/features/ads';
 import { useAppSelector } from '@/redux/store';
+import { firebaseCloudMessaging } from '@/config/firebase';
 
 const Layout = (props) => {
     const dispatch = useDispatch();
-    const adsData = useAppSelector(function(state){
+    const adsData = useAppSelector(function (state) {
         return state.adsReducer.adsData;
     });
+    const authUserData = useAppSelector(function(state){
+        return state.authUserReducer.user.data;
+    });
 
-    function head()
-    {
+    function head() {
         return (
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
@@ -35,9 +38,27 @@ const Layout = (props) => {
         );
     }
 
-    useEffect(function(){
+    useEffect(function() {
+        // Retrive FCM token
+        async function retriveFCMToken() {
+            let token = await firebaseCloudMessaging.init();
+            axios.post('/notification/store-fcm-token', {
+                fcm_token: token
+            }, {
+                headers: {
+                    Authorization : 'Bearer ' + localStorage.getItem('access_token')
+                }
+            });
+        }
+        if (authUserData?.id != undefined) {
+            retriveFCMToken();
+        }
+    }, [authUserData?.id]);
+
+    useEffect(function () {
+        // Get ads
         axios.get('/public-ads')
-            .then(function(res){
+            .then(function (res) {
                 if (res?.status == 200) {
                     dispatch(setAdsData(res.data));
                 }

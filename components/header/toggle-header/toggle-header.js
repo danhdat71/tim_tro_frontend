@@ -41,7 +41,11 @@ const ToggleHeader = () => {
     }
 
     function handleLogout() {
-        axios.post(`/auth/logout`, null, {
+        axios.post(`/auth/logout`, 
+        {
+            fcm_token: localStorage.getItem('fcm_token')
+        },
+        {
             headers: {
                 Authorization : 'Bearer ' + localStorage.getItem('access_token')
             }
@@ -50,6 +54,7 @@ const ToggleHeader = () => {
                 if (response?.status == 200) {
                     handleSetEnableHeader(false);
                     localStorage.removeItem('access_token');
+                    localStorage.removeItem('fcm_token');
                     deleteCookie('access_token');
                     handleSetUserLogin({});
                     router.push({
