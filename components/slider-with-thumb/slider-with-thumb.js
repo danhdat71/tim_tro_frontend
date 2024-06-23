@@ -64,8 +64,8 @@ const SliderWithThumb = (props) => {
                     <div className={`${cl.thumb_slider_item}`}>
                         <img
                             loading="lazy"
-                            src={baseUrl + val.url}
-                            alt={baseUrl + val.url}
+                            src={baseUrl + val.thumb_url}
+                            alt={baseUrl + val.thumb_url}
                         />
                     </div>
                 </SwiperSlide>
