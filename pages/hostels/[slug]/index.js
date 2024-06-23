@@ -26,6 +26,7 @@ import { useDispatch } from 'react-redux';
 import { updateUserDataAttr } from '@/redux/auth';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import AlertError from '@/components/alerts/alert-error/alert-error';
+import Head from 'next/head';
 
 export async function getServerSideProps(context) {
     let accessToken = getAccessTokenByContext(context);
@@ -284,98 +285,111 @@ const Index = ({data}) => {
     }
 
     return (
-        <div className={cl.hostel_detail}>
-            <Breadcrumb items={breadCrumbs.current}></Breadcrumb>
-            <SliderWithThumb
-                images={data?.product?.product_images}
-                imageThumbs={data?.product?.product_images}
-                baseUrl={process.env.BACKEND_URL + '/'}
-            ></SliderWithThumb>
+        <>
+            <Head>
+                <title>{data?.product?.title}</title>
+                <meta name="keywords" content={`thuê trọ, ${data?.product?.title}`} />
+                <meta name="description" content={data?.product?.description} />
+                <meta property="og:description" content={data?.product?.description} />
+                <meta property="og:title" content={data?.product?.title} />
+                <meta property="og:type" content="website" />
+                <meta property="og:locale" content="vi_VN" />
+                <meta property="og:site_name" content={`${process.env.APP_NAME} phòng trọ giá rẻ`} />
+                <meta property="og:image" content={process.env.BACKEND_URL + '/' + data?.product?.product_images[0].url}></meta>
+            </Head>
             <div className={cl.hostel_detail}>
-                <h2 className={cl.product_name}>{data?.product?.title}</h2>
-                <div className={cl.price}>{formatNumber(data?.product?.price)} / tháng</div>
-                <div className={cl.button_bar}>
-                    <div>
-                        <div className={cl.wrap_main_button}>
-                            {handleRenderButtonSave()}
-                            <ButtonCall tel={data?.product?.tel}></ButtonCall>
+                <Breadcrumb items={breadCrumbs.current}></Breadcrumb>
+                <SliderWithThumb
+                    images={data?.product?.product_images}
+                    imageThumbs={data?.product?.product_images}
+                    baseUrl={process.env.BACKEND_URL + '/'}
+                ></SliderWithThumb>
+                <div className={cl.hostel_detail}>
+                    <h2 className={cl.product_name}>{data?.product?.title}</h2>
+                    <div className={cl.price}>{formatNumber(data?.product?.price)} / tháng</div>
+                    <div className={cl.button_bar}>
+                        <div>
+                            <div className={cl.wrap_main_button}>
+                                {handleRenderButtonSave()}
+                                <ButtonCall tel={data?.product?.tel}></ButtonCall>
+                            </div>
+                        </div>
+                        <div className={cl.other_button}>
+                            <ButtonReport
+                                onClick={()=>{
+                                    setShowModalReport(true);
+                                }}
+                            ></ButtonReport>
+                            <ButtonShare
+                                onClick={()=>{
+                                    setShowModalShare(true);
+                                }}
+                            />
                         </div>
                     </div>
-                    <div className={cl.other_button}>
-                        <ButtonReport
-                            onClick={()=>{
-                                setShowModalReport(true);
-                            }}
-                        ></ButtonReport>
-                        <ButtonShare
-                            onClick={()=>{
-                                setShowModalShare(true);
-                            }}
+                    <ProductDetailInfo
+                        data={data?.product}
+                    />
+                    <div className={cl.wrap_avatar}>
+                        <AvatarUsername
+                            createdAt={data?.product?.user?.created_at}
+                            fullName={data?.product?.user?.full_name}
+                            href={`/provider?app_id=${data?.product?.user?.app_id}`}
+                            avatar={data?.product?.user?.avatar}
                         />
+                        <div className={cl.created_at}>Đăng lúc: <i>{formatToHiDMY(data?.product?.posted_at)}</i></div>
                     </div>
                 </div>
-                <ProductDetailInfo
-                    data={data?.product}
-                />
-                <div className={cl.wrap_avatar}>
-                    <AvatarUsername
-                        createdAt={data?.product?.user?.created_at}
-                        fullName={data?.product?.user?.full_name}
-                        href={`/provider?app_id=${data?.product?.user?.app_id}`}
-                        avatar={data?.product?.user?.avatar}
+                <div className={cl.search_other_price}>
+                    <TitleLeftBig title="Bảng giá theo khu vực"></TitleLeftBig>
+                    <OtherAreaBox
+                        items={data?.othersInDistrict?.wards}
+                        district={data?.othersInDistrict?.district}
+                        province={data?.othersInDistrict?.province}
                     />
-                    <div className={cl.created_at}>Đăng lúc: <i>{formatToHiDMY(data?.product?.posted_at)}</i></div>
                 </div>
-            </div>
-            <div className={cl.search_other_price}>
-                <TitleLeftBig title="Bảng giá theo khu vực"></TitleLeftBig>
-                <OtherAreaBox
-                    items={data?.othersInDistrict?.wards}
-                    district={data?.othersInDistrict?.district}
-                    province={data?.othersInDistrict?.province}
+                <div className={cl.other_search}>
+                    <BestAreaBox
+                        title="Các trọ theo khu vực"
+                        items={data.otherDistricts}
+                        onClick={(value)=>{
+                            router.push({
+                                pathname: '/',
+                                query: {
+                                    district_id: value
+                                }
+                            });
+                        }}
+                    ></BestAreaBox>
+                </div>
+                {handleRenderOtherProduct()}
+                <ModalReport
+                    showModalReport={showModalReport}
+                    handleShowModalReport={setShowModalReport}
+                    onSubmit={(value)=>{
+                        setDisableSubmitReport(true);
+                        handleSubmitReport(value);
+                    }}
+                    errors={reportErrors}
+                    productId={data?.product?.id}
+                    disableSubmitReport={disableSubmitReport}
+                ></ModalReport>
+                <ModalShare
+                    showModalShare={showModalShare}
+                    handleShowModalShare={setShowModalShare}
+                ></ModalShare>
+                <AlertSuccess
+                    isShow={alertSuccess?.isShow}
+                    sub={alertSuccess?.sub}
+                    message={alertSuccess?.message}
+                />
+                <AlertError
+                    isShow={alertError?.isShow}
+                    sub={alertError?.sub}
+                    message={alertError?.message}
                 />
             </div>
-            <div className={cl.other_search}>
-                <BestAreaBox
-                    title="Các trọ theo khu vực"
-                    items={data.otherDistricts}
-                    onClick={(value)=>{
-                        router.push({
-                            pathname: '/',
-                            query: {
-                                district_id: value
-                            }
-                        });
-                    }}
-                ></BestAreaBox>
-            </div>
-            {handleRenderOtherProduct()}
-            <ModalReport
-                showModalReport={showModalReport}
-                handleShowModalReport={setShowModalReport}
-                onSubmit={(value)=>{
-                    setDisableSubmitReport(true);
-                    handleSubmitReport(value);
-                }}
-                errors={reportErrors}
-                productId={data?.product?.id}
-                disableSubmitReport={disableSubmitReport}
-            ></ModalReport>
-            <ModalShare
-                showModalShare={showModalShare}
-                handleShowModalShare={setShowModalShare}
-            ></ModalShare>
-            <AlertSuccess
-                isShow={alertSuccess?.isShow}
-                sub={alertSuccess?.sub}
-                message={alertSuccess?.message}
-            />
-            <AlertError
-                isShow={alertError?.isShow}
-                sub={alertError?.sub}
-                message={alertError?.message}
-            />
-        </div>
+        </>
     );
 }
 

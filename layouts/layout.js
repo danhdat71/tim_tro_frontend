@@ -34,6 +34,7 @@ const Layout = (props) => {
                     rel="stylesheet"
                     type="text/css"
                 />
+                <link rel="icon" href={`${process.env.BACKEND_URL}/assets/imgs/logo-small.png`} type="image/x-icon" />
             </Head>
         );
     }
