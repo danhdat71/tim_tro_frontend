@@ -17,6 +17,7 @@ import EmptyList from '@/components/empty-list/empty-list';
 import axios from '@/helpers/http-requests/axios';
 import AlertSuccess from '@/components/alerts/alert-success/alert-success';
 import { useAppSelector } from '@/redux/store';
+import Head from 'next/head';
 
 export async function getServerSideProps(context) {
     let accessToken = getAccessTokenByContext(context);
@@ -214,66 +215,84 @@ const Index = ({data}) => {
     }
 
     return (
-        <div className={cl.mypage}>
-            <TitleCenterBig title="Trang cá nhân"></TitleCenterBig>
-            <div className={cl.wrap_avatar_box}>
-                <div className={cl.wrap_avatar}>
-                    <div className={cl.preview_img}>
-                        <img
-                            src={data?.provider?.avatar
-                                ? process.env.BACKEND_URL + '/' + data?.provider?.avatar
-                                : defaultAvatarIcon.src}
-                            alt={data?.provider?.avatar
-                                ? process.env.BACKEND_URL + '/' + data?.provider?.avatar
-                                : defaultAvatarIcon.src}
-                        ></img>
+        <>
+            <Head>
+                <title>Trang cá nhân { data?.provider?.full_name }</title>
+                <meta name="keywords" content={`thuê trọ, ${data?.provider?.full_name}`} />
+                <meta name="description" content={ data?.provider?.description } />
+                <meta property="og:description" content={ data?.provider?.description } />
+                <meta property="og:title" content={ `Trang cá nhân ${data?.provider?.full_name}` }  />
+                <meta property="og:type" content="website" />
+                <meta property="og:locale" content="vi_VN" />
+                <meta property="og:site_name" content={`${process.env.APP_NAME} phòng trọ giá rẻ`} />
+                <meta
+                    property="og:image"
+                    content={data?.provider?.avatar
+                        ? process.env.BACKEND_URL + '/' + data?.provider?.avatar
+                        : process.env.BACKEND_URL + '/assets/imgs/default_avatar.jpg'}
+                ></meta>
+            </Head>
+            <div className={cl.mypage}>
+                <TitleCenterBig title="Trang cá nhân"></TitleCenterBig>
+                <div className={cl.wrap_avatar_box}>
+                    <div className={cl.wrap_avatar}>
+                        <div className={cl.preview_img}>
+                            <img
+                                src={data?.provider?.avatar
+                                    ? process.env.BACKEND_URL + '/' + data?.provider?.avatar
+                                    : defaultAvatarIcon.src}
+                                alt={data?.provider?.avatar
+                                    ? process.env.BACKEND_URL + '/' + data?.provider?.avatar
+                                    : defaultAvatarIcon.src}
+                            ></img>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className={cl.button_bar}>
-                {handleRenderFollowButton()}
-            </div>
-            <div className={cl.info_item_box}>
-                <label className='label label-block'>Họ tên</label>
-                <div className={cl.info_item_content_bold}>{data?.provider?.full_name}</div>
-            </div>
-            <div className={cl.info_item_box}>
-                <label className='label label-block'>Email</label>
-                <div className={cl.info_item_content_bold}>{data?.provider?.email}</div>
-            </div>
-            <div className={cl.info_item_box} >
-                <label className='label label-block'>Số điện thoại</label>
-                <div className={cl.info_item_content_bold}>{data?.provider?.tel}</div>
-            </div>
-            <div className={cl.info_item_box}>
-                <label className='label label-block'>Giới tính</label>
-                <div className={cl.info_item_content_bold}>{getStringValue(data?.provider?.gender)}</div>
-            </div>
-            <div className={cl.info_item_box}>
-                <label className='label label-block'>Ngày sinh</label>
-                <div className={cl.info_item_content_bold}>{data?.provider?.birthday ? formatToDMY(data?.provider?.birthday) : 'Chưa cung cấp'}</div>
-            </div>
-            <div className={cl.info_item_box}>
-                <label className='label label-block'>Giới thiệu</label>
-                <div className={cl.info_item_content}>{data?.provider?.description ? data?.provider?.description : 'Chưa cung cấp'}</div>
-            </div>
+                <div className={cl.button_bar}>
+                    {handleRenderFollowButton()}
+                </div>
+                <div className={cl.info_item_box}>
+                    <label className='label label-block'>Họ tên</label>
+                    <div className={cl.info_item_content_bold}>{data?.provider?.full_name}</div>
+                </div>
+                <div className={cl.info_item_box}>
+                    <label className='label label-block'>Email</label>
+                    <div className={cl.info_item_content_bold}>{data?.provider?.email}</div>
+                </div>
+                <div className={cl.info_item_box} >
+                    <label className='label label-block'>Số điện thoại</label>
+                    <div className={cl.info_item_content_bold}>{data?.provider?.tel}</div>
+                </div>
+                <div className={cl.info_item_box}>
+                    <label className='label label-block'>Giới tính</label>
+                    <div className={cl.info_item_content_bold}>{getStringValue(data?.provider?.gender)}</div>
+                </div>
+                <div className={cl.info_item_box}>
+                    <label className='label label-block'>Ngày sinh</label>
+                    <div className={cl.info_item_content_bold}>{data?.provider?.birthday ? formatToDMY(data?.provider?.birthday) : 'Chưa cung cấp'}</div>
+                </div>
+                <div className={cl.info_item_box}>
+                    <label className='label label-block'>Giới thiệu</label>
+                    <div className={cl.info_item_content}>{data?.provider?.description ? data?.provider?.description : 'Chưa cung cấp'}</div>
+                </div>
 
-            <TitleLeftBig
-                title="Các trọ đăng tuyển"
-                style={{paddingTop: '20px'}}
-            ></TitleLeftBig>
-            <div>
-                {renderProductItems()}
+                <TitleLeftBig
+                    title="Các trọ đăng tuyển"
+                    style={{paddingTop: '20px'}}
+                ></TitleLeftBig>
+                <div>
+                    {renderProductItems()}
+                </div>
+                <div className={`${cl.wrap_paginate} paginate-md`}>
+                    {handleRenderPaginate()}
+                </div>
+                <AlertSuccess
+                    isShow={alertSuccess.isShow}
+                    message={alertSuccess?.message}
+                    sub={alertSuccess?.sub}
+                />
             </div>
-            <div className={`${cl.wrap_paginate} paginate-md`}>
-                {handleRenderPaginate()}
-            </div>
-            <AlertSuccess
-                isShow={alertSuccess.isShow}
-                message={alertSuccess?.message}
-                sub={alertSuccess?.sub}
-            />
-        </div>
+        </>
     );
 }
 

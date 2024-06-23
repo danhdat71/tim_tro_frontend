@@ -36,6 +36,9 @@ export async function middleware(request) {
   // Hostel regist
   if (request.nextUrl.pathname.startsWith('/provider/hostel-regist')) {
     let result = await get('/auth/get-me', accessToken);
+    if (result.status != 200) {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
     if (result.data.user_type != PROVIDER) {
       return NextResponse.redirect(new URL('/', request.url))
     }
