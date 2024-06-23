@@ -50,15 +50,17 @@ export async function middleware(request) {
   }
 
   // Finder access provider page
-  if (path.startsWith('/provider?app_id')) {
+  if (request.nextUrl.pathname.startsWith('/provider')) {
     let params = new URLSearchParams(request.nextUrl.search);
-    let appUrl = params.get('app_id');
-    let result = await get(`/public-provider/${appUrl}`, accessToken);
-    let getMe = await get('/auth/get-me', accessToken);
-    if (result.status != 200) {
-      return NextResponse.redirect(new URL('/errors/404', request.url));
-    } else if (getMe?.data?.user_type == PROVIDER) {
-      return NextResponse.redirect(new URL('/errors/404', request.url));
+    let appId = params.get('app_id');
+    if (appId != null) {
+      let result = await get(`/public-provider/${appId}`, accessToken);
+      let getMe = await get('/auth/get-me', accessToken);
+      if (result.status != 200) {
+        return NextResponse.redirect(new URL('/errors/404', request.url));
+      } else if (getMe?.data?.user_type == PROVIDER) {
+        return NextResponse.redirect(new URL('/errors/404', request.url));
+      }
     }
   }
 
