@@ -88,6 +88,10 @@ export async function getServerSideProps(context) {
   pricesRange = await pricesRange.json();
   data.pricesRange = pricesRange.data;
 
+  const date = new Date;
+  data.currentMonth = date.getMonth() + 1;
+  data.currentYear = date.getFullYear();
+
   return {
     props: { data },
   }
